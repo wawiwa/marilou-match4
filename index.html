@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MATCH4 - Four Matches One Jackpot</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      color: white;
+      background:
+        radial-gradient(circle at 50% 10%, #35115f 0%, transparent 35%),
+        radial-gradient(circle at 10% 90%, #092d61 0%, transparent 35%),
+        linear-gradient(135deg, #070816, #11132b 50%, #080913);
+      position: relative;
+    }
+
+    /* =========================
+       BACKGROUND
+    ========================= */
+
+    .background {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      animation: floatOrb 8s ease-in-out infinite alternate;
+    }
+
+    .orb1 {
+      width: 350px;
+      height: 350px;
+      background: #8b5cf6;
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb2 {
+      width: 300px;
+      height: 300px;
+      background: #ec4899;
+      right: -80px;
+      top: 20%;
+      animation-delay: 2s;
+    }
+
+    .orb3 {
+      width: 400px;
+      height: 400px;
+      background: #2563eb;
+      bottom: -180px;
+      left: 25%;
+      animation-delay: 4s;
+    }
+
+    @keyframes floatOrb {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(40px, -30px) scale(1.15);
+      }
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding-top: 35px;
+    }
+
+    .logo {
+      font-size: 64px;
+      font-weight: 900;
+      letter-spacing: 10px;
+      line-height: 1;
+      background: linear-gradient(
+        90deg,
+        #ff3b5c,
+        #ff7a18,
+        #facc15,
+        #22c55e,
+        #3b82f6,
+        #a855f7
+      );
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: logoGradient 5s linear infinite;
+      text-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+    }
+
+    @keyframes logoGradient {
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: 300% center;
+      }
+    }
+
+    .tagline {
+      margin-top: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .stats {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 35px auto 20px;
+      padding: 0 15px;
+    }
+
+    .stat {
+      min-width: 105px;
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.055);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 10px 35px rgba(0, 0, 0, 0.25),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .statTitle {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .statValue {
+      font-size: 18px;
+      font-weight: 900;
+      min-height: 22px;
+    }
+
+    /* =========================
+       GAME PANEL
+    ========================= */
+
+    .gamePanel {
+      position: relative;
+      z-index: 2;
+      width: min(700px, calc(100% - 24px));
+      margin: 20px auto 50px;
+      padding: 30px 20px 40px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      background: rgba(255, 255, 255, 0.045);
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.4),
+        inset 0 1px rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .levelArea {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .levelBadge {
+      padding: 8px 20px;
+      border-radius: 999px;
+      background: linear-gradient(
+        135deg,
+        rgba(168, 85, 247, 0.25),
+        rgba(59, 130, 246, 0.2)
+      );
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .levelBadge span {
+      color: white;
+      font-size: 14px;
+      margin-left: 5px;
+    }
+
+    /* =========================
+       MACHINE
+    ========================= */
+
+    .machine {
+      padding: 18px;
+      border-radius: 28px;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.11),
+          rgba(255, 255, 255, 0.035)
+        );
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      box-shadow:
+        inset 0 2px rgba(255, 255, 255, 0.1),
+        inset 0 -10px 30px rgba(0, 0, 0, 0.25),
+        0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .game {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .reel {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 20px;
+      background:
+        linear-gradient(
+          180deg,
+          #15182e,
+          #090b18
+        );
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        inset 0 8px 20px rgba(0, 0, 0, 0.45),
+        inset 0 -8px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .object {
+      font-size: 65px;
+      line-height: 1;
+      user-select: none;
+      filter:
+        drop-shadow(0 5px 10px rgba(0, 0, 0, 0.4));
+      transition:
+        transform 0.12s,
+        filter 0.12s;
+    }
+
+    .reel.rolling .object {
+      animation: reelShake 0.1s linear infinite;
+      filter: blur(1.5px);
+    }
+
+    @keyframes reelShake {
+      0% {
+        transform: translateY(-4px);
+      }
+
+      50% {
+        transform: translateY(4px);
+      }
+
+      100% {
+        transform: translateY(-4px);
+      }
+    }
+
+    .object.winner {
+      animation: winnerPulse 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes winnerPulse {
+      from {
+        transform: scale(1);
+        filter:
+          drop-shadow(0 0 8px currentColor)
+          drop-shadow(0 0 18px currentColor);
+      }
+
+      to {
+        transform: scale(1.22);
+        filter:
+          drop-shadow(0 0 15px currentColor)
+          drop-shadow(0 0 40px currentColor);
+      }
+    }
+
+    /* =========================
+       PLAY BUTTON
+    ========================= */
+
+    .playButton {
+      margin-top: 28px;
+      padding: 17px 55px;
+      border: none;
+      border-radius: 999px;
+      color: white;
+      background:
+        linear-gradient(
+          135deg,
+          #ff3b5c,
+          #a855f7
+        );
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      box-shadow:
+        0 10px 35px rgba(168, 85, 247, 0.35),
+        inset 0 1px rgba(255, 255, 255, 0.3);
+      transition:
+        transform 0.15s,
+        box-shadow 0.15s,
+        opacity 0.15s;
+    }
+
+    .playButton:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow:
+        0 15px 45px rgba(168, 85, 247, 0.5),
+        inset 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .playButton:active:not(:disabled) {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .playButton:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .message {
+      min-height: 35px;
+      margin-top: 22px;
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: rgba(255, 255, 255, 0.85);
+      transition: all 0.2s;
+    }
+
+    .message.try {
+      color: #facc15;
+      animation: messageShake 0.35s ease;
+    }
+
+    @keyframes messageShake {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-7px);
+      }
+
+      75% {
+        transform: translateX(7px);
+      }
+    }
+
+    .message.jackpotText {
+      color: #facc15;
+      text-shadow:
+        0 0 10px #facc15,
+        0 0 30px #ff7a18,
+        0 0 60px #ff3b5c;
+      animation: jackpotMessage 0.45s ease-in-out infinite alternate;
+    }
+
+    @keyframes jackpotMessage {
+      from {
+        transform: scale(1);
+      }
+
+      to {
+        transform: scale(1.12);
+      }
+    }
+
+    /* =========================
+       JACKPOT GLOW
+    ========================= */
+
+    .jackpotGlow {
+      position: fixed;
+      inset: 0;
+      z-index: 9980;
+      pointer-events: none;
+      opacity: 0;
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(255, 215, 0, 0.25),
+          transparent 55%
+        );
+    }
+
+    .jackpotGlow.show {
+      animation: jackpotGlow 1.5s ease-out forwards;
+    }
+
+    @keyframes jackpotGlow {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.5);
+      }
+    }
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
+    .confetti {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 8px;
+      height: 13px;
+      z-index: 9999;
+      pointer-events: none;
+      animation:
+        confettiExplosion
+        1.5s
+        cubic-bezier(.12, .7, .25, 1)
+        forwards;
+    }
+
+    @keyframes confettiExplosion {
+      0% {
+        transform:
+          translate(0, 0)
+          rotate(0)
+          scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform:
+          translate(var(--x), var(--y))
+          rotate(var(--r))
+          scale(.15);
+        opacity: 0;
+      }
+    }
+
+    /* =========================
+       FLASH
+    ========================= */
+
+    .flash {
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      background: rgba(255, 255, 255, .13);
+      pointer-events: none;
+      animation:
+        screenFlash
+        .35s
+        forwards;
+    }
+
+    @keyframes screenFlash {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+      .header {
+        padding-top: 25px;
+      }
+
+      .logo {
+        font-size: 36px;
+        letter-spacing: 5px;
+      }
+
+      .tagline {
+        font-size: 8px;
+        letter-spacing: 2px;
+        margin-top: 10px;
+      }
+
+      .stats {
+        gap: 7px;
+        margin-top: 25px;
+      }
+
+      .stat {
+        min-width: 82px;
+        padding: 8px 7px;
+      }
+
+      .statTitle {
+        font-size: 8px;
+      }
+
+      .statValue {
+        font-size: 15px;
+      }
+
+      .gamePanel {
+        padding:
+          25px
+          8px
+          30px;
+        border-radius: 25px;
+      }
+
+      .machine {
+        padding: 10px;
+        border-radius: 22px;
+      }
+
+      .game {
+        gap: 5px;
+      }
+
+      .reel {
+        height: 82px;
+        border-radius: 15px;
+      }
+
+      .object {
+        font-size: 43px;
+      }
+
+      .playButton {
+        padding:
+          15px 45px;
+        font-size: 15px;
+      }
+
+      .message {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .logo {
+        font-size: 31px;
+      }
+
+      .stat {
+        min-width: 75px;
+      }
+
+      .object {
+        font-size: 36px;
+      }
+
+      .reel {
+        height: 75px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="background">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="header">
+    <h1 class="logo">MATCH4</h1>
+
+    <div class="tagline">
+      FOUR MATCHES • ONE JACKPOT
+    </div>
+  </div>
+
+  <div class="stats">
+
+    <div class="stat">
+      <div class="statTitle">CHANCES</div>
+
+      <div
+        class="statValue"
+        id="chances">
+        8
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="statTitle">LIVES</div>
+
+      <div
+        class="statValue"
+        id="lives">
+        ❤️❤️❤️
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="statTitle">STREAK</div>
+
+      <div
+        class="statValue"
+        id="streak">
+        🔥 0
+      </div>
+    </div>
+
+    <div class="stat">
+      <div class="statTitle">BEST</div>
+
+      <div
+        class="statValue"
+        id="best">
+        1
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gamePanel">
+
+    <div class="levelArea">
+      <div class="levelBadge">
+        LEVEL
+        <span id="level">1</span>
+      </div>
+    </div>
+
+    <div class="machine">
+
+      <div
+        id="game"
+        class="game">
+      </div>
+
+    </div>
+
+    <button
+      id="playButton"
+      class="playButton"
+      type="button">
+
+      🎰 PLAY
+
+    </button>
+
+    <div
+      id="message"
+      class="message">
+
+      READY?
+
+    </div>
+
+  </div>
+
+  <div
+    id="jackpotGlow"
+    class="jackpotGlow">
+  </div>
+
+  <script>
+    "use strict";
+
+    /* =========================
+       GAME DATA
+    ========================= */
+
+    const objects = [
+      "🍎",
+      "🍌",
+      "🍔",
+      "🍕",
+      "🍩",
+      "🍉",
+      "🍓",
+      "🍒",
+      "🐱",
+      "🐶",
+      "🐼",
+      "🦊",
+      "🐸",
+      "🐨",
+      "🐯",
+      "🚗",
+      "🚕",
+      "🚌",
+      "🚀",
+      "⚽",
+      "🏀",
+      "🎈",
+      "🎁",
+      "⭐",
+      "🧸",
+      "🍀",
+      "💎",
+      "👑",
+      "🎯",
+      "💰",
+      "🎲"
+    ];
+
+    const colors = [
+      "#ff3b5c",
+      "#3b82f6",
+      "#22c55e",
+      "#facc15",
+      "#a855f7",
+      "#ff7a18"
+    ];
+
+    const MAX_LIVES = 3;
+    const INITIAL_LEVEL = 1;
+    const INITIAL_CHANCES = 8;
+    const BEST_STORAGE_KEY = "match4Best";
+
+    let level = INITIAL_LEVEL;
+    let chances = INITIAL_CHANCES;
+    let lives = MAX_LIVES;
+    let streak = 0;
+    let clicksThisLevel = 0;
+
+    let best =
+      Number(
+        localStorage.getItem(BEST_STORAGE_KEY)
+      ) || 1;
+
+    let audioContext = null;
+    let playing = false;
+
+    /* =========================
+       DOM
+    ========================= */
+
+    const gameElement =
+      document.getElementById("game");
+
+    const playButton =
+      document.getElementById("playButton");
+
+    const messageElement =
+      document.getElementById("message");
+
+    const chancesElement =
+      document.getElementById("chances");
+
+    const livesElement =
+      document.getElementById("lives");
+
+    const streakElement =
+      document.getElementById("streak");
+
+    const bestElement =
+      document.getElementById("best");
+
+    const levelElement =
+      document.getElementById("level");
+
+    const jackpotGlow =
+      document.getElementById("jackpotGlow");
+
+    /* =========================
+       DIFFICULTY
+    ========================= */
+
+    function getDifficulty() {
+      if (level === 1) {
+        return {
+          objectCount: 3,
+          colorCount: 2
+        };
+      }
+
+      if (level === 2) {
+        return {
+          objectCount: 4,
+          colorCount: 2
+        };
+      }
+
+      if (level === 3) {
+        return {
+          objectCount: 5,
+          colorCount: 2
+        };
+      }
+
+      if (level === 4) {
+        return {
+          objectCount: 6,
+          colorCount: 3
+        };
+      }
+
+      if (level === 5) {
+        return {
+          objectCount: 7,
+          colorCount: 3
+        };
+      }
+
+      if (level === 6) {
+        return {
+          objectCount: 10,
+          colorCount: 4
+        };
+      }
+
+      return {
+        objectCount: Math.min(
+          30,
+          10 + level * 2
+        ),
+
+        colorCount: Math.min(
+          6,
+          3 + Math.floor(level / 2)
+        )
+      };
+    }
+
+    /* =========================
+       CLICKS NEEDED
+    ========================= */
+
+    function winningClick() {
+      if (level === 1) return 4;
+      if (level === 2) return 2;
+      if (level === 3) return 3;
+      if (level === 4) return 3;
+      if (level === 5) return 4;
+      if (level === 6) return 2;
+      if (level === 7) return 3;
+
+      return 4;
+    }
+
+    /* =========================
+       CHANCES
+    ========================= */
+
+    function getStartingChances() {
+      if (level === 1) return 8;
+      if (level === 2) return 7;
+      if (level === 3) return 8;
+      if (level === 4) return 9;
+      if (level === 5) return 10;
+
+      return 10;
+    }
+
+    /* =========================
+       AUDIO
+    ========================= */
+
+    function startAudio() {
+      try {
+        if (!audioContext) {
+          const AudioContext =
+            window.AudioContext ||
+            window.webkitAudioContext;
+
+          if (!AudioContext) {
+            return;
+          }
+
+          audioContext =
+            new AudioContext();
+        }
+
+        if (
+          audioContext.state ===
+          "suspended"
+        ) {
+          audioContext.resume();
+        }
+      } catch (error) {
+        console.warn(
+          "Audio could not start:",
+          error
+        );
+      }
+    }
+
+    /* =========================
+       CASINO ROLL SOUND
+    ========================= */
+
+    function casinoRollSound() {
+      if (!audioContext) {
+        return;
+      }
+
+      const now =
+        audioContext.currentTime;
+
+      const osc =
+        audioContext.createOscillator();
+
+      const gain =
+        audioContext.createGain();
+
+      const filter =
+        audioContext.createBiquadFilter();
+
+      osc.type = "square";
+
+      osc.frequency.setValueAtTime(
+        250 + Math.random() * 120,
+        now
+      );
+
+      filter.type = "bandpass";
+      filter.frequency.value = 900;
+      filter.Q.value = 2;
+
+      gain.gain.setValueAtTime(
+        0.001,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.055,
+        now + 0.006
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        now + 0.055
+      );
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(
+        audioContext.destination
+      );
+
+      osc.start(now);
+      osc.stop(now + 0.06);
+
+      const click =
+        audioContext.createOscillator();
+
+      const clickGain =
+        audioContext.createGain();
+
+      click.type = "triangle";
+
+      click.frequency.value =
+        720 + Math.random() * 180;
+
+      clickGain.gain.setValueAtTime(
+        0.001,
+        now
+      );
+
+      clickGain.gain.exponentialRampToValueAtTime(
+        0.035,
+        now + 0.008
+      );
+
+      clickGain.gain.exponentialRampToValueAtTime(
+        0.001,
+        now + 0.035
+      );
+
+      click.connect(clickGain);
+
+      clickGain.connect(
+        audioContext.destination
+      );
+
+      click.start(now);
+      click.stop(now + 0.04);
+    }
+
+    /* =========================
+       JACKPOT SOUND
+    ========================= */
+
+    function jackpotSound() {
+      if (!audioContext) {
+        return;
+      }
+
+      const now =
+        audioContext.currentTime;
+
+      premiumNote(392, now, 0.001, 0.12);
+      premiumNote(523, now + 0.08, 0.001, 0.14);
+      premiumNote(659, now + 0.16, 0.001, 0.16);
+      premiumNote(784, now + 0.24, 0.001, 0.18);
+      premiumNote(1047, now + 0.34, 0.01, 0.28);
+      premiumNote(1319, now + 0.36, 0.01, 0.20);
+      premiumNote(1568, now + 0.38, 0.01, 0.16);
+      premiumNote(1047, now + 0.60, 0.001, 0.15);
+      premiumNote(1319, now + 0.72, 0.001, 0.14);
+      premiumNote(1568, now + 0.84, 0.001, 0.13);
+      premiumNote(2093, now + 0.96, 0.001, 0.12);
+      premiumNote(2637, now + 1.10, 0.001, 0.09);
+    }
+
+    function premiumNote(
+      frequency,
+      start,
+      volume,
+      peak
+    ) {
+      if (!audioContext) {
+        return;
+      }
+
+      const osc =
+        audioContext.createOscillator();
+
+      const gain =
+        audioContext.createGain();
+
+      const filter =
+        audioContext.createBiquadFilter();
+
+      osc.type = "triangle";
+
+      osc.frequency.setValueAtTime(
+        frequency,
+        start
+      );
+
+      filter.type = "lowpass";
+
+      filter.frequency.setValueAtTime(
+        3200,
+        start
+      );
+
+      gain.gain.setValueAtTime(
+        volume,
+        start
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        peak,
+        start + 0.025
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.001,
+        start + 0.55
+      );
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(
+        audioContext.destination
+      );
+
+      osc.start(start);
+      osc.stop(start + 0.58);
+    }
+
+    /* =========================
+       CREATE GAME
+    ========================= */
+
+    function createGame() {
+      gameElement.innerHTML = "";
+
+      for (let i = 0; i < 4; i++) {
+        const reel =
+          document.createElement("div");
+
+        reel.className = "reel";
+
+        const object =
+          document.createElement("div");
+
+        object.className = "object";
+
+        object.textContent =
+          randomObject();
+
+        object.style.color =
+          randomColor();
+
+        reel.appendChild(object);
+        gameElement.appendChild(reel);
+      }
+    }
+
+    /* =========================
+       RANDOM OBJECT
+    ========================= */
+
+    function randomObject() {
+      const difficulty =
+        getDifficulty();
+
+      return objects[
+        Math.floor(
+          Math.random() *
+          difficulty.objectCount
+        )
+      ];
+    }
+
+    /* =========================
+       RANDOM COLOR
+    ========================= */
+
+    function randomColor() {
+      const difficulty =
+        getDifficulty();
+
+      return colors[
+        Math.floor(
+          Math.random() *
+          difficulty.colorCount
+        )
+      ];
+    }
+
+    /* =========================
+       ROLL REELS
+    ========================= */
+
+    function rollReels(
+      duration,
+      callback
+    ) {
+      const reels =
+        document.querySelectorAll(
+          ".reel"
+        );
+
+      const start =
+        Date.now();
+
+      let soundTimer =
+        setInterval(() => {
+          if (!playing) {
+            clearInterval(soundTimer);
+            return;
+          }
+
+          casinoRollSound();
+        }, 75);
+
+      let reelTimer =
+        setInterval(() => {
+          const elapsed =
+            Date.now() - start;
+
+          reels.forEach((reel) => {
+            const object =
+              reel.querySelector(
+                ".object"
+              );
+
+            object.textContent =
+              randomObject();
+
+            object.style.color =
+              randomColor();
+
+            reel.classList.add(
+              "rolling"
+            );
+          });
+
+          if (elapsed >= duration) {
+            clearInterval(reelTimer);
+            clearInterval(soundTimer);
+
+            reels.forEach((reel) => {
+              reel.classList.remove(
+                "rolling"
+              );
+            });
+
+            callback();
+          }
+        }, 100);
+    }
+
+    /* =========================
+       FORCE WIN
+    ========================= */
+
+    function forceWin() {
+      const reels =
+        document.querySelectorAll(
+          ".reel"
+        );
+
+      const object =
+        randomObject();
+
+      const color =
+        randomColor();
+
+      reels.forEach((reel) => {
+        const item =
+          reel.querySelector(
+            ".object"
+          );
+
+        item.textContent = object;
+        item.style.color = color;
+      });
+    }
+
+    /* =========================
+       FORCE LOSE
+    ========================= */
+
+    function forceLose() {
+      const reels =
+        document.querySelectorAll(
+          ".reel"
+        );
+
+      const first =
+        randomObject();
+
+      let second =
+        randomObject();
+
+      while (second === first) {
+        second = randomObject();
+      }
+
+      reels[0]
+        .querySelector(".object")
+        .textContent = first;
+
+      reels[1]
+        .querySelector(".object")
+        .textContent = first;
+
+      reels[2]
+        .querySelector(".object")
+        .textContent = first;
+
+      reels[3]
+        .querySelector(".object")
+        .textContent = second;
+
+      reels.forEach((reel) => {
+        reel.querySelector(
+          ".object"
+        ).style.color = randomColor();
+      });
+    }
+
+    /* =========================
+       PLAY GAME
+    ========================= */
+
+    function playGame() {
+      if (
+        playing ||
+        chances <= 0 ||
+        lives <= 0
+      ) {
+        return;
+      }
+
+      /*
+        IMPORTANT:
+        Start audio from the actual
+        button click. This allows
+        browsers to permit sound.
+      */
+
+      startAudio();
+
+      playing = true;
+
+      playButton.disabled = true;
+
+      clicksThisLevel++;
+
+      chances--;
+
+      updateStats();
+
+      messageElement.textContent =
+        "ROLLING...";
+
+      messageElement.className =
+        "message";
+
+      const duration =
+        850 +
+        Math.min(
+          level * 45,
+          350
+        );
+
+      rollReels(
+        duration,
+        function () {
+
+          /*
+            Player has reached the
+            required number of clicks.
+          */
+
+          if (
+            clicksThisLevel >=
+            winningClick()
+          ) {
+            forceWin();
+            winGame();
+            return;
+          }
+
+          /*
+            Level 6 special:
+            give the player a win
+            after a bad result.
+          */
+
+          if (
+            level === 6 &&
+            clicksThisLevel >= 2
+          ) {
+            forceWin();
+            winGame();
+            return;
+          }
+
+          /*
+            Normal loss.
+          */
+
+          forceLose();
+
+          messageElement.textContent =
+            "TRY AGAIN";
+
+          messageElement.className =
+            "message try";
+
+          playing = false;
+
+          playButton.disabled = false;
+
+          /*
+            No chances remaining.
+          */
+
+          if (chances <= 0) {
+            setTimeout(
+              closeCall,
+              700
+            );
+          }
+        }
+      );
+    }
+
+    /* =========================
+       WIN
+    ========================= */
+
+    function winGame() {
+      const reels =
+        document.querySelectorAll(
+          ".reel"
+        );
+
+      reels.forEach((reel) => {
+        reel.querySelector(
+          ".object"
+        ).classList.add(
+          "winner"
+        );
+      });
+
+      messageElement.textContent =
+        "🎰 JACKPOT! 🎉";
+
+      messageElement.className =
+        "message jackpotText";
+
+      jackpotGlow.classList.remove(
+        "show"
+      );
+
+      void jackpotGlow.offsetWidth;
+
+      jackpotGlow.classList.add(
+        "show"
+      );
+
+      makeConfetti();
+
+      screenFlash();
+
+      jackpotSound();
+
+      streak++;
+
+      if (level > best) {
+        best = level;
+
+        localStorage.setItem(
+          BEST_STORAGE_KEY,
+          best
+        );
+      }
+
+      updateStats();
+
+      setTimeout(
+        nextLevel,
+        2400
+      );
+    }
+
+    /* =========================
+       NEXT LEVEL
+    ========================= */
+
+    function nextLevel() {
+      level++;
+
+      clicksThisLevel = 0;
+
+      chances =
+        getStartingChances();
+
+      createGame();
+
+      levelElement.textContent =
+        level;
+
+      messageElement.className =
+        "message";
+
+      messageElement.textContent =
+        "LEVEL " + level;
+
+      playing = false;
+
+      playButton.disabled = false;
+
+      updateStats();
+    }
+
+    /* =========================
+       CLOSE CALL
+    ========================= */
+
+    function closeCall() {
+      if (playing) {
+        playing = false;
+      }
+
+      lives--;
+
+      streak = 0;
+
+      clicksThisLevel = 0;
+
+      updateStats();
+
+      if (lives <= 0) {
+        gameOver();
+        return;
+      }
+
+      chances =
+        getStartingChances();
+
+      createGame();
+
+      messageElement.className =
+        "message";
+
+      messageElement.textContent =
+        "⚡ CLOSE CALL";
+
+      setTimeout(
+        function () {
+          playing = false;
+          playButton.disabled = false;
+        },
+        500
+      );
+
+      updateStats();
+    }
+
+    /* =========================
+       GAME OVER
+    ========================= */
+
+    function gameOver() {
+      playing = true;
+
+      playButton.disabled = true;
+
+      messageElement.className =
+        "message try";
+
+      messageElement.textContent =
+        "GAME OVER";
+
+      setTimeout(
+        function () {
+          level = INITIAL_LEVEL;
+
+          chances =
+            INITIAL_CHANCES;
+
+          lives = MAX_LIVES;
+
+          streak = 0;
+
+          clicksThisLevel = 0;
+
+          createGame();
+
+          updateStats();
+
+          messageElement.className =
+            "message";
+
+          messageElement.textContent =
+            "READY?";
+
+          playing = false;
+
+          playButton.disabled = false;
+        },
+        2000
+      );
+    }
+
+    /* =========================
+       STATS
+    ========================= */
+
+    function updateStats() {
+      levelElement.textContent =
+        level;
+
+      chancesElement.textContent =
+        chances;
+
+      let hearts = "";
+
+      for (
+        let i = 0;
+        i < lives;
+        i++
+      ) {
+        hearts += "❤️";
+      }
+
+      for (
+        let i = lives;
+        i < MAX_LIVES;
+        i++
+      ) {
+        hearts += "🖤";
+      }
+
+      livesElement.textContent =
+        hearts;
+
+      streakElement.textContent =
+        "🔥 " + streak;
+
+      bestElement.textContent =
+        best;
+    }
+
+    /* =========================
+       SCREEN FLASH
+    ========================= */
+
+    function screenFlash() {
+      const flash =
+        document.createElement(
+          "div"
+        );
+
+      flash.className = "flash";
+
+      document.body.appendChild(
+        flash
+      );
+
+      setTimeout(
+        function () {
+          flash.remove();
+        },
+        400
+      );
+    }
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
+    function makeConfetti() {
+      const confettiColors = [
+        "#ff3b5c",
+        "#3b82f6",
+        "#22c55e",
+        "#facc15",
+        "#a855f7",
+        "#ff7a18",
+        "#ffffff"
+      ];
+
+      for (
+        let i = 0;
+        i < 180;
+        i++
+      ) {
+        const piece =
+          document.createElement(
+            "div"
+          );
+
+        piece.className =
+          "confetti";
+
+        const x =
+          (
+            Math.random() - 0.5
+          ) * 1100;
+
+        const y =
+          (
+            Math.random() - 0.5
+          ) * 800;
+
+        const r =
+          Math.random() * 1400;
+
+        piece.style.setProperty(
+          "--x",
+          x + "px"
+        );
+
+        piece.style.setProperty(
+          "--y",
+          y + "px"
+        );
+
+        piece.style.setProperty(
+          "--r",
+          r + "deg"
+        );
+
+        piece.style.backgroundColor =
+          confettiColors[
+            Math.floor(
+              Math.random() *
+              confettiColors.length
+            )
+          ];
+
+        const size =
+          Math.random() * 9 + 5;
+
+        piece.style.width =
+          size + "px";
+
+        piece.style.height =
+          size * 1.5 + "px";
+
+        document.body.appendChild(
+          piece
+        );
+
+        setTimeout(
+          function () {
+            piece.remove();
+          },
+          1700
+        );
+      }
+    }
+
+    /* =========================
+       BUTTON EVENT
+    ========================= */
+
+    /*
+      Instead of inline
+      onclick="playGame()",
+      we explicitly attach
+      the click event here.
+    */
+
+    playButton.addEventListener(
+      "click",
+      playGame
+    );
+
+    /* =========================
+       START GAME
+    ========================= */
+
+    createGame();
+
+    updateStats();
+  </script>
+
+</body>
+</html>
