@@ -460,6 +460,7 @@ padding:16px;
 opacity:.45;
 }
 
+
 /* ==========================================
    CINEMATIC WORLD OPENING COVERS
 ========================================== */
@@ -537,9 +538,12 @@ transform:translateY(90px);
 .welcomeBox{
 position:relative;
 z-index:2;
+
 width:96%;
 max-width:540px;
+
 padding:42px 25px 32px;
+
 border-radius:34px;
 
 background:
@@ -557,6 +561,7 @@ box-shadow:
 inset 0 1px 0 #ffffff20;
 
 backdrop-filter:blur(20px);
+
 text-align:center;
 
 animation:coverIn .8s cubic-bezier(.16,1,.3,1);
@@ -618,23 +623,33 @@ background-position:250% center;
 
 .welcomeWorld{
 display:inline-block;
+
 font-size:11px;
 font-weight:bold;
 letter-spacing:4px;
+
 color:#00eaff;
+
 padding:8px 14px;
+
 border-radius:30px;
+
 background:#00eaff0b;
 border:1px solid #00eaff30;
+
 box-shadow:0 0 20px #00eaff12;
+
 margin-bottom:18px;
 }
 
 .welcomeText{
 color:#b8c2dc;
+
 font-size:13px;
 line-height:1.75;
+
 max-width:390px;
+
 margin:10px auto 22px;
 }
 
@@ -643,6 +658,7 @@ display:flex;
 justify-content:center;
 flex-wrap:wrap;
 gap:7px;
+
 margin:0 auto 22px;
 max-width:430px;
 }
@@ -651,22 +667,32 @@ max-width:430px;
 font-size:9px;
 font-weight:bold;
 letter-spacing:1px;
+
 padding:7px 10px;
+
 border-radius:20px;
+
 background:#ffffff08;
 border:1px solid #ffffff16;
+
 color:#dce5ff;
+
 box-shadow:inset 0 0 15px #ffffff05;
 }
 
 .welcomeButton{
 position:relative;
+
 width:92%;
 max-width:330px;
+
 padding:16px;
+
 font-size:14px;
 font-weight:900;
+
 letter-spacing:2px;
+
 border-radius:18px;
 
 background:
@@ -684,14 +710,17 @@ box-shadow:
 0 0 25px #00eaff22;
 
 animation:buttonGlow 3s ease infinite;
+
 overflow:hidden;
 }
 
 .welcomeButton:before{
 content:"";
 position:absolute;
+
 top:0;
 left:-120%;
+
 width:80%;
 height:100%;
 
@@ -704,6 +733,7 @@ transparent
 );
 
 transform:skewX(-20deg);
+
 animation:buttonSweep 2.8s infinite;
 }
 
@@ -728,10 +758,13 @@ box-shadow:
 
 .welcomePlanet{
 font-size:72px;
+
 margin-bottom:8px;
+
 filter:
 drop-shadow(0 0 12px #00eaff55)
 drop-shadow(0 0 35px #774cff33);
+
 animation:planetFloat 3s ease-in-out infinite;
 }
 
@@ -745,11 +778,13 @@ transform:translateY(-8px) scale(1.04);
 }
 }
 
+
 /* ==========================================
    WORLD 2 COVER
 ========================================== */
 
 body.world2 #welcome{
+
 background:
 radial-gradient(circle at 50% 30%,#764cff66,transparent 24%),
 radial-gradient(circle at 15% 75%,#00eaff35,transparent 25%),
@@ -758,6 +793,7 @@ radial-gradient(circle at 90% 70%,#ff39c833,transparent 25%),
 }
 
 body.world2 .welcomeBox{
+
 border-color:#9d6cff45;
 
 box-shadow:
@@ -767,6 +803,7 @@ inset 0 1px 0 #ffffff20;
 }
 
 body.world2 .welcomeTitle{
+
 background:
 linear-gradient(
 90deg,
@@ -783,13 +820,18 @@ color:transparent;
 }
 
 body.world2 .welcomeWorld{
+
 color:#b68cff;
+
 background:#9d6cff12;
+
 border-color:#9d6cff45;
+
 box-shadow:0 0 25px #764cff22;
 }
 
 body.world2 .welcomeButton{
+
 background:
 linear-gradient(
 135deg,
@@ -802,6 +844,20 @@ box-shadow:
 0 12px 40px #704cff66,
 0 0 35px #9d4cff33;
 }
+
+
+/* ==========================================
+   AUDIO ACTIVATION NOTICE
+========================================== */
+
+.audioHint{
+margin-top:13px;
+font-size:9px;
+letter-spacing:1.5px;
+color:#697694;
+opacity:.9;
+}
+
 
 /* MOBILE */
 
@@ -1081,6 +1137,10 @@ ENTER THE ARCADE
 
 </button>
 
+<div class="audioHint">
+🔊 CINEMATIC AUDIO • TAP ENTER TO BEGIN
+</div>
+
 </div>
 
 </div>
@@ -1230,43 +1290,8 @@ CLOSE
 💎 CONTINUE — 3 GEMS
 </button>
 
-<button class="choice dark" onclick="openEmergencyExchange()">
-🔄 EMERGENCY EXCHANGE
-</button>
-
 <button class="choice dark" onclick="saveExit()">
 🏠 SAVE & EXIT
-</button>
-
-</div>
-
-</div>
-
-
-<!-- EMERGENCY EXCHANGE -->
-
-<div class="overlay" id="exchange">
-
-<div class="modal">
-
-<div style="font-size:45px">🔄</div>
-
-<h2>EMERGENCY EXCHANGE</h2>
-
-<p id="exchangeText">
-Use a small amount of one currency to recover another.
-</p>
-
-<button class="choice" onclick="exchangeGemsForCoins()">
-💎 5 GEMS → 500 COINS
-</button>
-
-<button class="choice" onclick="exchangeCoinsForGems()">
-💰 1,000 COINS → 5 GEMS
-</button>
-
-<button class="choice dark" onclick="closeExchange()">
-CANCEL
 </button>
 
 </div>
@@ -1353,10 +1378,16 @@ let busy=false;
 
 let soundOn=true;
 let audio=null;
-let musicTimer=null;
-let musicStep=0;
 
-let welcomeShown=false;
+/*
+   IMPORTANT:
+   MUSIC IS NOW OPENING-ONLY.
+   No background music during gameplay.
+*/
+
+let openingMusicTimer=null;
+let openingMusicStep=0;
+let openingMusicActive=false;
 
 
 /* ==================================================
@@ -1658,7 +1689,7 @@ save();
 
 
 /* ==================================================
-   AUDIO
+   AUDIO ENGINE
 ================================================== */
 
 function initAudio(){
@@ -1676,6 +1707,11 @@ if(audio.state==="suspended")
 audio.resume();
 
 }
+
+
+/* ==================================================
+   GENERAL SOUND EFFECT
+================================================== */
 
 function tone(
 frequency,
@@ -1721,6 +1757,11 @@ osc.stop(audio.currentTime+duration);
 
 }
 
+
+/* ==================================================
+   JACKPOT
+================================================== */
+
 function jackpot(){
 
 tone(523,.10,.045,"sine");
@@ -1733,131 +1774,243 @@ setTimeout(()=>tone(1319,.25,.04,"triangle"),420);
 
 
 /* ==================================================
-   CINEMATIC NEON MUSIC
-   OPENING COVERS ONLY
+   ELECTRIFYING SCI-FI OPENING MUSIC
 ================================================== */
 
-const cosmicMusic=[
+const sciFiWorld1=[
+110,130.81,164.81,196,
+220,164.81,246.94,196,
+261.63,329.63,392,329.63,
+440,392,329.63,293.66,
 
-130.81,155.56,174.61,196.00,
-220.00,246.94,261.63,293.66,
+130.81,164.81,196,246.94,
+261.63,329.63,392,493.88,
+523.25,440,392,329.63,
+293.66,261.63,220,196,
 
-329.63,329.63,392.00,440.00,
-493.88,440.00,392.00,329.63,
-
-349.23,392.00,440.00,493.88,
-523.25,493.88,440.00,392.00,
-
-440.00,493.88,523.25,587.33,
-659.25,587.33,523.25,493.88,
-
-392.00,440.00,493.88,523.25,
-587.33,659.25,587.33,523.25,
-
-493.88,440.00,392.00,349.23,
-329.63,392.00,440.00,493.88,
-
+110,146.83,174.61,220,
+261.63,293.66,349.23,440,
 523.25,587.33,659.25,783.99,
-659.25,587.33,523.25,493.88,
-
-440.00,392.00,329.63,293.66,
-261.63,293.66,329.63,392.00
-
+659.25,587.33,523.25,440
 ];
 
-function playMusicNote(){
+const sciFiWorld2=[
+82.41,98,123.47,146.83,
+164.81,196,246.94,293.66,
+329.63,392,493.88,587.33,
+659.25,783.99,880,987.77,
 
-if(!soundOn||!audio)return;
+110,146.83,196,246.94,
+293.66,369.99,440,554.37,
+659.25,739.99,880,987.77,
+1046.50,880,739.99,659.25,
+
+123.47,164.81,220,293.66,
+369.99,440,554.37,659.25,
+783.99,880,1046.50,1174.66,
+1318.51,1174.66,1046.50,880
+];
+
+
+/*
+   Low-volume futuristic synth pulse.
+   Designed specifically for opening covers.
+*/
+
+function playSciFiNote(){
+
+if(
+!soundOn||
+!audio||
+!openingMusicActive
+)
+return;
+
+try{
+
+let music=
+world===1
+?sciFiWorld1
+:sciFiWorld2;
 
 let frequency=
-cosmicMusic[
-musicStep%cosmicMusic.length
+music[
+openingMusicStep%music.length
 ];
+
+let now=audio.currentTime;
+
+
+/* Main futuristic synth */
 
 let osc=audio.createOscillator();
 let gain=audio.createGain();
 
-osc.type="sawtooth";
+osc.type=
+world===1
+?"sawtooth"
+:"triangle";
 
 osc.frequency.setValueAtTime(
 frequency,
-audio.currentTime
+now
 );
 
 gain.gain.setValueAtTime(
 0,
-audio.currentTime
+now
 );
 
-/* LOW OPENING MUSIC VOLUME */
-
 gain.gain.linearRampToValueAtTime(
-.0045,
-audio.currentTime+.025
+world===1?.010:.012,
+now+.025
 );
 
 gain.gain.exponentialRampToValueAtTime(
 .001,
-audio.currentTime+.30
+now+.34
 );
 
 osc.connect(gain);
 gain.connect(audio.destination);
 
-osc.start();
+osc.start(now);
+osc.stop(now+.35);
 
-osc.stop(
-audio.currentTime+.30
+
+/* Sub-bass pulse */
+
+if(openingMusicStep%4===0){
+
+let bass=audio.createOscillator();
+let bassGain=audio.createGain();
+
+bass.type="sine";
+
+bass.frequency.setValueAtTime(
+frequency/2,
+now
 );
 
-musicStep++;
-
-}
-
-function startMusic(){
-
-if(!soundOn)return;
-
-initAudio();
-
-if(musicTimer)
-return;
-
-musicStep=0;
-
-playMusicNote();
-
-musicTimer=setInterval(
-playMusicNote,
-185
+bassGain.gain.setValueAtTime(
+0,
+now
 );
 
+bassGain.gain.linearRampToValueAtTime(
+world===1?.012:.015,
+now+.025
+);
+
+bassGain.gain.exponentialRampToValueAtTime(
+.001,
+now+.42
+);
+
+bass.connect(bassGain);
+bassGain.connect(audio.destination);
+
+bass.start(now);
+bass.stop(now+.43);
+
 }
 
-function stopMusic(){
 
-if(musicTimer){
+/* High sci-fi sparkle */
 
-clearInterval(musicTimer);
+if(openingMusicStep%8===7){
 
-musicTimer=null;
+let high=audio.createOscillator();
+let highGain=audio.createGain();
+
+high.type="sine";
+
+high.frequency.setValueAtTime(
+frequency*2,
+now
+);
+
+highGain.gain.setValueAtTime(
+0,
+now
+);
+
+highGain.gain.linearRampToValueAtTime(
+.006,
+now+.015
+);
+
+highGain.gain.exponentialRampToValueAtTime(
+.001,
+now+.22
+);
+
+high.connect(highGain);
+highGain.connect(audio.destination);
+
+high.start(now);
+high.stop(now+.23);
 
 }
 
-}
+openingMusicStep++;
 
-function restartMusic(){
-
-stopMusic();
-
-if(soundOn)
-startMusic();
+}catch(e){}
 
 }
 
 
 /* ==================================================
-   SOUND
+   START OPENING MUSIC
+================================================== */
+
+function startOpeningMusic(){
+
+if(!soundOn)
+return;
+
+try{
+
+initAudio();
+
+stopOpeningMusic();
+
+openingMusicActive=true;
+openingMusicStep=0;
+
+playSciFiNote();
+
+openingMusicTimer=setInterval(
+playSciFiNote,
+155
+);
+
+}catch(e){}
+
+}
+
+
+/* ==================================================
+   STOP OPENING MUSIC
+================================================== */
+
+function stopOpeningMusic(){
+
+openingMusicActive=false;
+
+if(openingMusicTimer){
+
+clearInterval(openingMusicTimer);
+
+openingMusicTimer=null;
+
+}
+
+}
+
+
+/* ==================================================
+   SOUND BUTTON
 ================================================== */
 
 function toggleSound(){
@@ -1870,14 +2023,24 @@ soundOn?"🔊":"🔇";
 
 if(soundOn){
 
-tone(440,.08,.025,"sine");
+initAudio();
 
-if(welcomeShown)
-startMusic();
+if(
+document.getElementById("welcome")
+.style.display==="flex"
+){
+
+startOpeningMusic();
 
 }else{
 
-stopMusic();
+tone(440,.08,.025,"sine");
+
+}
+
+}else{
+
+stopOpeningMusic();
 
 }
 
@@ -1890,27 +2053,29 @@ stopMusic();
 
 function showWelcome(){
 
-let welcome =
+let welcome=
 document.getElementById("welcome");
 
-let title =
+let title=
 document.getElementById("welcomeTitle");
 
-let text =
+let text=
 document.getElementById("welcomeText");
 
-let worldTitle =
+let worldTitle=
 document.getElementById("welcomeWorld");
 
-let planet =
+let planet=
 document.getElementById("welcomePlanet");
 
-let promo =
+let promo=
 document.getElementById("welcomePromo");
 
-let button =
+let button=
 document.getElementById("enterWorldButton");
 
+
+/* WORLD 1 */
 
 if(world===1){
 
@@ -1938,7 +2103,12 @@ promo.innerHTML=
 button.textContent=
 "ENTER THE ARCADE";
 
-}else{
+}
+
+
+/* WORLD 2 */
+
+else{
 
 document.body.classList.add("world2");
 
@@ -1970,12 +2140,19 @@ welcome.style.display="flex";
 
 welcomeShown=true;
 
-/* MUSIC ONLY DURING OPENING */
+
+/*
+   Start the cinematic opening music.
+   On browsers that block autoplay, the first
+   user interaction can unlock the audio.
+*/
 
 if(soundOn){
 
+try{
 initAudio();
-startMusic();
+startOpeningMusic();
+}catch(e){}
 
 }
 
@@ -1988,14 +2165,17 @@ startMusic();
 
 function enterWorld(){
 
+/*
+   CRITICAL:
+   Stop cinematic music BEFORE gameplay begins.
+*/
+
+stopOpeningMusic();
+
 document.getElementById("welcome")
 .style.display="none";
 
 welcomeShown=false;
-
-/* STOP MUSIC WHEN GAMEPLAY STARTS */
-
-stopMusic();
 
 initAudio();
 
@@ -2082,9 +2262,10 @@ if(busy)return;
 
 initAudio();
 
-/* NO MUSIC DURING GAMEPLAY */
-
-stopMusic();
+/*
+   No music is started here.
+   Gameplay is intentionally silent.
+*/
 
 if(level===5){
 
@@ -2139,31 +2320,31 @@ let chance;
 
 if(world===1){
 
-chance =
-level===1 ? 0.55 :
-level===2 ? 0.45 :
-level===3 ? 0.43 :
-0.38;
+chance=
+level===1?.55:
+level===2?.45:
+level===3?.43:
+.38;
 
 }else{
 
-chance =
-level===1 ? 0.48 :
-level===2 ? 0.43 :
-level===3 ? 0.42 :
-0.38;
+chance=
+level===1?.48:
+level===2?.43:
+level===3?.42:
+.38;
 
 }
 
-chance += lucky*0.05;
+chance+=lucky*.05;
 
 let win=
-guaranteed ||
+guaranteed||
 Math.random()<chance;
 
 let target=randomSymbol();
 
-if(world===2&&Math.random()<0.12)
+if(world===2&&Math.random()<.12)
 target="💎";
 
 spin(
@@ -2517,8 +2698,6 @@ return;
 
 }
 
-stopMusic();
-
 busy=true;
 
 document.getElementById("play")
@@ -2624,7 +2803,6 @@ function extraCrown(){
 if(gems<3){
 
 alert("You need 3 gems.");
-
 return;
 
 }
@@ -2660,13 +2838,11 @@ function buyCrownCoins(){
 if(coins<2500){
 
 alert("You need 2,500 coins.");
-
 return;
 
 }
 
 coins-=2500;
-
 crownWin();
 
 }
@@ -2676,13 +2852,11 @@ function buyCrownGems(){
 if(gems<15){
 
 alert("You need 15 gems.");
-
 return;
 
 }
 
 gems-=15;
-
 crownWin();
 
 }
@@ -2760,9 +2934,6 @@ document.getElementById("nextWorldButton")
 .textContent=
 "🌎 PLAY WORLD 1";
 
-document.getElementById("nextWorldButton")
-.style.display="block";
-
 document.getElementById("complete")
 .style.display="flex";
 
@@ -2827,6 +2998,8 @@ alert(
 return;
 
 }
+
+stopOpeningMusic();
 
 world=x;
 
@@ -3083,13 +3256,11 @@ function continueCoins(){
 if(coins<300){
 
 alert("You need 300 coins.");
-
 return;
 
 }
 
 coins-=300;
-
 continueGame();
 
 }
@@ -3099,13 +3270,11 @@ function continueGems(){
 if(gems<3){
 
 alert("You need 3 gems.");
-
 return;
 
 }
 
 gems-=3;
-
 continueGame();
 
 }
@@ -3113,9 +3282,6 @@ continueGame();
 function continueGame(){
 
 document.getElementById("over")
-.style.display="none";
-
-document.getElementById("exchange")
 .style.display="none";
 
 lives=5;
@@ -3135,92 +3301,6 @@ save();
 
 }
 
-
-/* ==================================================
-   EMERGENCY EXCHANGE
-================================================== */
-
-function openEmergencyExchange(){
-
-document.getElementById("over")
-.style.display="none";
-
-document.getElementById("exchange")
-.style.display="flex";
-
-}
-
-function closeExchange(){
-
-document.getElementById("exchange")
-.style.display="none";
-
-document.getElementById("over")
-.style.display="flex";
-
-}
-
-
-/*
-   Emergency exchange is intentionally limited.
-   It is a rescue mechanic, not an infinite currency loop.
-*/
-
-function exchangeGemsForCoins(){
-
-if(gems<5){
-
-alert("You need 5 gems.");
-
-return;
-
-}
-
-gems-=5;
-coins+=500;
-
-document.getElementById("exchange")
-.style.display="none";
-
-showReward(
-"🔄 EXCHANGE COMPLETE!<br>+500 💰"
-);
-
-update();
-save();
-
-}
-
-function exchangeCoinsForGems(){
-
-if(coins<1000){
-
-alert("You need 1,000 coins.");
-
-return;
-
-}
-
-coins-=1000;
-gems+=5;
-
-document.getElementById("exchange")
-.style.display="none";
-
-showReward(
-"🔄 EXCHANGE COMPLETE!<br>+5 💎"
-);
-
-update();
-save();
-
-}
-
-
-/* ==================================================
-   SAVE EXIT
-================================================== */
-
 function saveExit(){
 
 document.getElementById("over")
@@ -3233,9 +3313,6 @@ document.getElementById("mystery")
 .style.display="none";
 
 document.getElementById("gift")
-.style.display="none";
-
-document.getElementById("exchange")
 .style.display="none";
 
 lives=5;
@@ -3487,10 +3564,54 @@ document.getElementById("play")
 
 
 /* ==================================================
+   AUDIO UNLOCK
+================================================== */
+
+/*
+   Some mobile browsers block audio until the user
+   interacts with the page.
+
+   This listener unlocks the AudioContext when the
+   player first touches/clicks the opening screen.
+*/
+
+document.addEventListener(
+"pointerdown",
+function(e){
+
+if(!soundOn)
+return;
+
+if(
+document.getElementById("welcome")
+.style.display==="flex"
+){
+
+try{
+
+initAudio();
+
+if(!openingMusicActive){
+
+startOpeningMusic();
+
+}
+
+}catch(err){}
+
+}
+
+},
+{passive:true}
+);
+
+
+/* ==================================================
    START
 ================================================== */
 
 /*
+   IMPORTANT:
    Always start in WORLD 1.
    World 2 can only be entered after unlocking it.
 */
