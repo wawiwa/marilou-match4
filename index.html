@@ -460,7 +460,6 @@ padding:16px;
 opacity:.45;
 }
 
-
 /* ==========================================
    CINEMATIC WORLD OPENING COVERS
 ========================================== */
@@ -778,7 +777,6 @@ transform:translateY(-8px) scale(1.04);
 }
 }
 
-
 /* ==========================================
    WORLD 2 COVER
 ========================================== */
@@ -844,20 +842,6 @@ box-shadow:
 0 12px 40px #704cff66,
 0 0 35px #9d4cff33;
 }
-
-
-/* ==========================================
-   AUDIO ACTIVATION NOTICE
-========================================== */
-
-.audioHint{
-margin-top:13px;
-font-size:9px;
-letter-spacing:1.5px;
-color:#697694;
-opacity:.9;
-}
-
 
 /* MOBILE */
 
@@ -932,7 +916,7 @@ WORLD 1 • DELUXE ARCADE
 
 <div class="stat">
 <small>❤️ LIVES</small>
-<b id="lives">5</b>
+<b id="lives">4</b>
 </div>
 
 <div class="stat">
@@ -942,7 +926,7 @@ WORLD 1 • DELUXE ARCADE
 
 <div class="stat">
 <small>💰 COINS</small>
-<b id="coins">1000</b>
+<b id="coins">500</b>
 </div>
 
 <div class="stat">
@@ -1088,11 +1072,6 @@ MATCH4 once
 
 </div>
 
-
-<!-- ==========================================
-     CINEMATIC WORLD OPENING COVER
-========================================== -->
-
 <div id="welcome">
 
 <div class="welcomeBox">
@@ -1137,16 +1116,9 @@ ENTER THE ARCADE
 
 </button>
 
-<div class="audioHint">
-🔊 CINEMATIC AUDIO • TAP ENTER TO BEGIN
 </div>
 
 </div>
-
-</div>
-
-
-<!-- WORLD SELECT -->
 
 <div class="overlay" id="worldSelect">
 
@@ -1176,9 +1148,6 @@ CLOSE
 
 </div>
 
-
-<!-- MYSTERY -->
-
 <div class="overlay" id="mystery">
 
 <div class="modal">
@@ -1205,9 +1174,6 @@ CLOSE
 
 </div>
 
-
-<!-- COSMIC GIFT -->
-
 <div class="overlay" id="gift">
 
 <div class="modal">
@@ -1233,9 +1199,6 @@ CLOSE
 </div>
 
 </div>
-
-
-<!-- CROWN -->
 
 <div class="overlay" id="crown">
 
@@ -1267,9 +1230,6 @@ CLOSE
 
 </div>
 
-
-<!-- OUT OF LIVES -->
-
 <div class="overlay" id="over">
 
 <div class="modal">
@@ -1298,9 +1258,6 @@ CLOSE
 
 </div>
 
-
-<!-- WORLD COMPLETE -->
-
 <div class="overlay" id="complete">
 
 <div class="modal">
@@ -1327,12 +1284,7 @@ onclick="goNextWorld()">
 
 </div>
 
-
 <script>
-
-/* ==================================================
-   SHARED SAVE
-================================================== */
 
 let saved=JSON.parse(
 localStorage.getItem("MATCH4_MASTER")||"{}"
@@ -1379,20 +1331,10 @@ let busy=false;
 let soundOn=true;
 let audio=null;
 
-/*
-   IMPORTANT:
-   MUSIC IS NOW OPENING-ONLY.
-   No background music during gameplay.
-*/
-
 let openingMusicTimer=null;
 let openingMusicStep=0;
-let openingMusicActive=false;
 
-
-/* ==================================================
-   SYMBOLS
-================================================== */
+let welcomeShown=false;
 
 const world1Normal=[
 "🍒","🍋","🍊","🍉",
@@ -1413,11 +1355,6 @@ const world2Special=[
 ...world2Normal,
 "🌈","👑"
 ];
-
-
-/* ==================================================
-   SAVE
-================================================== */
 
 function save(){
 
@@ -1453,11 +1390,6 @@ w2
 );
 
 }
-
-
-/* ==================================================
-   LOAD WORLD
-================================================== */
 
 let progress={
 match:0,
@@ -1512,11 +1444,6 @@ renderCollection();
 
 }
 
-
-/* ==================================================
-   WORLD STYLE
-================================================== */
-
 function updateWorldStyle(){
 
 if(world===1){
@@ -1553,11 +1480,6 @@ document.getElementById("energyWrap")
 }
 
 }
-
-
-/* ==================================================
-   MISSIONS
-================================================== */
 
 function getMission(){
 
@@ -1635,11 +1557,6 @@ value:crownAttempts
 
 }
 
-
-/* ==================================================
-   UPDATE
-================================================== */
-
 function update(){
 
 document.getElementById("level")
@@ -1687,11 +1604,6 @@ save();
 
 }
 
-
-/* ==================================================
-   AUDIO ENGINE
-================================================== */
-
 function initAudio(){
 
 if(!audio){
@@ -1707,11 +1619,6 @@ if(audio.state==="suspended")
 audio.resume();
 
 }
-
-
-/* ==================================================
-   GENERAL SOUND EFFECT
-================================================== */
 
 function tone(
 frequency,
@@ -1757,11 +1664,6 @@ osc.stop(audio.currentTime+duration);
 
 }
 
-
-/* ==================================================
-   JACKPOT
-================================================== */
-
 function jackpot(){
 
 tone(523,.10,.045,"sine");
@@ -1772,231 +1674,98 @@ setTimeout(()=>tone(1319,.25,.04,"triangle"),420);
 
 }
 
+const cosmicOpeningMusic=[
 
-/* ==================================================
-   ELECTRIFYING SCI-FI OPENING MUSIC
-================================================== */
+130.81,155.56,174.61,196.00,
+220.00,246.94,261.63,293.66,
 
-const sciFiWorld1=[
-110,130.81,164.81,196,
-220,164.81,246.94,196,
-261.63,329.63,392,329.63,
-440,392,329.63,293.66,
+329.63,329.63,392.00,440.00,
+493.88,440.00,392.00,329.63,
 
-130.81,164.81,196,246.94,
-261.63,329.63,392,493.88,
-523.25,440,392,329.63,
-293.66,261.63,220,196,
+349.23,392.00,440.00,493.88,
+523.25,493.88,440.00,392.00,
 
-110,146.83,174.61,220,
-261.63,293.66,349.23,440,
+440.00,493.88,523.25,587.33,
+659.25,587.33,523.25,493.88,
+
+392.00,440.00,493.88,523.25,
+587.33,659.25,587.33,523.25,
+
+493.88,440.00,392.00,349.23,
+329.63,392.00,440.00,493.88,
+
 523.25,587.33,659.25,783.99,
-659.25,587.33,523.25,440
+659.25,587.33,523.25,493.88
+
 ];
 
-const sciFiWorld2=[
-82.41,98,123.47,146.83,
-164.81,196,246.94,293.66,
-329.63,392,493.88,587.33,
-659.25,783.99,880,987.77,
+function playOpeningNote(){
 
-110,146.83,196,246.94,
-293.66,369.99,440,554.37,
-659.25,739.99,880,987.77,
-1046.50,880,739.99,659.25,
-
-123.47,164.81,220,293.66,
-369.99,440,554.37,659.25,
-783.99,880,1046.50,1174.66,
-1318.51,1174.66,1046.50,880
-];
-
-
-/*
-   Low-volume futuristic synth pulse.
-   Designed specifically for opening covers.
-*/
-
-function playSciFiNote(){
-
-if(
-!soundOn||
-!audio||
-!openingMusicActive
-)
-return;
-
-try{
-
-let music=
-world===1
-?sciFiWorld1
-:sciFiWorld2;
+if(!soundOn||!audio)return;
 
 let frequency=
-music[
-openingMusicStep%music.length
+cosmicOpeningMusic[
+openingMusicStep%cosmicOpeningMusic.length
 ];
-
-let now=audio.currentTime;
-
-
-/* Main futuristic synth */
 
 let osc=audio.createOscillator();
 let gain=audio.createGain();
 
-osc.type=
-world===1
-?"sawtooth"
-:"triangle";
+osc.type="sawtooth";
 
 osc.frequency.setValueAtTime(
 frequency,
-now
+audio.currentTime
 );
 
 gain.gain.setValueAtTime(
 0,
-now
+audio.currentTime
 );
 
 gain.gain.linearRampToValueAtTime(
-world===1?.010:.012,
-now+.025
+.006,
+audio.currentTime+.03
 );
 
 gain.gain.exponentialRampToValueAtTime(
 .001,
-now+.34
+audio.currentTime+.32
 );
 
 osc.connect(gain);
 gain.connect(audio.destination);
 
-osc.start(now);
-osc.stop(now+.35);
+osc.start();
 
-
-/* Sub-bass pulse */
-
-if(openingMusicStep%4===0){
-
-let bass=audio.createOscillator();
-let bassGain=audio.createGain();
-
-bass.type="sine";
-
-bass.frequency.setValueAtTime(
-frequency/2,
-now
+osc.stop(
+audio.currentTime+.32
 );
-
-bassGain.gain.setValueAtTime(
-0,
-now
-);
-
-bassGain.gain.linearRampToValueAtTime(
-world===1?.012:.015,
-now+.025
-);
-
-bassGain.gain.exponentialRampToValueAtTime(
-.001,
-now+.42
-);
-
-bass.connect(bassGain);
-bassGain.connect(audio.destination);
-
-bass.start(now);
-bass.stop(now+.43);
-
-}
-
-
-/* High sci-fi sparkle */
-
-if(openingMusicStep%8===7){
-
-let high=audio.createOscillator();
-let highGain=audio.createGain();
-
-high.type="sine";
-
-high.frequency.setValueAtTime(
-frequency*2,
-now
-);
-
-highGain.gain.setValueAtTime(
-0,
-now
-);
-
-highGain.gain.linearRampToValueAtTime(
-.006,
-now+.015
-);
-
-highGain.gain.exponentialRampToValueAtTime(
-.001,
-now+.22
-);
-
-high.connect(highGain);
-highGain.connect(audio.destination);
-
-high.start(now);
-high.stop(now+.23);
-
-}
 
 openingMusicStep++;
 
-}catch(e){}
-
 }
-
-
-/* ==================================================
-   START OPENING MUSIC
-================================================== */
 
 function startOpeningMusic(){
 
-if(!soundOn)
-return;
-
-try{
+if(!soundOn)return;
 
 initAudio();
 
 stopOpeningMusic();
 
-openingMusicActive=true;
 openingMusicStep=0;
 
-playSciFiNote();
+playOpeningNote();
 
 openingMusicTimer=setInterval(
-playSciFiNote,
-155
+playOpeningNote,
+200
 );
-
-}catch(e){}
 
 }
 
-
-/* ==================================================
-   STOP OPENING MUSIC
-================================================== */
-
 function stopOpeningMusic(){
-
-openingMusicActive=false;
 
 if(openingMusicTimer){
 
@@ -2008,11 +1777,6 @@ openingMusicTimer=null;
 
 }
 
-
-/* ==================================================
-   SOUND BUTTON
-================================================== */
-
 function toggleSound(){
 
 soundOn=!soundOn;
@@ -2021,61 +1785,49 @@ document.getElementById("sound")
 .textContent=
 soundOn?"🔊":"🔇";
 
-if(soundOn){
+if(!soundOn){
 
-initAudio();
+stopOpeningMusic();
+
+return;
+
+}
 
 if(
-document.getElementById("welcome")
-.style.display==="flex"
+world===2 &&
+document.getElementById("welcome").style.display==="flex"
 ){
 
 startOpeningMusic();
 
-}else{
+}
 
 tone(440,.08,.025,"sine");
 
 }
 
-}else{
-
-stopOpeningMusic();
-
-}
-
-}
-
-
-/* ==================================================
-   CINEMATIC WELCOME COVER
-================================================== */
-
 function showWelcome(){
 
-let welcome=
+let welcome =
 document.getElementById("welcome");
 
-let title=
+let title =
 document.getElementById("welcomeTitle");
 
-let text=
+let text =
 document.getElementById("welcomeText");
 
-let worldTitle=
+let worldTitle =
 document.getElementById("welcomeWorld");
 
-let planet=
+let planet =
 document.getElementById("welcomePlanet");
 
-let promo=
+let promo =
 document.getElementById("welcomePromo");
 
-let button=
+let button =
 document.getElementById("enterWorldButton");
-
-
-/* WORLD 1 */
 
 if(world===1){
 
@@ -2103,12 +1855,9 @@ promo.innerHTML=
 button.textContent=
 "ENTER THE ARCADE";
 
-}
+stopOpeningMusic();
 
-
-/* WORLD 2 */
-
-else{
+}else{
 
 document.body.classList.add("world2");
 
@@ -2134,48 +1883,24 @@ promo.innerHTML=
 button.textContent=
 "ENTER THE COSMOS";
 
+startOpeningMusic();
+
 }
 
 welcome.style.display="flex";
 
 welcomeShown=true;
 
-
-/*
-   Start the cinematic opening music.
-   On browsers that block autoplay, the first
-   user interaction can unlock the audio.
-*/
-
-if(soundOn){
-
-try{
-initAudio();
-startOpeningMusic();
-}catch(e){}
-
 }
-
-}
-
-
-/* ==================================================
-   ENTER WORLD
-================================================== */
 
 function enterWorld(){
-
-/*
-   CRITICAL:
-   Stop cinematic music BEFORE gameplay begins.
-*/
-
-stopOpeningMusic();
 
 document.getElementById("welcome")
 .style.display="none";
 
 welcomeShown=false;
+
+stopOpeningMusic();
 
 initAudio();
 
@@ -2194,11 +1919,6 @@ document.getElementById("msg")
 }
 
 }
-
-
-/* ==================================================
-   RANDOM SYMBOL
-================================================== */
 
 function randomSymbol(){
 
@@ -2226,11 +1946,6 @@ Math.floor(Math.random()*pool.length)
 
 }
 
-
-/* ==================================================
-   SHOW
-================================================== */
-
 function show(symbols){
 
 let game=
@@ -2251,21 +1966,13 @@ game.appendChild(reel);
 
 }
 
-
-/* ==================================================
-   PLAY
-================================================== */
-
 function play(){
 
 if(busy)return;
 
 initAudio();
 
-/*
-   No music is started here.
-   Gameplay is intentionally silent.
-*/
+stopOpeningMusic();
 
 if(level===5){
 
@@ -2355,11 +2062,6 @@ normalResult
 
 }
 
-
-/* ==================================================
-   SPIN
-================================================== */
-
 function spin(win,target,callback){
 
 let n=0;
@@ -2373,10 +2075,21 @@ randomSymbol(),
 randomSymbol()
 ]);
 
+/*
+==================================================
+ROLLING SOUND
+==================================================
+A LITTLE LOUDER:
+OLD = 0.028
+NEW = 0.038
+
+Still soft enough to avoid cracking.
+*/
+
 tone(
 160+Math.random()*180,
-.035,
-.018,
+.045,
+.038,
 "sine"
 );
 
@@ -2396,11 +2109,6 @@ setTimeout(
 },65);
 
 }
-
-
-/* ==================================================
-   RESULT
-================================================== */
 
 function normalResult(win,target){
 
@@ -2588,11 +2296,6 @@ renderCollection();
 
 }
 
-
-/* ==================================================
-   CHECK LEVEL
-================================================== */
-
 function checkLevel(){
 
 let advance=false;
@@ -2639,11 +2342,6 @@ end();
 
 }
 
-
-/* ==================================================
-   NEXT LEVEL
-================================================== */
-
 function nextLevel(){
 
 level++;
@@ -2682,11 +2380,6 @@ save();
 
 }
 
-
-/* ==================================================
-   CROWN
-================================================== */
-
 function crownPlay(){
 
 if(crownAttempts>=5){
@@ -2697,6 +2390,8 @@ document.getElementById("crown")
 return;
 
 }
+
+stopOpeningMusic();
 
 busy=true;
 
@@ -2728,11 +2423,6 @@ crownResult
 );
 
 }
-
-
-/* ==================================================
-   CROWN RESULT
-================================================== */
 
 function crownResult(win){
 
@@ -2793,11 +2483,6 @@ renderCollection();
 
 }
 
-
-/* ==================================================
-   EXTRA CROWN
-================================================== */
-
 function extraCrown(){
 
 if(gems<3){
@@ -2827,11 +2512,6 @@ update();
 save();
 
 }
-
-
-/* ==================================================
-   CROWN PURCHASE
-================================================== */
 
 function buyCrownCoins(){
 
@@ -2889,11 +2569,6 @@ update();
 
 }
 
-
-/* ==================================================
-   WORLD COMPLETE
-================================================== */
-
 function worldComplete(){
 
 busy=true;
@@ -2942,11 +2617,6 @@ document.getElementById("complete")
 save();
 
 }
-
-
-/* ==================================================
-   WORLD SWITCH
-================================================== */
 
 function openWorlds(){
 
@@ -2999,24 +2669,19 @@ return;
 
 }
 
-stopOpeningMusic();
-
 world=x;
 
 closeWorlds();
 
 loadWorld();
 
+stopOpeningMusic();
+
 showWelcome();
 
 save();
 
 }
-
-
-/* ==================================================
-   NEXT WORLD
-================================================== */
 
 function goNextWorld(){
 
@@ -3035,14 +2700,11 @@ world=1;
 
 loadWorld();
 
+stopOpeningMusic();
+
 showWelcome();
 
 }
-
-
-/* ==================================================
-   MYSTERY BONUS
-================================================== */
 
 function openMystery(){
 
@@ -3086,11 +2748,6 @@ update();
 save();
 
 }
-
-
-/* ==================================================
-   COSMIC GIFT
-================================================== */
 
 function openGift(){
 
@@ -3155,11 +2812,6 @@ update();
 save();
 
 }
-
-
-/* ==================================================
-   SHOP
-================================================== */
 
 function openShop(){
 
@@ -3246,11 +2898,6 @@ save();
 
 }
 
-
-/* ==================================================
-   GAME OVER
-================================================== */
-
 function continueCoins(){
 
 if(coins<300){
@@ -3315,6 +2962,8 @@ document.getElementById("mystery")
 document.getElementById("gift")
 .style.display="none";
 
+stopOpeningMusic();
+
 lives=5;
 moves=10;
 streak=0;
@@ -3331,11 +2980,6 @@ update();
 save();
 
 }
-
-
-/* ==================================================
-   END
-================================================== */
 
 function end(){
 
@@ -3365,11 +3009,6 @@ document.getElementById("over")
 
 }
 
-
-/* ==================================================
-   REWARD
-================================================== */
-
 function showReward(text){
 
 let r=document.createElement("div");
@@ -3389,11 +3028,6 @@ document.getElementById("msg")
 .innerHTML=text;
 
 }
-
-
-/* ==================================================
-   COLLECTION
-================================================== */
 
 function addCollection(x){
 
@@ -3471,11 +3105,6 @@ document.getElementById("collection")
 
 }
 
-
-/* ==================================================
-   CONFETTI
-================================================== */
-
 function confetti(){
 
 let symbols=
@@ -3516,11 +3145,6 @@ setTimeout(
 
 }
 
-
-/* ==================================================
-   DEFAULT DISPLAY
-================================================== */
-
 function showDefault(){
 
 if(world===1){
@@ -3545,11 +3169,6 @@ show([
 
 }
 
-
-/* ==================================================
-   CLOSE COMPLETE
-================================================== */
-
 function closeComplete(){
 
 document.getElementById("complete")
@@ -3561,60 +3180,6 @@ document.getElementById("play")
 .disabled=false;
 
 }
-
-
-/* ==================================================
-   AUDIO UNLOCK
-================================================== */
-
-/*
-   Some mobile browsers block audio until the user
-   interacts with the page.
-
-   This listener unlocks the AudioContext when the
-   player first touches/clicks the opening screen.
-*/
-
-document.addEventListener(
-"pointerdown",
-function(e){
-
-if(!soundOn)
-return;
-
-if(
-document.getElementById("welcome")
-.style.display==="flex"
-){
-
-try{
-
-initAudio();
-
-if(!openingMusicActive){
-
-startOpeningMusic();
-
-}
-
-}catch(err){}
-
-}
-
-},
-{passive:true}
-);
-
-
-/* ==================================================
-   START
-================================================== */
-
-/*
-   IMPORTANT:
-   Always start in WORLD 1.
-   World 2 can only be entered after unlocking it.
-*/
 
 world=1;
 
