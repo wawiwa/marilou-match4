@@ -460,98 +460,350 @@ padding:16px;
 opacity:.45;
 }
 
-/* ==================================================
-   SOPHISTICATED WORLD INTRO
-================================================== */
+/* ==========================================
+   CINEMATIC WORLD OPENING COVERS
+========================================== */
 
-.worldIntro{
+#welcome{
 display:none;
 position:fixed;
 inset:0;
 z-index:300;
 align-items:center;
 justify-content:center;
+padding:18px;
+overflow:hidden;
+
 background:
-radial-gradient(circle at center,#18234fcc,transparent 45%),
-#02030bed;
-backdrop-filter:blur(16px);
-animation:introFade 3.6s forwards;
+radial-gradient(circle at 50% 35%,#704cff55,transparent 25%),
+radial-gradient(circle at 20% 80%,#ff2f7540,transparent 28%),
+radial-gradient(circle at 85% 20%,#00eaff35,transparent 30%),
+#02030b;
 }
 
-.worldIntroBox{
-width:90%;
-max-width:560px;
-padding:45px 25px;
+#welcome:before{
+content:"";
+position:absolute;
+width:180%;
+height:180%;
+left:-40%;
+top:-40%;
+
+background:
+conic-gradient(
+from 0deg,
+transparent,
+#00eaff12,
+transparent,
+#ff3c6e12,
+transparent,
+#8b5cff18,
+transparent
+);
+
+animation:coverRotate 16s linear infinite;
+pointer-events:none;
+}
+
+#welcome:after{
+content:"";
+position:absolute;
+inset:0;
+
+background-image:
+radial-gradient(#fff 1px,transparent 1px),
+radial-gradient(#00eaff 1px,transparent 1px);
+
+background-size:90px 90px,140px 140px;
+background-position:20px 30px,70px 80px;
+
+opacity:.22;
+animation:coverStars 12s linear infinite;
+pointer-events:none;
+}
+
+@keyframes coverRotate{
+to{
+transform:rotate(360deg);
+}
+}
+
+@keyframes coverStars{
+to{
+transform:translateY(90px);
+}
+}
+
+.welcomeBox{
+position:relative;
+z-index:2;
+width:96%;
+max-width:540px;
+padding:42px 25px 32px;
+border-radius:34px;
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,.12),
+rgba(255,255,255,.025)
+);
+
+border:1px solid rgba(255,255,255,.2);
+
+box-shadow:
+0 35px 120px #000,
+0 0 80px #4b3cff22,
+inset 0 1px 0 #ffffff20;
+
+backdrop-filter:blur(20px);
 text-align:center;
-border-top:1px solid #ffffff25;
-border-bottom:1px solid #ffffff25;
-animation:introBox 3.6s forwards;
+
+animation:coverIn .8s cubic-bezier(.16,1,.3,1);
 }
 
-.worldIntroKicker{
+@keyframes coverIn{
+0%{
+opacity:0;
+transform:scale(.78) translateY(45px);
+filter:blur(10px);
+}
+
+100%{
+opacity:1;
+transform:scale(1) translateY(0);
+filter:blur(0);
+}
+}
+
+.welcomeSmall{
 font-size:10px;
-letter-spacing:7px;
-color:#8493b8;
+letter-spacing:6px;
+font-weight:bold;
+color:#7f8baa;
+margin-bottom:13px;
+}
+
+.welcomeTitle{
+font-size:clamp(30px,8vw,48px);
+font-weight:900;
+letter-spacing:4px;
+line-height:1.05;
+margin:5px 0 12px;
+
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#58eaff,
+#ffffff,
+#b47cff
+);
+
+background-size:250% auto;
+
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+
+animation:titleShine 4s linear infinite;
+text-shadow:0 0 25px #00eaff22;
+}
+
+@keyframes titleShine{
+to{
+background-position:250% center;
+}
+}
+
+.welcomeWorld{
+display:inline-block;
+font-size:11px;
+font-weight:bold;
+letter-spacing:4px;
+color:#00eaff;
+padding:8px 14px;
+border-radius:30px;
+background:#00eaff0b;
+border:1px solid #00eaff30;
+box-shadow:0 0 20px #00eaff12;
 margin-bottom:18px;
 }
 
-.worldIntroTitle{
-font-size:46px;
+.welcomeText{
+color:#b8c2dc;
+font-size:13px;
+line-height:1.75;
+max-width:390px;
+margin:10px auto 22px;
+}
+
+.welcomePromo{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:7px;
+margin:0 auto 22px;
+max-width:430px;
+}
+
+.welcomePromo span{
+font-size:9px;
 font-weight:bold;
-letter-spacing:6px;
-margin:0;
-background:linear-gradient(
-90deg,#ff3c6e,#ffd43b,#42f4b1,#4bcaff,#a66cff
+letter-spacing:1px;
+padding:7px 10px;
+border-radius:20px;
+background:#ffffff08;
+border:1px solid #ffffff16;
+color:#dce5ff;
+box-shadow:inset 0 0 15px #ffffff05;
+}
+
+.welcomeButton{
+position:relative;
+width:92%;
+max-width:330px;
+padding:16px;
+font-size:14px;
+font-weight:900;
+letter-spacing:2px;
+border-radius:18px;
+
+background:
+linear-gradient(
+135deg,
+#ff386d,
+#714cff,
+#00cfff
 );
+
+background-size:200% 200%;
+
+box-shadow:
+0 12px 35px #5b4cff55,
+0 0 25px #00eaff22;
+
+animation:buttonGlow 3s ease infinite;
+overflow:hidden;
+}
+
+.welcomeButton:before{
+content:"";
+position:absolute;
+top:0;
+left:-120%;
+width:80%;
+height:100%;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#ffffff55,
+transparent
+);
+
+transform:skewX(-20deg);
+animation:buttonSweep 2.8s infinite;
+}
+
+@keyframes buttonSweep{
+0%,45%{left:-120%}
+70%,100%{left:140%}
+}
+
+@keyframes buttonGlow{
+0%,100%{
+box-shadow:
+0 12px 35px #5b4cff44,
+0 0 20px #00eaff18;
+}
+
+50%{
+box-shadow:
+0 15px 45px #5b4cff77,
+0 0 35px #00eaff35;
+}
+}
+
+.welcomePlanet{
+font-size:72px;
+margin-bottom:8px;
+filter:
+drop-shadow(0 0 12px #00eaff55)
+drop-shadow(0 0 35px #774cff33);
+animation:planetFloat 3s ease-in-out infinite;
+}
+
+@keyframes planetFloat{
+0%,100%{
+transform:translateY(0) scale(1);
+}
+
+50%{
+transform:translateY(-8px) scale(1.04);
+}
+}
+
+/* ==========================================
+   WORLD 2 COVER
+========================================== */
+
+body.world2 #welcome{
+background:
+radial-gradient(circle at 50% 30%,#764cff66,transparent 24%),
+radial-gradient(circle at 15% 75%,#00eaff35,transparent 25%),
+radial-gradient(circle at 90% 70%,#ff39c833,transparent 25%),
+#01020a;
+}
+
+body.world2 .welcomeBox{
+border-color:#9d6cff45;
+
+box-shadow:
+0 35px 120px #000,
+0 0 90px #764cff35,
+inset 0 1px 0 #ffffff20;
+}
+
+body.world2 .welcomeTitle{
+background:
+linear-gradient(
+90deg,
+#ffffff,
+#9c7cff,
+#00eaff,
+#ff4fd8,
+#ffffff
+);
+
+background-size:300% auto;
 -webkit-background-clip:text;
 color:transparent;
 }
 
-.worldIntroSub{
-font-size:13px;
-letter-spacing:5px;
-color:#d5ddf5;
-margin-top:10px;
+body.world2 .welcomeWorld{
+color:#b68cff;
+background:#9d6cff12;
+border-color:#9d6cff45;
+box-shadow:0 0 25px #764cff22;
 }
 
-.worldIntroLine{
-font-size:14px;
-line-height:1.7;
-color:#9da9c5;
-margin:22px auto 0;
-max-width:420px;
+body.world2 .welcomeButton{
+background:
+linear-gradient(
+135deg,
+#633cff,
+#b13cff,
+#00cfff
+);
+
+box-shadow:
+0 12px 40px #704cff66,
+0 0 35px #9d4cff33;
 }
 
-.worldIntroLine span{
-color:#ffffff;
-}
-
-@keyframes introFade{
-0%{opacity:0}
-12%{opacity:1}
-75%{opacity:1}
-100%{opacity:0}
-}
-
-@keyframes introBox{
-0%{
-opacity:0;
-transform:scale(.94);
-letter-spacing:0;
-}
-15%{
-opacity:1;
-transform:scale(1);
-}
-75%{
-opacity:1;
-transform:scale(1);
-}
-100%{
-opacity:0;
-transform:scale(1.04);
-}
-}
+/* MOBILE */
 
 @media(max-width:600px){
 
@@ -578,18 +830,32 @@ padding:20px 8px;
 min-width:70px;
 }
 
-.worldIntroTitle{
-font-size:34px;
-letter-spacing:4px;
+.welcomeBox{
+padding:35px 18px 27px;
 }
 
-.worldIntroSub{
-font-size:10px;
+.welcomePlanet{
+font-size:58px;
+}
+
+.welcomeTitle{
+font-size:30px;
 letter-spacing:3px;
 }
 
-.worldIntroLine{
+.welcomeWorld{
+font-size:9px;
+letter-spacing:3px;
+}
+
+.welcomeText{
 font-size:12px;
+line-height:1.7;
+}
+
+.welcomePromo span{
+font-size:8px;
+padding:6px 8px;
 }
 
 }
@@ -610,7 +876,7 @@ WORLD 1 • DELUXE ARCADE
 
 <div class="stat">
 <small>❤️ LIVES</small>
-<b id="lives">3</b>
+<b id="lives">5</b>
 </div>
 
 <div class="stat">
@@ -620,7 +886,7 @@ WORLD 1 • DELUXE ARCADE
 
 <div class="stat">
 <small>💰 COINS</small>
-<b id="coins">0</b>
+<b id="coins">1000</b>
 </div>
 
 <div class="stat">
@@ -638,7 +904,7 @@ WORLD 1 • DELUXE ARCADE
 <div class="panel">
 
 <div class="level">
-<span id="levelIcon">ARCADE</span>
+<span id="levelIcon">🌎</span>
 LEVEL <span id="level">1</span> / 5
 </div>
 
@@ -675,7 +941,7 @@ LEVEL <span id="level">1</span> / 5
 </button>
 
 <button onclick="openWorlds()">
-WORLD SELECT
+🌍 WORLDS
 </button>
 
 <div id="msg">
@@ -738,7 +1004,7 @@ READY?
 
 <br>
 
-<button class="dark" onclick="closeShop">
+<button class="dark" onclick="closeShop()">
 CLOSE SHOP
 </button>
 
@@ -767,25 +1033,78 @@ MATCH4 once
 </div>
 
 
+<!-- ==========================================
+     CINEMATIC WORLD OPENING COVER
+========================================== -->
+
+<div id="welcome">
+
+<div class="welcomeBox">
+
+<div class="welcomePlanet" id="welcomePlanet">
+🌎
+</div>
+
+<div class="welcomeSmall">
+MATCH4 • ARCADE EXPERIENCE
+</div>
+
+<div class="welcomeTitle" id="welcomeTitle">
+ARCADE DELUXE
+</div>
+
+<div class="welcomeWorld" id="welcomeWorld">
+WORLD 1 • ARCADE DELUXE
+</div>
+
+<div class="welcomeText" id="welcomeText">
+Enter a high-energy neon arcade where every spin
+can trigger a MATCH4. Build your streak, stack your
+coins, hunt rare symbols and conquer five levels.
+</div>
+
+<div class="welcomePromo" id="welcomePromo">
+
+<span>🎯 MATCH 4</span>
+<span>🔥 BUILD STREAKS</span>
+<span>💰 STACK COINS</span>
+<span>👑 GRAND MATCH</span>
+
+</div>
+
+<button
+class="welcomeButton cosmic"
+onclick="enterWorld()"
+id="enterWorldButton">
+
+ENTER THE ARCADE
+
+</button>
+
+</div>
+
+</div>
+
+
 <!-- WORLD SELECT -->
 
 <div class="overlay" id="worldSelect">
 
 <div class="modal">
 
-<div style="font-size:50px">WORLD</div>
+<div style="font-size:50px">🌍</div>
 
 <h2>SELECT WORLD</h2>
 
 <button class="choice worldBtn" onclick="switchWorld(1)">
-WORLD 1<br>
+🌎 WORLD 1<br>
 <small>DELUXE ARCADE</small>
 </button>
 
 <button id="world2Button"
 class="choice worldBtn cosmic locked"
 onclick="switchWorld(2)">
-WORLD 2<br>
+🌌 WORLD 2<br>
 <small>NEON COSMOS 🔒</small>
 </button>
 
@@ -881,7 +1200,7 @@ CLOSE
 </button>
 
 <button class="choice dark" onclick="saveExit()">
-SAVE & EXIT
+🏠 SAVE & EXIT
 </button>
 
 </div>
@@ -911,8 +1230,43 @@ SAVE & EXIT
 💎 CONTINUE — 3 GEMS
 </button>
 
+<button class="choice dark" onclick="openEmergencyExchange()">
+🔄 EMERGENCY EXCHANGE
+</button>
+
 <button class="choice dark" onclick="saveExit()">
-SAVE & EXIT
+🏠 SAVE & EXIT
+</button>
+
+</div>
+
+</div>
+
+
+<!-- EMERGENCY EXCHANGE -->
+
+<div class="overlay" id="exchange">
+
+<div class="modal">
+
+<div style="font-size:45px">🔄</div>
+
+<h2>EMERGENCY EXCHANGE</h2>
+
+<p id="exchangeText">
+Use a small amount of one currency to recover another.
+</p>
+
+<button class="choice" onclick="exchangeGemsForCoins()">
+💎 5 GEMS → 500 COINS
+</button>
+
+<button class="choice" onclick="exchangeCoinsForGems()">
+💰 1,000 COINS → 5 GEMS
+</button>
+
+<button class="choice dark" onclick="closeExchange()">
+CANCEL
 </button>
 
 </div>
@@ -937,39 +1291,12 @@ You unlocked the next world!
 <button id="nextWorldButton"
 class="choice cosmic"
 onclick="goNextWorld()">
-ENTER WORLD 2
+🚀 ENTER WORLD 2
 </button>
 
 <button class="choice dark" onclick="closeComplete()">
-STAY HERE
+🏠 STAY HERE
 </button>
-
-</div>
-
-</div>
-
-
-<!-- SOPHISTICATED WORLD INTRO -->
-
-<div class="worldIntro" id="worldIntro">
-
-<div class="worldIntroBox">
-
-<div class="worldIntroKicker" id="introKicker">
-WORLD 1
-</div>
-
-<h2 class="worldIntroTitle" id="introTitle">
-DELUXE ARCADE
-</h2>
-
-<div class="worldIntroSub" id="introSub">
-PRECISION • INSTINCT • MOMENTUM
-</div>
-
-<div class="worldIntroLine" id="introLine">
-The game begins where <span>instinct meets precision.</span>
-</div>
 
 </div>
 
@@ -988,7 +1315,11 @@ localStorage.getItem("MATCH4_MASTER")||"{}"
 
 let world=1;
 
-let coins=saved.coins||0;
+let coins=
+saved.coins===undefined
+?1000
+:saved.coins;
+
 let gems=saved.gems||0;
 
 let lucky=saved.lucky||0;
@@ -1013,10 +1344,8 @@ gifts:0
 };
 
 let level=1;
-
-let lives=3;
+let lives=5;
 let moves=10;
-
 let streak=0;
 let crownAttempts=0;
 let energy=0;
@@ -1026,6 +1355,8 @@ let soundOn=true;
 let audio=null;
 let musicTimer=null;
 let musicStep=0;
+
+let welcomeShown=false;
 
 
 /* ==================================================
@@ -1043,7 +1374,7 @@ const world1Special=[
 ];
 
 const world2Normal=[
-"🌙","⭐","🔵","☄️",
+"🌙","⭐","🌎","☄️",
 "💎","🔮","🌌","🚀"
 ];
 
@@ -1077,7 +1408,7 @@ w2.gifts=progress.gifts;
 localStorage.setItem(
 "MATCH4_MASTER",
 JSON.stringify({
-world,
+world:1,
 coins,
 gems,
 lucky,
@@ -1132,7 +1463,7 @@ energy=0;
 
 }
 
-lives=3;
+lives=5;
 moves=10;
 streak=0;
 crownAttempts=0;
@@ -1164,7 +1495,7 @@ document.getElementById("worldName")
 "WORLD 1 • DELUXE ARCADE";
 
 document.getElementById("levelIcon")
-.textContent="ARCADE";
+.textContent="🌎";
 
 document.getElementById("missionLabel")
 .textContent="MATCH4 MISSION";
@@ -1179,7 +1510,7 @@ document.getElementById("worldName")
 "WORLD 2 • NEON COSMOS";
 
 document.getElementById("levelIcon")
-.textContent="COSMOS";
+.textContent="🌌";
 
 document.getElementById("missionLabel")
 .textContent=
@@ -1189,64 +1520,6 @@ document.getElementById("energyWrap")
 .style.display="block";
 
 }
-
-}
-
-
-/* ==================================================
-   WORLD INTRO
-================================================== */
-
-function showWorldIntro(){
-
-let kicker=
-document.getElementById("introKicker");
-
-let title=
-document.getElementById("introTitle");
-
-let sub=
-document.getElementById("introSub");
-
-let line=
-document.getElementById("introLine");
-
-if(world===1){
-
-kicker.textContent="WORLD 1";
-
-title.textContent="DELUXE ARCADE";
-
-sub.textContent=
-"PRECISION • INSTINCT • MOMENTUM";
-
-line.innerHTML=
-'The game begins where <span>instinct meets precision.</span>';
-
-}else{
-
-kicker.textContent="WORLD 2";
-
-title.textContent="NEON COSMOS";
-
-sub.textContent=
-"ENERGY • VELOCITY • DISCOVERY";
-
-line.innerHTML=
-'Beyond the atmosphere, every match becomes <span>a new dimension.</span>';
-
-}
-
-let intro=
-document.getElementById("worldIntro");
-
-intro.style.display="flex";
-
-setTimeout(()=>{
-
-intro.style.display="none";
-
-},3700);
 
 }
 
@@ -1294,9 +1567,6 @@ value:crownAttempts
 };
 
 }
-
-
-/* WORLD 2 */
 
 if(level===1)
 return{
@@ -1453,71 +1723,61 @@ osc.stop(audio.currentTime+duration);
 
 function jackpot(){
 
-tone(523,.10,.045);
-setTimeout(()=>tone(659,.10,.045),90);
-setTimeout(()=>tone(784,.12,.05),180);
-setTimeout(()=>tone(1047,.18,.05),280);
-setTimeout(()=>tone(1319,.25,.04),420);
+tone(523,.10,.045,"sine");
+setTimeout(()=>tone(659,.10,.045,"sine"),90);
+setTimeout(()=>tone(784,.12,.05,"sine"),180);
+setTimeout(()=>tone(1047,.18,.05,"triangle"),280);
+setTimeout(()=>tone(1319,.25,.04,"triangle"),420);
 
 }
 
 
 /* ==================================================
-   2026 ENERGETIC GAME MUSIC
+   CINEMATIC NEON MUSIC
+   OPENING COVERS ONLY
 ================================================== */
 
-/* WORLD 1
-   Energetic electro-arcade
-*/
-
-const casinoMusic=[
-261.63,329.63,392.00,523.25,
-659.25,784.88,659.25,523.25,
-392.00,493.88,587.33,659.25,
-783.99,880.00,783.99,659.25,
-
-523.25,659.25,783.99,1046.50,
-880.00,783.99,659.25,587.33,
-659.25,783.99,987.77,1174.66,
-1046.50,880.00,783.99,659.25
-];
-
-
-/* WORLD 2
-   Energetic futuristic cosmic
-*/
-
 const cosmicMusic=[
-130.81,164.81,196.00,246.94,
-261.63,329.63,392.00,493.88,
-523.25,659.25,783.99,987.77,
-1046.50,987.77,783.99,659.25,
+
+130.81,155.56,174.61,196.00,
+220.00,246.94,261.63,293.66,
+
+329.63,329.63,392.00,440.00,
+493.88,440.00,392.00,329.63,
+
+349.23,392.00,440.00,493.88,
+523.25,493.88,440.00,392.00,
+
+440.00,493.88,523.25,587.33,
+659.25,587.33,523.25,493.88,
+
+392.00,440.00,493.88,523.25,
+587.33,659.25,587.33,523.25,
+
+493.88,440.00,392.00,349.23,
+329.63,392.00,440.00,493.88,
 
 523.25,587.33,659.25,783.99,
-880.00,987.77,1174.66,1318.51,
-1174.66,987.77,880.00,783.99,
-659.25,587.33,493.88,392.00
+659.25,587.33,523.25,493.88,
+
+440.00,392.00,329.63,293.66,
+261.63,293.66,329.63,392.00
+
 ];
 
 function playMusicNote(){
 
 if(!soundOn||!audio)return;
 
-let notes=
-world===1
-?casinoMusic
-:cosmicMusic;
-
 let frequency=
-notes[musicStep%notes.length];
+cosmicMusic[
+musicStep%cosmicMusic.length
+];
 
 let osc=audio.createOscillator();
 let gain=audio.createGain();
 
-osc.type=
-world===1
-?"square"
-:"sawtooth";
+osc.type="sawtooth";
 
 osc.frequency.setValueAtTime(
 frequency,
@@ -1529,15 +1789,16 @@ gain.gain.setValueAtTime(
 audio.currentTime
 );
 
+/* LOW OPENING MUSIC VOLUME */
+
 gain.gain.linearRampToValueAtTime(
-world===1?.015:.012,
+.0045,
 audio.currentTime+.025
 );
 
 gain.gain.exponentialRampToValueAtTime(
 .001,
-audio.currentTime+
-(world===1?.20:.18)
+audio.currentTime+.30
 );
 
 osc.connect(gain);
@@ -1546,8 +1807,7 @@ gain.connect(audio.destination);
 osc.start();
 
 osc.stop(
-audio.currentTime+
-(world===1?.23:.20)
+audio.currentTime+.30
 );
 
 musicStep++;
@@ -1569,7 +1829,7 @@ playMusicNote();
 
 musicTimer=setInterval(
 playMusicNote,
-world===1?220:185
+185
 );
 
 }
@@ -1610,12 +1870,146 @@ soundOn?"🔊":"🔇";
 
 if(soundOn){
 
-tone(440,.08,.025);
+tone(440,.08,.025,"sine");
+
+if(welcomeShown)
 startMusic();
 
 }else{
 
 stopMusic();
+
+}
+
+}
+
+
+/* ==================================================
+   CINEMATIC WELCOME COVER
+================================================== */
+
+function showWelcome(){
+
+let welcome =
+document.getElementById("welcome");
+
+let title =
+document.getElementById("welcomeTitle");
+
+let text =
+document.getElementById("welcomeText");
+
+let worldTitle =
+document.getElementById("welcomeWorld");
+
+let planet =
+document.getElementById("welcomePlanet");
+
+let promo =
+document.getElementById("welcomePromo");
+
+let button =
+document.getElementById("enterWorldButton");
+
+
+if(world===1){
+
+document.body.classList.remove("world2");
+
+planet.textContent="🌎";
+
+title.textContent=
+"ARCADE DELUXE";
+
+worldTitle.textContent=
+"WORLD 1 • ARCADE DELUXE";
+
+text.textContent=
+"Enter a high-energy neon arcade where every spin can trigger a MATCH4. Build your streak, stack your coins, hunt rare symbols and conquer five levels.";
+
+promo.innerHTML=
+`
+<span>🎯 MATCH 4</span>
+<span>🔥 BUILD STREAKS</span>
+<span>💰 STACK COINS</span>
+<span>👑 GRAND MATCH</span>
+`;
+
+button.textContent=
+"ENTER THE ARCADE";
+
+}else{
+
+document.body.classList.add("world2");
+
+planet.textContent="🌌";
+
+title.textContent=
+"NEON COSMOS";
+
+worldTitle.textContent=
+"WORLD 2 • NEON COSMOS";
+
+text.textContent=
+"Leave the arcade behind and enter a deeper neon universe. Chase Diamond Matches, unlock Cosmic Gifts, charge your energy and hunt the Galactic Crown.";
+
+promo.innerHTML=
+`
+<span>💎 DIAMOND MATCHES</span>
+<span>⚡ COSMIC ENERGY</span>
+<span>🎁 COSMIC GIFTS</span>
+<span>👑 GALACTIC CROWN</span>
+`;
+
+button.textContent=
+"ENTER THE COSMOS";
+
+}
+
+welcome.style.display="flex";
+
+welcomeShown=true;
+
+/* MUSIC ONLY DURING OPENING */
+
+if(soundOn){
+
+initAudio();
+startMusic();
+
+}
+
+}
+
+
+/* ==================================================
+   ENTER WORLD
+================================================== */
+
+function enterWorld(){
+
+document.getElementById("welcome")
+.style.display="none";
+
+welcomeShown=false;
+
+/* STOP MUSIC WHEN GAMEPLAY STARTS */
+
+stopMusic();
+
+initAudio();
+
+if(world===1){
+
+document.getElementById("msg")
+.textContent=
+"⚡ ARCADE ONLINE • LET'S PLAY!";
+
+}else{
+
+document.getElementById("msg")
+.textContent=
+"🚀 COSMOS ONLINE • INITIATE RUN!";
 
 }
 
@@ -1688,7 +2082,9 @@ if(busy)return;
 
 initAudio();
 
-startMusic();
+/* NO MUSIC DURING GAMEPLAY */
+
+stopMusic();
 
 if(level===5){
 
@@ -1697,7 +2093,13 @@ crownPlay();
 return;
 }
 
-/* MOVES ARE THE PLAY RESOURCE */
+if(lives<=0){
+
+document.getElementById("over")
+.style.display="flex";
+
+return;
+}
 
 if(moves<=0){
 
@@ -1706,16 +2108,6 @@ document.getElementById("msg")
 "🎯 NO MOVES LEFT!";
 
 return;
-
-}
-
-if(lives<=0){
-
-document.getElementById("over")
-.style.display="flex";
-
-return;
-
 }
 
 busy=true;
@@ -1723,8 +2115,7 @@ busy=true;
 document.getElementById("play")
 .disabled=true;
 
-/* EVERY PLAY USES ONE MOVE */
-
+lives--;
 moves--;
 
 update();
@@ -1748,31 +2139,31 @@ let chance;
 
 if(world===1){
 
-chance=
-level===1?.55:
-level===2?.45:
-level===3?.43:
-.38;
+chance =
+level===1 ? 0.55 :
+level===2 ? 0.45 :
+level===3 ? 0.43 :
+0.38;
 
 }else{
 
-chance=
-level===1?.48:
-level===2?.43:
-level===3?.42:
-.38;
+chance =
+level===1 ? 0.48 :
+level===2 ? 0.43 :
+level===3 ? 0.42 :
+0.38;
 
 }
 
-chance+=lucky*.05;
+chance += lucky*0.05;
 
 let win=
-guaranteed||
+guaranteed ||
 Math.random()<chance;
 
 let target=randomSymbol();
 
-if(world===2&&Math.random()<.12)
+if(world===2&&Math.random()<0.12)
 target="💎";
 
 spin(
@@ -1907,8 +2298,6 @@ openMystery,
 
 }else{
 
-/* WORLD 2 */
-
 energy+=12;
 
 if(energy>100)
@@ -1957,7 +2346,7 @@ streak*50;
 coins+=reward;
 
 if(
-["⭐","🔵","🚀"].includes(target)
+["⭐","🌎","🚀"].includes(target)
 )
 addCollection(target);
 
@@ -1993,8 +2382,6 @@ streak=0;
 if(world===2)
 energy=Math.max(0,energy-8);
 
-/* ONLY A LOSS COSTS A LIFE */
-
 if(shield>0){
 
 shield--;
@@ -2005,11 +2392,9 @@ document.getElementById("msg")
 
 }else{
 
-lives--;
-
 document.getElementById("msg")
 .textContent=
-"☄️ SO CLOSE! -1 LIFE";
+"☄️ SO CLOSE!";
 
 }
 
@@ -2082,7 +2467,7 @@ function nextLevel(){
 
 level++;
 
-lives=3;
+lives=5;
 moves=10;
 streak=0;
 energy=0;
@@ -2099,7 +2484,7 @@ document.getElementById("attempts")
 
 document.getElementById("msg")
 .textContent=
-"LEVEL "+
+"🚀 LEVEL "+
 level+
 " UNLOCKED!";
 
@@ -2132,9 +2517,7 @@ return;
 
 }
 
-/* Crown attempts do not use Moves */
-
-startMusic();
+stopMusic();
 
 busy=true;
 
@@ -2241,6 +2624,7 @@ function extraCrown(){
 if(gems<3){
 
 alert("You need 3 gems.");
+
 return;
 
 }
@@ -2276,11 +2660,13 @@ function buyCrownCoins(){
 if(coins<2500){
 
 alert("You need 2,500 coins.");
+
 return;
 
 }
 
 coins-=2500;
+
 crownWin();
 
 }
@@ -2290,11 +2676,13 @@ function buyCrownGems(){
 if(gems<15){
 
 alert("You need 15 gems.");
+
 return;
 
 }
 
 gems-=15;
+
 crownWin();
 
 }
@@ -2345,15 +2733,15 @@ world2Unlocked=true;
 
 document.getElementById("completeTitle")
 .textContent=
-"WORLD 1 MASTERED!";
+"🏆 WORLD 1 MASTERED!";
 
 document.getElementById("completeText")
 .textContent=
-"WORLD 2 IS NOW UNLOCKED.";
+"🌌 WORLD 2 IS NOW UNLOCKED!";
 
 document.getElementById("nextWorldButton")
 .textContent=
-"ENTER WORLD 2";
+"🚀 ENTER WORLD 2";
 
 document.getElementById("complete")
 .style.display="flex";
@@ -2362,15 +2750,18 @@ document.getElementById("complete")
 
 document.getElementById("completeTitle")
 .textContent=
-"WORLD 2 MASTERED!";
+"🏆 WORLD 2 MASTERED!";
 
 document.getElementById("completeText")
 .textContent=
-"YOU MASTERED MATCH4.";
+"🌟 YOU MASTERED MATCH4!";
 
 document.getElementById("nextWorldButton")
 .textContent=
-"PLAY WORLD 1";
+"🌎 PLAY WORLD 1";
+
+document.getElementById("nextWorldButton")
+.style.display="block";
 
 document.getElementById("complete")
 .style.display="flex";
@@ -2412,14 +2803,14 @@ if(world2Unlocked){
 b.classList.remove("locked");
 
 b.innerHTML=
-"WORLD 2<br><small>NEON COSMOS 🔓</small>";
+"🌌 WORLD 2<br><small>NEON COSMOS 🔓</small>";
 
 }else{
 
 b.classList.add("locked");
 
 b.innerHTML=
-"WORLD 2<br><small>NEON COSMOS 🔒</small>";
+"🌌 WORLD 2<br><small>NEON COSMOS 🔒</small>";
 
 }
 
@@ -2430,7 +2821,7 @@ function switchWorld(x){
 if(x===2&&!world2Unlocked){
 
 alert(
-"Complete WORLD 1 to unlock WORLD 2."
+"🔒 Complete WORLD 1 to unlock WORLD 2."
 );
 
 return;
@@ -2443,19 +2834,7 @@ closeWorlds();
 
 loadWorld();
 
-restartMusic();
-
-showWorldIntro();
-
-setTimeout(()=>{
-
-document.getElementById("msg")
-.textContent=
-world===1
-?"WELCOME TO DELUXE ARCADE"
-:"WELCOME TO NEON COSMOS";
-
-},3500);
+showWelcome();
 
 save();
 
@@ -2483,9 +2862,7 @@ world=1;
 
 loadWorld();
 
-restartMusic();
-
-showWorldIntro();
+showWelcome();
 
 }
 
@@ -2706,11 +3083,13 @@ function continueCoins(){
 if(coins<300){
 
 alert("You need 300 coins.");
+
 return;
 
 }
 
 coins-=300;
+
 continueGame();
 
 }
@@ -2720,11 +3099,13 @@ function continueGems(){
 if(gems<3){
 
 alert("You need 3 gems.");
+
 return;
 
 }
 
 gems-=3;
+
 continueGame();
 
 }
@@ -2734,7 +3115,10 @@ function continueGame(){
 document.getElementById("over")
 .style.display="none";
 
-lives=3;
+document.getElementById("exchange")
+.style.display="none";
+
+lives=5;
 moves=10;
 streak=0;
 busy=false;
@@ -2744,12 +3128,98 @@ document.getElementById("play")
 
 document.getElementById("msg")
 .textContent=
-"RUN CONTINUES!";
+"🚀 RUN CONTINUES!";
 
 update();
 save();
 
 }
+
+
+/* ==================================================
+   EMERGENCY EXCHANGE
+================================================== */
+
+function openEmergencyExchange(){
+
+document.getElementById("over")
+.style.display="none";
+
+document.getElementById("exchange")
+.style.display="flex";
+
+}
+
+function closeExchange(){
+
+document.getElementById("exchange")
+.style.display="none";
+
+document.getElementById("over")
+.style.display="flex";
+
+}
+
+
+/*
+   Emergency exchange is intentionally limited.
+   It is a rescue mechanic, not an infinite currency loop.
+*/
+
+function exchangeGemsForCoins(){
+
+if(gems<5){
+
+alert("You need 5 gems.");
+
+return;
+
+}
+
+gems-=5;
+coins+=500;
+
+document.getElementById("exchange")
+.style.display="none";
+
+showReward(
+"🔄 EXCHANGE COMPLETE!<br>+500 💰"
+);
+
+update();
+save();
+
+}
+
+function exchangeCoinsForGems(){
+
+if(coins<1000){
+
+alert("You need 1,000 coins.");
+
+return;
+
+}
+
+coins-=1000;
+gems+=5;
+
+document.getElementById("exchange")
+.style.display="none";
+
+showReward(
+"🔄 EXCHANGE COMPLETE!<br>+5 💎"
+);
+
+update();
+save();
+
+}
+
+
+/* ==================================================
+   SAVE EXIT
+================================================== */
 
 function saveExit(){
 
@@ -2765,7 +3235,10 @@ document.getElementById("mystery")
 document.getElementById("gift")
 .style.display="none";
 
-lives=3;
+document.getElementById("exchange")
+.style.display="none";
+
+lives=5;
 moves=10;
 streak=0;
 busy=false;
@@ -2775,7 +3248,7 @@ document.getElementById("play")
 
 document.getElementById("msg")
 .textContent=
-"PROGRESS SAVED!";
+"💾 PROGRESS SAVED!";
 
 update();
 save();
@@ -2809,12 +3282,6 @@ if(lives<=0){
 document.getElementById("over")
 .style.display="flex";
 
-}else if(moves<=0){
-
-document.getElementById("msg")
-.textContent=
-"🎯 NO MOVES LEFT";
-
 }
 
 },600);
@@ -2831,6 +3298,7 @@ function showReward(text){
 let r=document.createElement("div");
 
 r.className="reward";
+
 r.innerHTML=text;
 
 document.body.appendChild(r);
@@ -2888,7 +3356,7 @@ items=[
 items=[
 ["🌙","Moon"],
 ["⭐","Star"],
-["🔵","Planet"],
+["🌎","Earth"],
 ["☄️","Meteor"],
 ["💎","Diamond"],
 ["🔮","Crystal"],
@@ -2992,7 +3460,7 @@ show([
 show([
 "🌙",
 "⭐",
-"🔵",
+"🌎",
 "💎"
 ]);
 
@@ -3022,7 +3490,10 @@ document.getElementById("play")
    START
 ================================================== */
 
-/* ALWAYS START IN WORLD 1 */
+/*
+   Always start in WORLD 1.
+   World 2 can only be entered after unlocking it.
+*/
 
 world=1;
 
@@ -3031,10 +3502,8 @@ loadWorld();
 updateWorldButtons();
 
 setTimeout(()=>{
-
-showWorldIntro();
-
-},500);
+showWelcome();
+},250);
 
 </script>
 
