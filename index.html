@@ -1,3197 +1,1010 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MATCH4 • Worlds 1 & 2</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match4 Master Suite • Cinematic Worlds 1, 2 & 3</title>
 <style>
-*{box-sizing:border-box}
-
-body{
-margin:0;
-min-height:100vh;
-font-family:Arial,sans-serif;
-color:white;
-text-align:center;
-overflow-x:hidden;
-background:
-radial-gradient(circle at 10% 10%,#6d35ff55,transparent 28%),
-radial-gradient(circle at 90% 15%,#00d9ff44,transparent 28%),
-radial-gradient(circle at 50% 100%,#ff347044,transparent 32%),
-linear-gradient(135deg,#03040b,#10152d,#060812);
-}
-
-body:before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-background-image:
-radial-gradient(#fff 1px,transparent 1px),
-radial-gradient(#5eeaff 1px,transparent 1px);
-background-size:80px 80px,130px 130px;
-background-position:10px 20px,40px 70px;
-opacity:.2;
-animation:stars 18s linear infinite;
-}
-
-@keyframes stars{
-to{transform:translateY(80px)}
-}
-
-h1{
-margin:18px 0 2px;
-font-size:42px;
-letter-spacing:7px;
-background:linear-gradient(
-90deg,#ff3c6e,#ffd43b,#42f4b1,#4bcaff,#a66cff
-);
--webkit-background-clip:text;
-color:transparent;
-}
-
-.sub{
-font-size:10px;
-letter-spacing:4px;
-color:#8291b5;
-}
-
-#sound{
-position:fixed;
-right:14px;
-top:14px;
-z-index:90;
-width:42px;
-height:42px;
-padding:0;
-margin:0;
-border-radius:50%;
-background:#ffffff12;
-border:1px solid #ffffff25;
-font-size:18px;
-}
-
-.stats{
-display:flex;
-justify-content:center;
-gap:7px;
-flex-wrap:wrap;
-width:96%;
-margin:17px auto;
-}
-
-.stat{
-min-width:78px;
-padding:9px;
-border-radius:15px;
-background:#ffffff0d;
-border:1px solid #ffffff18;
-backdrop-filter:blur(10px);
-}
-
-.stat small{
-display:block;
-color:#858ca5;
-font-size:8px;
-letter-spacing:1px;
-}
-
-.stat b{
-display:block;
-margin-top:4px;
-font-size:16px;
-}
-
-.panel{
-position:relative;
-z-index:2;
-width:94%;
-max-width:820px;
-margin:15px auto 110px;
-padding:22px 12px;
-border-radius:28px;
-background:#ffffff0b;
-border:1px solid #ffffff18;
-box-shadow:0 25px 70px #0009;
-backdrop-filter:blur(18px);
-}
-
-.level{
-font-size:22px;
-font-weight:bold;
-}
-
-.missionTop{
-color:#ffd43b;
-font-weight:bold;
-margin:8px;
-}
-
-.progress{
-height:7px;
-max-width:430px;
-margin:10px auto;
-background:#20263d;
-border-radius:10px;
-overflow:hidden;
-}
-
-.progress i{
-display:block;
-height:100%;
-width:0;
-background:linear-gradient(
-90deg,#ff3c6e,#ffd43b,#4bcaff,#8b5cff
-);
-box-shadow:0 0 12px #00eaff;
-transition:.4s;
-}
-
-#attempts{
-color:#ffd43b;
-font-size:18px;
-letter-spacing:4px;
-margin:8px;
-}
-
-.energyTitle{
-font-size:9px;
-letter-spacing:2px;
-color:#8d9abb;
-margin-top:14px;
-}
-
-.energy{
-height:6px;
-max-width:430px;
-margin:6px auto 12px;
-background:#20263d;
-border-radius:10px;
-overflow:hidden;
-}
-
-.energy i{
-display:block;
-height:100%;
-width:0;
-background:linear-gradient(
-90deg,#00eaff,#7d5cff,#ff39c8
-);
-transition:.4s;
-}
-
-#game{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:8px;
-margin:25px 0;
-}
-
-.reel{
-width:78px;
-height:82px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:19px;
-font-size:43px;
-background:linear-gradient(#20253e,#090b16);
-border:1px solid #ffffff15;
-box-shadow:
-inset 0 0 25px #000,
-0 10px 25px #0007;
-transition:.2s;
-}
-
-.win{
-animation:winPulse .35s infinite alternate;
-}
-
-@keyframes winPulse{
-to{
-transform:scale(1.14);
-filter:
-drop-shadow(0 0 12px #fff)
-drop-shadow(0 0 25px #00eaff)
-drop-shadow(0 0 35px #ff3ca8);
-}
-}
-
-button{
-border:0;
-border-radius:35px;
-padding:12px 20px;
-margin:5px;
-color:white;
-background:linear-gradient(135deg,#ff3c6e,#774cff);
-font-weight:bold;
-cursor:pointer;
-transition:.15s;
-}
-
-button:hover{
-transform:translateY(-2px) scale(1.03);
-box-shadow:0 8px 25px #00d9ff44;
-}
-
-button:disabled{
-opacity:.4;
-cursor:not-allowed;
-}
-
-.dark{
-background:#282c3e;
-}
-
-.gold{
-background:linear-gradient(135deg,#ffad00,#ffe05a);
-color:#211700;
-}
-
-.cosmic{
-background:linear-gradient(135deg,#00cfff,#764cff);
-}
-
-#msg{
-min-height:32px;
-font-size:21px;
-font-weight:bold;
-margin:15px;
-}
-
-.box{
-position:relative;
-z-index:2;
-width:94%;
-max-width:820px;
-margin:15px auto;
-padding:20px 12px;
-border-radius:28px;
-background:#ffffff0b;
-border:1px solid #ffffff18;
-}
-
-.sectionTitle{
-font-size:18px;
-font-weight:bold;
-margin-bottom:12px;
-}
-
-.card{
-display:inline-block;
-width:78px;
-padding:9px;
-margin:4px;
-border-radius:13px;
-background:#ffffff08;
-border:1px solid #ffffff15;
-font-size:27px;
-}
-
-.card small{
-display:block;
-font-size:8px;
-color:#9aa2b8;
-}
-
-.item{
-display:inline-block;
-width:140px;
-min-height:115px;
-margin:4px;
-padding:10px;
-border-radius:16px;
-background:#ffffff08;
-border:1px solid #ffffff15;
-}
-
-.item span{
-display:block;
-color:#aeb5c9;
-font-size:11px;
-margin:5px;
-}
-
-.missionPhone{
-position:fixed;
-left:50%;
-bottom:15px;
-transform:translateX(-50%);
-width:92%;
-max-width:430px;
-z-index:50;
-padding:12px 15px;
-border-radius:20px;
-background:rgba(10,15,35,.75);
-border:1px solid rgba(0,234,255,.18);
-backdrop-filter:blur(18px);
-box-shadow:0 12px 35px #0008;
-text-align:left;
-}
-
-.phoneTop{
-display:flex;
-align-items:center;
-gap:8px;
-color:#9da5bd;
-font-size:9px;
-letter-spacing:1px;
-}
-
-.phoneIcon{
-width:30px;
-height:30px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-background:linear-gradient(135deg,#ff3c6e,#774cff);
-font-size:15px;
-}
-
-.phoneMission{
-margin-top:5px;
-font-size:13px;
-font-weight:bold;
-}
-
-.phoneProgress{
-height:4px;
-margin-top:8px;
-background:#ffffff15;
-border-radius:10px;
-overflow:hidden;
-}
-
-.phoneProgress i{
-display:block;
-height:100%;
-width:0;
-background:linear-gradient(90deg,#ff3c6e,#00eaff,#ff3ca8);
-transition:.4s;
-}
-
-.overlay{
-display:none;
-position:fixed;
-inset:0;
-z-index:100;
-background:#02030bdd;
-align-items:center;
-justify-content:center;
-padding:15px;
-backdrop-filter:blur(12px);
-}
-
-.modal{
-width:94%;
-max-width:440px;
-padding:25px;
-border-radius:28px;
-background:#11152a;
-border:1px solid #ffffff20;
-box-shadow:0 25px 80px #000;
-}
-
-.modal h2{
-margin:5px;
-font-size:27px;
-}
-
-.choice{
-display:block;
-width:90%;
-margin:8px auto;
-}
-
-.reward{
-position:fixed;
-left:50%;
-top:45%;
-transform:translate(-50%,-50%) scale(.5);
-z-index:180;
-padding:18px 28px;
-border-radius:24px;
-background:#10172d;
-border:1px solid #00eaff55;
-box-shadow:0 0 30px #00eaff44,0 20px 70px #000;
-font-size:23px;
-font-weight:bold;
-pointer-events:none;
-animation:rewardPop 1.4s forwards;
-}
-
-@keyframes rewardPop{
-0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}
-20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
-75%{opacity:1;transform:translate(-50%,-65%) scale(1)}
-100%{opacity:0;transform:translate(-50%,-90%) scale(.8)}
-}
-
-.conf{
-position:fixed;
-left:50%;
-top:50%;
-z-index:200;
-pointer-events:none;
-font-size:25px;
-animation:conf 1.4s forwards;
-}
-
-@keyframes conf{
-to{
-transform:
-translate(var(--x),var(--y))
-rotate(720deg)
-scale(.5);
-opacity:0;
-}
-}
-
-.worldBtn{
-width:90%;
-max-width:350px;
-font-size:17px;
-padding:16px;
-}
-
-.locked{
-opacity:.45;
-}
-
-/* ==========================================
-   CINEMATIC WORLD OPENING COVERS
-========================================== */
-
-#welcome{
-display:none;
-position:fixed;
-inset:0;
-z-index:300;
-align-items:center;
-justify-content:center;
-padding:18px;
-overflow:hidden;
-
-background:
-radial-gradient(circle at 50% 35%,#704cff55,transparent 25%),
-radial-gradient(circle at 20% 80%,#ff2f7540,transparent 28%),
-radial-gradient(circle at 85% 20%,#00eaff35,transparent 30%),
-#02030b;
-}
-
-#welcome:before{
-content:"";
-position:absolute;
-width:180%;
-height:180%;
-left:-40%;
-top:-40%;
-
-background:
-conic-gradient(
-from 0deg,
-transparent,
-#00eaff12,
-transparent,
-#ff3c6e12,
-transparent,
-#8b5cff18,
-transparent
-);
-
-animation:coverRotate 16s linear infinite;
-pointer-events:none;
-}
-
-#welcome:after{
-content:"";
-position:absolute;
-inset:0;
-
-background-image:
-radial-gradient(#fff 1px,transparent 1px),
-radial-gradient(#00eaff 1px,transparent 1px);
-
-background-size:90px 90px,140px 140px;
-background-position:20px 30px,70px 80px;
-
-opacity:.22;
-animation:coverStars 12s linear infinite;
-pointer-events:none;
-}
-
-@keyframes coverRotate{
-to{
-transform:rotate(360deg);
-}
-}
-
-@keyframes coverStars{
-to{
-transform:translateY(90px);
-}
-}
-
-.welcomeBox{
-position:relative;
-z-index:2;
-
-width:96%;
-max-width:540px;
-
-padding:42px 25px 32px;
-
-border-radius:34px;
-
-background:
-linear-gradient(
-145deg,
-rgba(255,255,255,.12),
-rgba(255,255,255,.025)
-);
-
-border:1px solid rgba(255,255,255,.2);
-
-box-shadow:
-0 35px 120px #000,
-0 0 80px #4b3cff22,
-inset 0 1px 0 #ffffff20;
-
-backdrop-filter:blur(20px);
-
-text-align:center;
-
-animation:coverIn .8s cubic-bezier(.16,1,.3,1);
-}
-
-@keyframes coverIn{
-0%{
-opacity:0;
-transform:scale(.78) translateY(45px);
-filter:blur(10px);
-}
-
-100%{
-opacity:1;
-transform:scale(1) translateY(0);
-filter:blur(0);
-}
-}
-
-.welcomeSmall{
-font-size:10px;
-letter-spacing:6px;
-font-weight:bold;
-color:#7f8baa;
-margin-bottom:13px;
-}
-
-.welcomeTitle{
-font-size:clamp(30px,8vw,48px);
-font-weight:900;
-letter-spacing:4px;
-line-height:1.05;
-margin:5px 0 12px;
-
-background:
-linear-gradient(
-90deg,
-#ffffff,
-#58eaff,
-#ffffff,
-#b47cff
-);
-
-background-size:250% auto;
-
--webkit-background-clip:text;
-background-clip:text;
-color:transparent;
-
-animation:titleShine 4s linear infinite;
-text-shadow:0 0 25px #00eaff22;
-}
-
-@keyframes titleShine{
-to{
-background-position:250% center;
-}
-}
-
-.welcomeWorld{
-display:inline-block;
-
-font-size:11px;
-font-weight:bold;
-letter-spacing:4px;
-
-color:#00eaff;
-
-padding:8px 14px;
-
-border-radius:30px;
-
-background:#00eaff0b;
-border:1px solid #00eaff30;
-
-box-shadow:0 0 20px #00eaff12;
-
-margin-bottom:18px;
-}
-
-.welcomeText{
-color:#b8c2dc;
-
-font-size:13px;
-line-height:1.75;
-
-max-width:390px;
-
-margin:10px auto 22px;
-}
-
-.welcomePromo{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:7px;
-
-margin:0 auto 22px;
-max-width:430px;
-}
-
-.welcomePromo span{
-font-size:9px;
-font-weight:bold;
-letter-spacing:1px;
-
-padding:7px 10px;
-
-border-radius:20px;
-
-background:#ffffff08;
-border:1px solid #ffffff16;
-
-color:#dce5ff;
-
-box-shadow:inset 0 0 15px #ffffff05;
-}
-
-.welcomeButton{
-position:relative;
-
-width:92%;
-max-width:330px;
-
-padding:16px;
-
-font-size:14px;
-font-weight:900;
-
-letter-spacing:2px;
-
-border-radius:18px;
-
-background:
-linear-gradient(
-135deg,
-#ff386d,
-#714cff,
-#00cfff
-);
-
-background-size:200% 200%;
-
-box-shadow:
-0 12px 35px #5b4cff55,
-0 0 25px #00eaff22;
-
-animation:buttonGlow 3s ease infinite;
-
-overflow:hidden;
-}
-
-.welcomeButton:before{
-content:"";
-position:absolute;
-
-top:0;
-left:-120%;
-
-width:80%;
-height:100%;
-
-background:
-linear-gradient(
-90deg,
-transparent,
-#ffffff55,
-transparent
-);
-
-transform:skewX(-20deg);
-
-animation:buttonSweep 2.8s infinite;
-}
-
-@keyframes buttonSweep{
-0%,45%{left:-120%}
-70%,100%{left:140%}
-}
-
-@keyframes buttonGlow{
-0%,100%{
-box-shadow:
-0 12px 35px #5b4cff44,
-0 0 20px #00eaff18;
-}
-
-50%{
-box-shadow:
-0 15px 45px #5b4cff77,
-0 0 35px #00eaff35;
-}
-}
-
-.welcomePlanet{
-font-size:72px;
-
-margin-bottom:8px;
-
-filter:
-drop-shadow(0 0 12px #00eaff55)
-drop-shadow(0 0 35px #774cff33);
-
-animation:planetFloat 3s ease-in-out infinite;
-}
-
-@keyframes planetFloat{
-0%,100%{
-transform:translateY(0) scale(1);
-}
-
-50%{
-transform:translateY(-8px) scale(1.04);
-}
-}
-
-/* ==========================================
-   WORLD 2 COVER
-========================================== */
-
-body.world2 #welcome{
-
-background:
-radial-gradient(circle at 50% 30%,#764cff66,transparent 24%),
-radial-gradient(circle at 15% 75%,#00eaff35,transparent 25%),
-radial-gradient(circle at 90% 70%,#ff39c833,transparent 25%),
-#01020a;
-}
-
-body.world2 .welcomeBox{
-
-border-color:#9d6cff45;
-
-box-shadow:
-0 35px 120px #000,
-0 0 90px #764cff35,
-inset 0 1px 0 #ffffff20;
-}
-
-body.world2 .welcomeTitle{
-
-background:
-linear-gradient(
-90deg,
-#ffffff,
-#9c7cff,
-#00eaff,
-#ff4fd8,
-#ffffff
-);
-
-background-size:300% auto;
--webkit-background-clip:text;
-color:transparent;
-}
-
-body.world2 .welcomeWorld{
-
-color:#b68cff;
-
-background:#9d6cff12;
-
-border-color:#9d6cff45;
-
-box-shadow:0 0 25px #764cff22;
-}
-
-body.world2 .welcomeButton{
-
-background:
-linear-gradient(
-135deg,
-#633cff,
-#b13cff,
-#00cfff
-);
-
-box-shadow:
-0 12px 40px #704cff66,
-0 0 35px #9d4cff33;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-h1{
-font-size:32px;
-letter-spacing:5px;
-}
-
-.reel{
-width:64px;
-height:70px;
-font-size:36px;
-}
-
-#game{
-gap:5px;
-}
-
-.panel{
-padding:20px 8px;
-}
-
-.stat{
-min-width:70px;
-}
-
-.welcomeBox{
-padding:35px 18px 27px;
-}
-
-.welcomePlanet{
-font-size:58px;
-}
-
-.welcomeTitle{
-font-size:30px;
-letter-spacing:3px;
-}
-
-.welcomeWorld{
-font-size:9px;
-letter-spacing:3px;
-}
-
-.welcomeText{
-font-size:12px;
-line-height:1.7;
-}
-
-.welcomePromo span{
-font-size:8px;
-padding:6px 8px;
-}
-
-}
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #050b20; color: #fff; font-family: Arial, sans-serif; overflow: hidden; }
+
+  /* ROUTER VIEWS */
+  #app-view { width: 100vw; height: 100vh; position: relative; }
+  .view-screen { display: none; width: 100%; height: 100%; position: absolute; inset: 0; }
+  .view-screen.active { display: flex; flex-direction: column; }
+
+  /* WORLD SELECTOR MAP */
+  .world-select-container { padding: 30px 20px; text-align: center; overflow-y: auto; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .world-select-container h1 { font-size: 28px; background: linear-gradient(90deg,#ff3c6e,#ffd43b,#42f4b1,#4bcaff,#a66cff); -webkit-background-clip: text; color: transparent; margin-bottom: 5px; text-transform: uppercase; }
+  .world-select-container p.subtitle { color: #adb5dc; font-size: 12px; margin-bottom: 25px; letter-spacing: 2px; }
+  .world-card { background: #08152f; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 16px 20px; margin: 8px 0; width: min(420px, 92%); text-align: left; cursor: pointer; transition: 0.2s ease; display: flex; justify-content: space-between; align-items: center; }
+  .world-card:hover { border-color: #39dfff; background: #0c1e40; transform: translateY(-2px); }
+  .world-card h3 { margin: 0 0 4px; color: #fff; font-size: 15px; }
+  .world-card p { margin: 0; font-size: 11px; color: #9fc7dc; }
+  .world-badge { background: rgba(57, 223, 255, 0.15); border: 1px solid #39dfff; color: #39dfff; font-size: 10px; font-weight: bold; padding: 5px 10px; border-radius: 8px; }
+
+  /* NAV HEADERS */
+  .nav-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #081226; border-bottom: 1px solid #ffffff18; }
+  .nav-map-btn { background: #39dfff; color: #000; border: none; padding: 8px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; z-index: 10; }
+  .nav-map-btn:hover { background: #65f7ff; }
+  .wallet-bar { font-size: 13px; font-weight: bold; }
+
+  /* WORLD 1 & 2 CONTAINER STYLES */
+  .world1-2-frame {
+    flex: 1; overflow-y: auto; text-align: center;
+    background: radial-gradient(circle at 10% 10%,#6d35ff55,transparent 28%),
+                radial-gradient(circle at 90% 15%,#00d9ff44,transparent 28%),
+                radial-gradient(circle at 50% 100%,#ff347044,transparent 32%),
+                linear-gradient(135deg,#03040b,#10152d,#060812);
+    padding-bottom: 40px;
+  }
+  .w1-h1 { margin: 18px 0 2px; font-size: 36px; letter-spacing: 5px; background: linear-gradient(90deg,#ff3c6e,#ffd43b,#42f4b1,#4bcaff,#a66cff); -webkit-background-clip: text; color: transparent; }
+  .w1-sub { font-size: 10px; letter-spacing: 4px; color: #8291b5; }
+  .w1-stats { display: flex; justify-content: center; gap: 7px; flex-wrap: wrap; width: 96%; margin: 17px auto; }
+  .w1-stat { min-width: 78px; padding: 9px; border-radius: 15px; background: #ffffff0d; border: 1px solid #ffffff18; backdrop-filter: blur(10px); }
+  .w1-stat small { display: block; color: #858ca5; font-size: 8px; letter-spacing: 1px; }
+  .w1-stat b { display: block; margin-top: 4px; font-size: 16px; }
+  .w1-panel { position: relative; z-index: 2; width: 94%; max-width: 820px; margin: 15px auto; padding: 22px 12px; border-radius: 28px; background: #ffffff0b; border: 1px solid #ffffff18; box-shadow: 0 25px 70px #0009; backdrop-filter: blur(18px); }
+  .w1-level { font-size: 22px; font-weight: bold; }
+  .w1-missionTop { color: #ffd43b; font-weight: bold; margin: 8px; font-size: 13px; }
+  .w1-progress { height: 7px; max-width: 430px; margin: 10px auto; background: #20263d; border-radius: 10px; overflow: hidden; }
+  .w1-progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#ff3c6e,#ffd43b,#4bcaff,#8b5cff); box-shadow: 0 0 12px #00eaff; transition: .4s; }
+  .w1-energy { height: 6px; max-width: 430px; margin: 6px auto 12px; background: #20263d; border-radius: 10px; overflow: hidden; }
+  .w1-energy i { display: block; height: 100%; width: 0; background: linear-gradient(90deg,#00eaff,#7d5cff,#ff39c8); transition: .4s; }
+  #w1-game { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 25px 0; }
+  .w1-reel { width: 78px; height: 82px; display: flex; align-items: center; justify-content: center; border-radius: 19px; font-size: 43px; background: linear-gradient(#20253e,#090b16); border: 1px solid #ffffff15; box-shadow: inset 0 0 25px #000, 0 10px 25px #0007; transition: .2s; }
+  .w1-box { position: relative; z-index: 2; width: 94%; max-width: 820px; margin: 15px auto; padding: 20px 12px; border-radius: 28px; background: #ffffff0b; border: 1px solid #ffffff18; }
+  .w1-card { display: inline-block; width: 78px; padding: 9px; margin: 4px; border-radius: 13px; background: #ffffff08; border: 1px solid #ffffff15; font-size: 27px; }
+  .w1-card small { display: block; font-size: 8px; color: #9aa2b8; }
+  .w1-overlay { display: none; position: fixed; inset: 0; z-index: 100; background: #02030bdd; align-items: center; justify-content: center; padding: 15px; backdrop-filter: blur(12px); }
+  .w1-modal { width: 94%; max-width: 440px; padding: 25px; border-radius: 28px; background: #11152a; border: 1px solid #ffffff20; box-shadow: 0 25px 80px #000; text-align: center; }
+  .w1-modal h2 { margin: 5px; font-size: 27px; }
+  .w1-choice { display: block; width: 90%; margin: 8px auto; }
+
+  /* WORLD 3 ENGINE UI SPECIFICATIONS */
+  .app { width: min(740px, 100%); height: 100vh; margin: auto; padding: 12px; display: flex; flex-direction: column; }
+  .stats { display: flex; gap: 6px; }
+  .stat { padding: 8px 10px; background: #ffffff0b; border: 1px solid #ffffff18; border-radius: 10px; text-align: center; flex: 1; }
+  .stat small { display: block; font-size: 9px; color: #9eb7cc; text-transform: uppercase; margin-bottom: 2px; }
+  .stat b { font-size: 14px; }
+  .screen { display: none; height: 100%; min-height: 0; flex-direction: column; }
+  .screen.active { display: flex; }
+  .game { margin-top: 8px; padding: 12px; border-radius: 20px; background: #08152f; border: 1px solid #ffffff18; display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+  .level { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 900; margin-bottom: 8px; }
+  .challenge { font-size: 9px; color: #8feeff; background: rgba(57,223,255,0.1); padding: 3px 8px; border-radius: 6px; border: 1px solid #39dfff44; }
+  .missions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 10px; }
+  .mission { text-align: center; padding: 6px 4px; border-radius: 12px; background: #ffffff08; border: 1px solid #ffffff12; }
+  .mission.done { background: #63e68b25; border-color: #63e68b; box-shadow: 0 0 10px #63e68b44; }
+  .mi { font-size: 22px; line-height: 1.1; }
+  .mission b { display: block; font-size: 11px; margin-top: 3px; color: #fff; }
+  .mission small { font-size: 7px; color: #adb5dc; text-transform: uppercase; font-weight: bold; }
+  .boardwrap { padding: 10px; background: #030616e8; border-radius: 20px; flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .board { width: min(100%, calc(100vh - 280px)); height: min(100%, calc(100vh - 280px)); aspect-ratio: 1; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; touch-action: none; position: relative; }
+  .cell { background: #ffffff0b; border-radius: 14px; position: relative; border: 1px solid #ffffff0a; overflow: visible; }
+  .cell.blocked { background: #16465e; border-color: #36dfff44; }
+  .obstacle { position: absolute; inset: 0; display: grid; place-items: center; font-size: 26px; }
+  .tile { position: absolute; inset: 0; display: grid; place-items: center; }
+  .char { width: 80%; height: 80%; display: grid; place-items: center; border-radius: 35%; font-size: clamp(32px, 8vw, 62px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+  .t0 .char { background: #ffbd82; } .t1 .char { background: #42ca72; } .t2 .char { background: #ffd45a; }
+  .t3 .char { background: #6ed9ff; } .t4 .char { background: #8d5aff; } .t5 .char { background: #ff65d2; }
+  .label { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; font-size: 8px; font-weight: 900; letter-spacing: 0.5px; text-shadow: 0 1px 2px #000; }
+  .controls { display: grid; grid-template-columns: repeat(6,1fr); gap: 5px; margin-top: 10px; }
+  .btn { min-height: 48px; border: 1px solid #ffffff1c; border-radius: 12px; background: #ffffff0b; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; font-size: 8px; cursor: pointer; }
+  .ico { font-size: 18px; margin-bottom: 3px; }
+  .cost { font-size: 7px; color: #adb5dc; }
+  .page { height: 100%; padding: 12px; overflow: auto; }
+  .pagehead { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+  .back { background: #ffffff12; border: 1px solid #ffffff18; border-radius: 12px; padding: 8px 14px; color: #fff; font-weight: 900; cursor: pointer; font-size: 11px; }
+  .grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .item-card { padding: 14px 8px; text-align: center; border-radius: 16px; background: #ffffff09; border: 1px solid #ffffff18; }
+  .emoji { font-size: 44px; }
+  .item-card h3 { margin: 4px; font-size: 13px; }
+  .item-card p { font-size: 9px; color: #adb5dc; margin: 6px; }
+  .item-card button { border: 0; border-radius: 8px; padding: 8px 12px; color: #fff; font-weight: 900; font-size: 9px; cursor: pointer; background: linear-gradient(100deg,#ffbd45,#ff6b6b); }
+
+  /* ==========================================
+     CINEMATIC COVERS (WORLD 1, 2 & 3)
+  ========================================== */
+  .cinematic-cover {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 35%,#704cff55,transparent 25%),
+                radial-gradient(circle at 20% 80%,#ff2f7540,transparent 28%),
+                radial-gradient(circle at 85% 20%,#00eaff35,transparent 30%),
+                #02030b;
+  }
+  .cinematic-cover.active { display: flex; }
+  .cover-box {
+    position: relative;
+    z-index: 2;
+    width: 96%;
+    max-width: 580px;
+    padding: 46px 30px 36px;
+    border-radius: 42px;
+    background: radial-gradient(circle at top, rgba(255,255,255,0.18), rgba(15,22,50,0.85));
+    border: 1.5px solid rgba(255,255,255,0.35);
+    box-shadow: 0 50px 160px rgba(0,0,0,0.85), 0 0 130px rgba(118,76,255,0.45), inset 0 2px 4px rgba(255,255,255,0.4);
+    backdrop-filter: blur(28px);
+    text-align: center;
+  }
+  .cover-small { font-size: 10px; letter-spacing: 7px; font-weight: bold; color: #a3c2ff; margin-bottom: 12px; text-transform: uppercase; }
+  .cover-title {
+    font-size: clamp(32px, 7.5vw, 48px);
+    font-weight: 900;
+    letter-spacing: 5px;
+    line-height: 1.05;
+    margin: 5px 0 14px;
+    background: linear-gradient(90deg, #ffffff, #76efff, #ffffff, #d88cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .cover-world-tag {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    color: #00eaff;
+    padding: 9px 18px;
+    border-radius: 30px;
+    background: rgba(0,234,255,0.15);
+    border: 1px solid rgba(0,234,255,0.5);
+    margin-bottom: 20px;
+  }
+  .cover-text { color: #d0dcff; font-size: 14px; line-height: 1.85; max-width: 430px; margin: 10px auto 24px; }
+  .cover-promo { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin: 0 auto 26px; max-width: 480px; }
+  .cover-promo span { font-size: 9.5px; font-weight: bold; letter-spacing: 1.2px; padding: 9px 14px; border-radius: 22px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #ffffff; }
+  .cover-btn {
+    position: relative;
+    z-index: 310;
+    width: 92%;
+    max-width: 360px;
+    padding: 18px;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 2.5px;
+    border-radius: 20px;
+    color: #fff;
+    background: linear-gradient(135deg, #ff386d, #714cff, #00cfff);
+    border: 2px solid #fff;
+    cursor: pointer;
+    box-shadow: 0 15px 40px rgba(91,76,255,0.8), 0 0 30px rgba(0,234,255,0.5);
+  }
+  .cover-btn:hover { transform: scale(1.04); }
+  .cover-planet { font-size: 76px; margin-bottom: 10px; }
+
+  .toast { position: fixed; top: 12%; left: 50%; transform: translateX(-50%); background: #06152bf5; padding: 10px 20px; border-radius: 20px; border: 1px solid #ffffff18; opacity: 0; z-index: 500; font-size: 13px; font-weight: bold; pointer-events: none; transition: 0.2s; }
+  .toast.show { opacity: 1; }
 </style>
 </head>
-
 <body>
 
-<button id="sound" onclick="toggleSound()">🔊</button>
+<div id="app-view">
 
-<h1>MATCH4</h1>
+  <!-- MAIN MAP SELECTOR WITH ALL 3 WORLDS -->
+  <div id="worldSelectScreen" class="view-screen active">
+    <div class="world-select-container">
+      <h1>🎮 MATCH4 MASTER SUITE</h1>
+      <p class="subtitle">Select a world module to launch cinematic gameplay</p>
 
-<div class="sub" id="worldName">
-WORLD 1 • DELUXE ARCADE
-</div>
+      <div class="world-card" onclick="launchWorld(1)">
+        <div>
+          <h3>🌎 World 1: Deluxe Arcade</h3>
+          <p>Mode: Classic Match4 Slots & Progression</p>
+        </div>
+        <span class="world-badge">PLAY ▶</span>
+      </div>
 
-<div class="stats">
+      <div class="world-card" onclick="launchWorld(2)">
+        <div>
+          <h3>🌌 World 2: Neon Cosmos</h3>
+          <p>Mode: Specific Mission Matches & Gifts</p>
+        </div>
+        <span class="world-badge">PLAY ▶</span>
+      </div>
 
-<div class="stat">
-<small>❤️ LIVES</small>
-<b id="lives">4</b>
-</div>
+      <div class="world-card" onclick="launchWorld(3)">
+        <div>
+          <h3>🐾 World 3: Merge Evolution</h3>
+          <p>Mode: 4x4 Creature Merging & Objectives</p>
+        </div>
+        <span class="world-badge" style="background: #39dfff; color: #000;">PLAY ▶</span>
+      </div>
+    </div>
+  </div>
 
-<div class="stat">
-<small>🎯 MOVES</small>
-<b id="moves">10</b>
-</div>
+  <!-- WORLD 1 & 2 SCREEN CONTAINER -->
+  <div id="world12Screen" class="view-screen">
+    <div class="nav-header">
+      <button class="nav-map-btn" onclick="exitToMap()">🗺️ MAP</button>
+      <div id="w1HeaderTitle" style="font-weight:bold; font-size:14px; color:#ffd700;">WORLD 1 • DELUXE ARCADE</div>
+      <div class="wallet-bar">💰 <span id="w1CoinsWallet">1000</span> | 💎 <span id="w1GemsWallet">0</span></div>
+    </div>
+    
+    <div class="world1-2-frame">
+      <h1 class="w1-h1">MATCH4</h1>
+      <div class="w1-sub" id="w1WorldSubtitle">WORLD 1 • DELUXE ARCADE</div>
 
-<div class="stat">
-<small>💰 COINS</small>
-<b id="coins">500</b>
-</div>
+      <div class="w1-stats">
+        <div class="w1-stat"><small>❤️ LIVES</small><b id="w1Lives">5</b></div>
+        <div class="w1-stat"><small>🎯 MOVES</small><b id="w1Moves">10</b></div>
+        <div class="w1-stat"><small>💰 COINS</small><b id="w1Coins">1000</b></div>
+        <div class="w1-stat"><small>💎 GEMS</small><b id="w1Gems">0</b></div>
+        <div class="w1-stat"><small>🔥 STREAK</small><b id="w1Streak">0</b></div>
+      </div>
 
-<div class="stat">
-<small>💎 GEMS</small>
-<b id="gems">0</b>
-</div>
+      <div class="w1-panel">
+        <div class="w1-level"><span id="w1LevelIcon">🌎</span> LEVEL <span id="w1LevelNum">1</span> / 5</div>
+        <div class="w1-missionTop" id="w1MissionText">🎯 MATCH4 1 time</div>
+        <div class="w1-progress"><i id="w1Bar"></i></div>
+        <div id="w1EnergyWrap" style="display:none">
+          <div style="font-size:9px; letter-spacing:2px; color:#8d9abb; margin-top:14px;">⚡ COSMIC ENERGY & MISSION</div>
+          <div id="w1MissionDesc" style="color: #00eaff; font-size: 11px; font-weight: bold; margin: 4px 0 8px;">Target: Complete 4 Diamonds & Charge Energy!</div>
+          <div class="w1-energy"><i id="w1EnergyBar"></i></div>
+        </div>
+        <div id="w1Attempts" style="color:#ffd43b; font-size:18px; letter-spacing:4px; margin:8px;"></div>
+        
+        <div id="w1-game"></div>
 
-<div class="stat">
-<small>🔥 STREAK</small>
-<b id="streak">0</b>
-</div>
+        <button onclick="w1Play()" style="background:linear-gradient(135deg,#ff3c6e,#774cff); padding:12px 20px; border-radius:35px; color:#fff; font-weight:bold; cursor:pointer; margin: 5px;">🎰 PLAY</button>
+        <button onclick="w1OpenWorlds()" style="background:linear-gradient(135deg,#ff3c6e,#774cff); padding:12px 20px; border-radius:35px; color:#fff; font-weight:bold; cursor:pointer; margin: 5px;">🌍 SWITCH WORLD</button>
+      </div>
 
-</div>
+      <div class="w1-box">
+        <div style="font-size:18px; font-weight:bold; margin-bottom:12px;">🎒 COLLECTION</div>
+        <div id="w1CollectionList"></div>
+      </div>
+    </div>
+  </div>
 
-<div class="panel">
+  <!-- WORLD 3 GAMEPLAY SCREEN (MERGE EVOLUTION) -->
+  <div id="world3Screen" class="view-screen">
+    <div class="nav-header">
+      <button class="nav-map-btn" onclick="exitToMap()">🗺️ MAP</button>
+      <div style="font-weight:bold; font-size:13px;">WORLD 3: MERGE EVOLUTION</div>
+      <div class="wallet-bar">💰 <span id="coins">100</span> 💎 <span id="gems">5</span></div>
+    </div>
+    
+    <div class="app" style="height: calc(100vh - 55px);">
+      <div id="gameScreen" class="screen active">
+        <div class="stats" style="margin-top: 6px;">
+          <div class="stat"><small>⭐ SCORE</small><b id="score">0</b></div>
+          <div class="stat"><small>🌱 LEVEL</small><b id="levelNum">1</b></div>
+          <div class="stat"><small>🎯 MOVES</small><b id="moves">10</b></div>
+        </div>
 
-<div class="level">
-<span id="levelIcon">🌎</span>
-LEVEL <span id="level">1</span> / 5
-</div>
+        <section class="game">
+          <div class="level">
+            <span class="levelname"><span id="levelIcon">🌱</span> <span id="levelText">LEVEL 1 • MEADOW</span></span>
+            <span class="challenge" id="challengeText">LEARN MERGING</span>
+          </div>
+          
+          <div class="missions" id="missions"></div>
 
-<div class="missionTop" id="mission">
-🎯 MATCH4 once
-</div>
+          <div class="boardwrap"><div class="board" id="board"></div></div>
+          <div class="controls">
+            <button class="btn" onclick="undo()"><span class="ico">↩</span>UNDO<span class="cost">💎1</span></button>
+            <button class="btn" onclick="shuffle()"><span class="ico">⤨</span>SHUFFLE<span class="cost">💰5</span></button>
+            <button class="btn" onclick="destroyMode()"><span class="ico">💥</span>DESTROY<span class="cost">💰3</span></button>
+            <button class="btn" onclick="plus()"><span class="ico">⚡</span>+5 MOVES<span class="cost">💎4</span></button>
+            <button class="btn" onclick="showSubPage('shop')"><span class="ico">🛍</span>SHOP</button>
+            <button class="btn" onclick="showSubPage('collection')"><span class="ico">🎒</span>VAULT</button>
+          </div>
+        </section>
+      </div>
 
-<div class="progress">
-<i id="bar"></i>
-</div>
+      <!-- SHOP SUB-SCREEN -->
+      <div id="shopScreen" class="screen">
+        <div class="page">
+          <div class="pagehead">
+            <button class="back" onclick="showSubPage('game')">← BACK TO GAME</button>
+            <div style="font-weight:bold; font-size:13px;">CREATURE SHOP</div>
+          </div>
+          <div class="grid" id="shopList"></div>
+        </div>
+      </div>
 
-<div id="energyWrap" style="display:none">
-
-<div class="energyTitle">
-⚡ COSMIC ENERGY
-</div>
-
-<div class="energy">
-<i id="energyBar"></i>
-</div>
-
-</div>
-
-<div id="attempts"></div>
-
-<div id="game"></div>
-
-<button id="play" onclick="play()">
-🎰 PLAY
-</button>
-
-<button onclick="openShop()">
-🛍️ SHOP
-</button>
-
-<button onclick="openWorlds()">
-🌍 WORLDS
-</button>
-
-<div id="msg">
-READY?
-</div>
-
-</div>
-
-<div class="box">
-
-<div class="sectionTitle">
-🎒 COLLECTION
-</div>
-
-<div id="collection"></div>
-
-</div>
-
-<div class="box" id="shop" style="display:none">
-
-<div class="sectionTitle">
-🛍️ MATCH4 SHOP
-</div>
-
-<div class="item">
-<b>❤️ Extra Life</b>
-<span>+1 Life</span>
-<button onclick="buy('life')">500 💰</button>
-</div>
-
-<div class="item">
-<b>🎯 Move Pack</b>
-<span>+3 Moves</span>
-<button onclick="buy('move')">300 💰</button>
-</div>
-
-<div class="item">
-<b>🍀 Lucky Charm</b>
-<span>Better odds</span>
-<button onclick="buy('lucky')">750 💰</button>
-</div>
-
-<div class="item">
-<b>🛡️ Life Shield</b>
-<span>Save one life</span>
-<button onclick="buy('shield')">30 💎</button>
-</div>
-
-<div class="item">
-<b>🌟 Super Spin</b>
-<span>Guaranteed MATCH4</span>
-<button onclick="buy('super')">25 💎</button>
-</div>
-
-<div class="item">
-<b>👑 Crown Boost</b>
-<span>Better Crown odds</span>
-<button onclick="buy('crown')">40 💎</button>
-</div>
-
-<br>
-
-<button class="dark" onclick="closeShop()">
-CLOSE SHOP
-</button>
+      <!-- VAULT SUB-SCREEN -->
+      <div id="collectionScreen" class="screen">
+        <div class="page">
+          <div class="pagehead">
+            <button class="back" onclick="showSubPage('game')">← BACK TO GAME</button>
+            <div style="font-weight:bold; font-size:13px;">CREATURE VAULT</div>
+          </div>
+          <div class="grid" id="discoverList"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 
-<div class="missionPhone">
-
-<div class="phoneTop">
-
-<div class="phoneIcon">🎯</div>
-
-<div id="missionLabel">
-MATCH4 MISSION
+<!-- CINEMATIC COVERS FOR ALL 3 WORLDS -->
+<div id="coverWorld1" class="cinematic-cover">
+  <div class="cover-box">
+    <div class="cover-planet">🌎</div>
+    <div class="cover-small">MATCH4 • ARCADE EXPERIENCE</div>
+    <div class="cover-title">ARCADE DELUXE</div>
+    <div class="cover-world-tag">WORLD 1 • ARCADE DELUXE</div>
+    <div class="cover-text">Enter a high-energy neon arcade where every spin can trigger a MATCH4. Build your streak, stack your coins, hunt rare symbols and conquer levels.</div>
+    <div class="cover-promo">
+      <span>🎯 MATCH 4</span>
+      <span>🔥 BUILD STREAKS</span>
+      <span>💰 STACK COINS</span>
+      <span>👑 GRAND MATCH</span>
+    </div>
+    <button class="cover-btn" onclick="closeCover(1)">ENTER THE ARCADE</button>
+  </div>
 </div>
 
+<div id="coverWorld2" class="cinematic-cover">
+  <div class="cover-box" style="border-color:rgba(182,140,255,0.6); box-shadow: 0 50px 180px rgba(0,0,0,0.9), 0 0 150px rgba(118,76,255,0.6);">
+    <div class="cover-planet">🌌</div>
+    <div class="cover-small" style="color:#d4b8ff;">MATCH4 • COSMIC VOYAGE & MISSIONS</div>
+    <div class="cover-title" style="background:linear-gradient(90deg,#ffffff,#b88cff,#00ffff,#ff5edb,#ffffff);">NEON COSMOS</div>
+    <div class="cover-world-tag" style="color:#d4b8ff; background:rgba(157,108,255,0.25); border-color:rgba(182,140,255,0.7);">WORLD 2 • NEON COSMOS</div>
+    <div class="cover-text">Journey into deep interstellar dimensions. Complete specific mission requirements for each level (like matching diamonds, stars, or crystals), charge energy, and harvest galactic rewards!</div>
+    <div class="cover-promo">
+      <span>⭐ SPECIFIC MISSIONS</span>
+      <span>⚡ COSMIC ENERGY</span>
+      <span>💎 COMPLETE 4 DIAMONDS</span>
+      <span>👑 GALACTIC CROWN</span>
+    </div>
+    <button class="cover-btn" style="background:linear-gradient(135deg,#733cff,#b13cff,#00eaff);" onclick="closeCover(2)">ENTER THE COSMOS</button>
+  </div>
 </div>
 
-<div class="phoneMission" id="phoneMission">
-MATCH4 once
+<div id="coverWorld3" class="cinematic-cover">
+  <div class="cover-box" style="border-color:rgba(57,223,255,0.6); box-shadow: 0 50px 180px rgba(0,0,0,0.9), 0 0 150px rgba(57,223,255,0.5);">
+    <div class="cover-planet">🐾</div>
+    <div class="cover-small" style="color:#8fffff;">MATCH4 • EVOLUTION SANCTUARY</div>
+    <div class="cover-title" style="background:linear-gradient(90deg,#ffffff,#39dfff,#63e68b,#ffd43b,#ffffff);">MERGE EVOLUTION</div>
+    <div class="cover-world-tag" style="color:#39dfff; background:rgba(57,223,255,0.25); border-color:rgba(57,223,255,0.7);">WORLD 3 • MERGE EVOLUTION</div>
+    <div class="cover-text">Step into a vibrant 4x4 grid sanctuary. Swipe to glide creatures, chain legendary merges, clear ocean tides, and advance seamlessly through consecutive evolutionary levels!</div>
+    <div class="cover-promo">
+      <span>🐾 SLIDE & MERGE</span>
+      <span>🌱 GROW CREATURES</span>
+      <span>🌊 CLEAR WATER</span>
+      <span>👑 INFINITE LEVELS</span>
+    </div>
+    <button class="cover-btn" style="background:linear-gradient(135deg,#00c6ff,#0072ff,#9900ff);" onclick="closeCover(3)">ENTER SANCTUARY</button>
+  </div>
 </div>
 
-<div class="phoneProgress">
-<i id="phoneBar"></i>
+<!-- WORLD SWITCH MODAL FOR WORLD 1 & 2 -->
+<div class="w1-overlay" id="w1WorldSelectModal" style="display:none;">
+  <div class="w1-modal">
+    <div style="font-size:50px">🌍</div>
+    <h2>SELECT WORLD</h2>
+    <button class="w1-choice" onclick="selectWorld12(1)" style="padding:16px; background:linear-gradient(135deg,#ff3c6e,#774cff); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:8px 0;">🌎 WORLD 1<br><small>DELUXE ARCADE</small></button>
+    <button class="w1-choice" onclick="selectWorld12(2)" style="padding:16px; background:linear-gradient(135deg,#00cfff,#764cff); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:8px 0;">🌌 WORLD 2<br><small>NEON COSMOS</small></button>
+    <button class="w1-choice" onclick="selectWorld12(3)" style="padding:16px; background:linear-gradient(135deg,#12c2e9,#774cff); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:8px 0;">🐾 WORLD 3<br><small>MERGE EVOLUTION</small></button>
+    <button class="w1-choice" onclick="document.getElementById('w1WorldSelectModal').style.display='none'" style="padding:12px; background:#282c3e; border-radius:20px; color:#fff; border:0; cursor:pointer; width:100%; margin-top:10px;">CLOSE</button>
+  </div>
 </div>
 
+<!-- OUT OF MOVES MODAL FOR WORLD 1 & 2 -->
+<div class="w1-overlay" id="w1GameOverModal" style="display:none;">
+  <div class="w1-modal">
+    <div style="font-size:50px">⚠️</div>
+    <h2>OUT OF MOVES!</h2>
+    <p style="color: #adb5dc; font-size: 13px; margin: 10px 0 20px;">You ran out of moves in this round. Choose an option below to continue or restart:</p>
+    <button class="w1-choice" onclick="w1BuyMovesCoins()" style="padding:14px; background:linear-gradient(135deg,#ffd43b,#ff7638); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:6px 0;">💰 BUY +5 MOVES (COINS 500)</button>
+    <button class="w1-choice" onclick="w1BuyMoves()" style="padding:14px; background:linear-gradient(135deg,#00cfff,#764cff); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:6px 0;">⚡ BUY +5 MOVES (💎 2)</button>
+    <button class="w1-choice" onclick="w1WatchAd()" style="padding:14px; background:linear-gradient(135deg,#ff3c6e,#ffd43b); border-radius:20px; font-weight:bold; color:#fff; border:0; cursor:pointer; width:100%; margin:6px 0;">📺 WATCH AD FOR +3 MOVES</button>
+    <button class="w1-choice" onclick="w1RestartLevel()" style="padding:12px; background:#282c3e; border-radius:20px; color:#fff; border:0; cursor:pointer; width:100%; margin-top:10px;">🔄 RESTART LEVEL</button>
+  </div>
 </div>
 
-<div id="welcome">
-
-<div class="welcomeBox">
-
-<div class="welcomePlanet" id="welcomePlanet">
-🌎
-</div>
-
-<div class="welcomeSmall">
-MATCH4 • ARCADE EXPERIENCE
-</div>
-
-<div class="welcomeTitle" id="welcomeTitle">
-ARCADE DELUXE
-</div>
-
-<div class="welcomeWorld" id="welcomeWorld">
-WORLD 1 • ARCADE DELUXE
-</div>
-
-<div class="welcomeText" id="welcomeText">
-Enter a high-energy neon arcade where every spin
-can trigger a MATCH4. Build your streak, stack your
-coins, hunt rare symbols and conquer five levels.
-</div>
-
-<div class="welcomePromo" id="welcomePromo">
-
-<span>🎯 MATCH 4</span>
-<span>🔥 BUILD STREAKS</span>
-<span>💰 STACK COINS</span>
-<span>👑 GRAND MATCH</span>
-
-</div>
-
-<button
-class="welcomeButton cosmic"
-onclick="enterWorld()"
-id="enterWorldButton">
-
-ENTER THE ARCADE
-
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="worldSelect">
-
-<div class="modal">
-
-<div style="font-size:50px">🌍</div>
-
-<h2>SELECT WORLD</h2>
-
-<button class="choice worldBtn" onclick="switchWorld(1)">
-🌎 WORLD 1<br>
-<small>DELUXE ARCADE</small>
-</button>
-
-<button id="world2Button"
-class="choice worldBtn cosmic locked"
-onclick="switchWorld(2)">
-🌌 WORLD 2<br>
-<small>NEON COSMOS 🔒</small>
-</button>
-
-<button class="choice dark" onclick="closeWorlds()">
-CLOSE
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="mystery">
-
-<div class="modal">
-
-<div style="font-size:45px">🎁</div>
-
-<h2>MYSTERY BONUS!</h2>
-
-<p>Choose one reward:</p>
-
-<button class="choice" onclick="mysteryReward('coins')">
-💰 500 COINS
-</button>
-
-<button class="choice" onclick="mysteryReward('gems')">
-💎 2 GEMS
-</button>
-
-<button class="choice" onclick="mysteryReward('move')">
-🎯 +2 MOVES
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="gift">
-
-<div class="modal">
-
-<div style="font-size:45px">🎁</div>
-
-<h2>COSMIC GIFT!</h2>
-
-<p>Choose your reward:</p>
-
-<button class="choice" onclick="giftReward('coins')">
-💰 COIN GIFT
-</button>
-
-<button class="choice" onclick="giftReward('gems')">
-💎 GEM GIFT
-</button>
-
-<button class="choice" onclick="giftReward('energy')">
-⚡ ENERGY GIFT
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="crown">
-
-<div class="modal">
-
-<div style="font-size:55px">👑</div>
-
-<h2 id="crownTitle">GRAND MATCH</h2>
-
-<p>You used all 5 Crown attempts.</p>
-
-<button class="choice" onclick="extraCrown()">
-💎 EXTRA ATTEMPT — 3 GEMS
-</button>
-
-<button class="choice gold" onclick="buyCrownCoins()">
-💰 BUY CROWN — 2,500 COINS
-</button>
-
-<button class="choice" onclick="buyCrownGems()">
-💎 BUY CROWN — 15 GEMS
-</button>
-
-<button class="choice dark" onclick="saveExit()">
-🏠 SAVE & EXIT
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="over">
-
-<div class="modal">
-
-<div style="font-size:45px">💔</div>
-
-<h2>OUT OF LIVES</h2>
-
-<p>Your coins and gems are SAFE.</p>
-
-<p>Continue your adventure?</p>
-
-<button class="choice" onclick="continueCoins()">
-💰 CONTINUE — 300 COINS
-</button>
-
-<button class="choice" onclick="continueGems()">
-💎 CONTINUE — 3 GEMS
-</button>
-
-<button class="choice dark" onclick="saveExit()">
-🏠 SAVE & EXIT
-</button>
-
-</div>
-
-</div>
-
-<div class="overlay" id="complete">
-
-<div class="modal">
-
-<div style="font-size:55px">🏆</div>
-
-<h2 id="completeTitle">WORLD MASTERED!</h2>
-
-<p id="completeText">
-You unlocked the next world!
-</p>
-
-<button id="nextWorldButton"
-class="choice cosmic"
-onclick="goNextWorld()">
-🚀 ENTER WORLD 2
-</button>
-
-<button class="choice dark" onclick="closeComplete()">
-🏠 STAY HERE
-</button>
-
-</div>
-
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
+// ENHANCED SYNTHESIZED SOUND EFFECTS ENGINE (Web Audio API)
+let audioCtx = null;
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
 
-let saved=JSON.parse(
-localStorage.getItem("MATCH4_MASTER")||"{}"
-);
+function playSound(type) {
+  try {
+    initAudio();
+    if (!audioCtx) return;
+    let osc = audioCtx.createOscillator();
+    let gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    let now = audioCtx.currentTime;
 
-let world=1;
+    if (type === 'spin') {
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(150, now);
+      osc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (type === 'win') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(300, now);
+      osc.frequency.setValueAtTime(450, now + 0.1);
+      osc.frequency.setValueAtTime(600, now + 0.2);
+      osc.frequency.setValueAtTime(900, now + 0.3);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+      osc.start(now);
+      osc.stop(now + 0.45);
+    } else if (type === 'click') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(500, now);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.05);
+      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } else if (type === 'welcome') {
+      // Majestic rising chord for cinematic world welcome cover induction
+      [220, 330, 440, 550, 660].forEach((freq, idx) => {
+        let o = audioCtx.createOscillator();
+        let g = audioCtx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(freq, now + idx * 0.08);
+        g.gain.setValueAtTime(0.12, now + idx * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.4);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.08);
+        o.stop(now + idx * 0.08 + 0.4);
+      });
+    } else if (type === 'worldComplete') {
+      // Triumphant fanfare arpeggio for completing an entire world
+      [440, 554.37, 659.25, 880, 1108.73, 1318.51].forEach((freq, idx) => {
+        let o = audioCtx.createOscillator();
+        let g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(freq, now + idx * 0.1);
+        g.gain.setValueAtTime(0.18, now + idx * 0.1);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.6);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.1);
+        o.stop(now + idx * 0.1 + 0.6);
+      });
+    }
+  } catch (e) {
+    // Audio context policy fallback
+  }
+}
 
-let coins=
-saved.coins===undefined
-?1000
-:saved.coins;
+function toast(msg) {
+  let t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t.timer);
+  t.timer = setTimeout(() => t.classList.remove("show"), 1500);
+}
 
-let gems=saved.gems||0;
+// ROUTER LAUNCHER WITH CINEMATIC COVERS AND WELCOME SOUND EFFECTS
+function launchWorld(worldNum) {
+  playSound('welcome');
+  document.querySelectorAll('.view-screen').forEach(s => s.classList.remove('active'));
+  if (worldNum === 1 || worldNum === 2) {
+    document.getElementById('world12Screen').classList.add('active');
+    initWorld12(worldNum);
+  } else if (worldNum === 3) {
+    document.getElementById('world3Screen').classList.add('active');
+    initWorld3();
+  }
+  document.getElementById('coverWorld' + worldNum).classList.add('active');
+}
 
-let lucky=saved.lucky||0;
-let shield=saved.shield||0;
-let superSpin=saved.superSpin||0;
-let crownBoost=saved.crownBoost||0;
+function closeCover(worldNum) {
+  playSound('click');
+  document.getElementById('coverWorld' + worldNum).classList.remove('active');
+  
+  if (worldNum === 1 || worldNum === 2) {
+    let pool = worldNum === 1 ? symbolsPool : cosmicSymbolsPool;
+    let s1 = pool[Math.floor(Math.random()*pool.length)];
+    let s2 = pool[Math.floor(Math.random()*pool.length)];
+    let s3 = pool[Math.floor(Math.random()*pool.length)];
+    let s4 = pool[Math.floor(Math.random()*pool.length)];
+    document.getElementById('w1-game').innerHTML = `<div class="w1-reel">${s1}</div><div class="w1-reel">${s2}</div><div class="w1-reel">${s3}</div><div class="w1-reel">${s4}</div>`;
+  }
+}
 
-let world2Unlocked=saved.world2Unlocked||false;
+function exitToMap() {
+  playSound('click');
+  document.querySelectorAll('.view-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('worldSelectScreen').classList.add('active');
+}
 
-let w1=saved.w1||{
-level:1,
-collection:[],
-match:0,
-gemMission:0
-};
+/* ==========================================
+   WORLD 1 & 2 ENGINE
+========================================== */
+let activeW12 = 1;
+let w1Coins = 1000, w1Gems = 5, w1Lives = 5, w1Moves = 10, w1Streak = 0, w1Level = 1, w1Progress = 0, w1Energy = 0;
+let consecutiveMisses = 0;
+let hasPlayedBefore = false;
 
-let w2=saved.w2||{
-level:1,
-collection:[],
-diamond:0,
-gifts:0
-};
-
-let level=1;
-let lives=5;
-let moves=10;
-let streak=0;
-let crownAttempts=0;
-let energy=0;
-let busy=false;
-
-let soundOn=true;
-let audio=null;
-
-let openingMusicTimer=null;
-let openingMusicStep=0;
-
-let welcomeShown=false;
-
-const world1Normal=[
-"🍒","🍋","🍊","🍉",
-"⭐","🍀","💎","🍓"
+const w1LevelsData = [
+  { level: 1, target: 1, rewardCoins: 150, desc: "🎯 MATCH4 1 time" },
+  { level: 2, target: 2, rewardCoins: 300, desc: "🎯 MATCH4 2 times" },
+  { level: 3, target: 3, rewardCoins: 500, desc: "🎯 MATCH4 3 times" },
+  { level: 4, target: 4, rewardCoins: 800, desc: "🎯 MATCH4 4 times" },
+  { level: 5, target: 5, rewardCoins: 1200, desc: "🎯 MATCH4 5 times" }
 ];
 
-const world1Special=[
-...world1Normal,
-"🌈"
+const w2LevelsData = [
+  { level: 1, target: 4, rewardCoins: 250, desc: "🌌 Complete 4 Diamonds 💎", reqSymbol: "💎" },
+  { level: 2, target: 4, rewardCoins: 400, desc: "🌌 Complete 4 Stars ⭐", reqSymbol: "⭐" },
+  { level: 3, target: 4, rewardCoins: 650, desc: "🌌 Complete 4 Crystals 🔮", reqSymbol: "🔮" },
+  { level: 4, target: 4, rewardCoins: 1000, desc: "🌌 Complete 4 Suns ☀️", reqSymbol: "☀️" },
+  { level: 5, target: 4, rewardCoins: 1800, desc: "🌌 Complete 4 Vortexes 🌀", reqSymbol: "🌀" }
 ];
 
-const world2Normal=[
-"🌙","⭐","🌎","☄️",
-"💎","🔮","🌌","🚀"
+function initWorld12(wNum) {
+  activeW12 = wNum;
+  consecutiveMisses = 0;
+  w1Level = 1;
+  w1Progress = 0;
+  w1Energy = 0;
+  
+  if (!hasPlayedBefore) {
+    w1Moves = 10;
+  }
+
+  document.getElementById('w1HeaderTitle').textContent = wNum === 1 ? "WORLD 1 • DELUXE ARCADE" : "WORLD 2 • NEON COSMOS";
+  document.getElementById('w1WorldSubtitle').textContent = wNum === 1 ? "WORLD 1 • DELUXE ARCADE" : "WORLD 2 • NEON COSMOS";
+  document.getElementById('w1EnergyWrap').style.display = wNum === 2 ? "block" : "none";
+  
+  let pool = wNum === 1 ? symbolsPool : cosmicSymbolsPool;
+  let s1 = pool[Math.floor(Math.random()*pool.length)];
+  let s2 = pool[Math.floor(Math.random()*pool.length)];
+  let s3 = pool[Math.floor(Math.random()*pool.length)];
+  let s4 = pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById('w1-game').innerHTML = `<div class="w1-reel">${s1}</div><div class="w1-reel">${s2}</div><div class="w1-reel">${s3}</div><div class="w1-reel">${s4}</div>`;
+
+  renderW12();
+}
+
+function w1OpenWorlds() {
+  playSound('click');
+  document.getElementById('w1WorldSelectModal').style.display = 'flex';
+}
+
+function selectWorld12(wNum) {
+  playSound('click');
+  document.getElementById('w1WorldSelectModal').style.display = 'none';
+  launchWorld(wNum);
+}
+
+const symbolsPool = ["🍒","🍋","🍊","🍉","⭐","🍀","💎","🍓"];
+const cosmicSymbolsPool = ["⭐","🌟","☀️","🌙","⚡","💎","🔮","🌀"];
+
+function w1Play() {
+  if (w1Moves <= 0) {
+    playSound('click');
+    document.getElementById('w1GameOverModal').style.display = 'flex';
+    return;
+  }
+  
+  hasPlayedBefore = true;
+  playSound('spin');
+  w1Moves--;
+  w1Coins += 50;
+  w1Streak++;
+  
+  let pool = activeW12 === 1 ? symbolsPool : cosmicSymbolsPool;
+  let s1, s2, s3, s4;
+  
+  let forceMatch4 = (consecutiveMisses >= 3 || Math.random() < 0.28);
+
+  if (forceMatch4) {
+    let targetSym = pool[Math.floor(Math.random() * pool.length)];
+    if (activeW12 === 2) {
+      let currentLevelData = w2LevelsData[w1Level - 1];
+      if (Math.random() < 0.75 && currentLevelData && currentLevelData.reqSymbol) {
+        targetSym = currentLevelData.reqSymbol;
+      }
+    }
+    s1 = targetSym;
+    s2 = targetSym;
+    s3 = targetSym;
+    s4 = targetSym;
+    consecutiveMisses = 0;
+  } else {
+    consecutiveMisses++;
+    s1 = pool[Math.floor(Math.random() * pool.length)];
+    s2 = pool[Math.floor(Math.random() * pool.length)];
+    s3 = pool[Math.floor(Math.random() * pool.length)];
+    s4 = pool[Math.floor(Math.random() * pool.length)];
+    if (s1 === s2 && s2 === s3 && s3 === s4) {
+      s4 = pool[(pool.indexOf(s1) + 1) % pool.length];
+    }
+  }
+  
+  let gameBox = document.getElementById('w1-game');
+  gameBox.innerHTML = `<div class="w1-reel">${s1}</div><div class="w1-reel">${s2}</div><div class="w1-reel">${s3}</div><div class="w1-reel">${s4}</div>`;
+  
+  let isMatch4 = (s1 === s2 && s2 === s3 && s3 === s4);
+  let currentLevelData = activeW12 === 1 ? w1LevelsData[w1Level - 1] : w2LevelsData[w1Level - 1];
+
+  if (isMatch4) {
+    playSound('win');
+    
+    let isTargetMatch = true;
+    if (activeW12 === 2) {
+      if (s1 === currentLevelData.reqSymbol) {
+        isTargetMatch = true;
+        toast("⭐ CORRECT MISSION MATCH!");
+      } else {
+        isTargetMatch = false;
+        toast("🎉 Match 4! (Looking for " + currentLevelData.reqSymbol + ")");
+      }
+    } else {
+      toast("🎉 MATCH 4 JACKPOT!");
+    }
+
+    if (isTargetMatch) {
+      w1Coins += (activeW12 === 1 ? 500 : 800);
+      w1Gems += (activeW12 === 2 ? 3 : 1);
+      w1Progress++;
+      if (activeW12 === 2) {
+        w1Energy = Math.min(100, w1Energy + 25);
+      }
+    }
+  } else {
+    toast("Spin complete! +50 Coins");
+  }
+
+  if (w1Progress >= currentLevelData.target) {
+    playSound('worldComplete');
+    w1Coins += currentLevelData.rewardCoins;
+    w1Moves += 5;
+    
+    if (w1Level < 5) {
+      toast(`🎉 LEVEL ${w1Level} CLEARED! Advancing to Level ${w1Level + 1}! (+${currentLevelData.rewardCoins} Coins)`);
+      w1Level++;
+      w1Progress = 0;
+    } else {
+      if (activeW12 === 1) {
+        toast("🏆 WORLD 1 COMPLETED! Auto-launching World 2...");
+        setTimeout(() => {
+          launchWorld(2);
+        }, 1500);
+      } else if (activeW12 === 2) {
+        toast("🏆 WORLD 2 COMPLETED! Auto-launching World 3 (Merge Evolution)...");
+        setTimeout(() => {
+          launchWorld(3);
+        }, 1500);
+      }
+    }
+  }
+
+  renderW12();
+
+  if (w1Moves <= 0 && w1Progress < currentLevelData.target) {
+    setTimeout(() => {
+      document.getElementById('w1GameOverModal').style.display = 'flex';
+    }, 600);
+  }
+}
+
+function w1BuyMovesCoins() {
+  playSound('click');
+  if (w1Coins < 500) {
+    toast("Need 💰 500 Coins to buy moves!");
+    return;
+  }
+  w1Coins -= 500;
+  w1Moves += 5;
+  document.getElementById('w1GameOverModal').style.display = 'none';
+  renderW12();
+  toast("💰 +5 Moves Added with Coins!");
+}
+
+function w1BuyMoves() {
+  playSound('click');
+  if (w1Gems < 2) {
+    toast("Need 💎 2 to buy moves!");
+    return;
+  }
+  w1Gems -= 2;
+  w1Moves += 5;
+  document.getElementById('w1GameOverModal').style.display = 'none';
+  renderW12();
+  toast("⚡ +5 Moves Added with Gems!");
+}
+
+function w1WatchAd() {
+  playSound('win');
+  w1Moves += 3;
+  document.getElementById('w1GameOverModal').style.display = 'none';
+  renderW12();
+  toast("📺 Ad Watched! +3 Moves Added!");
+}
+
+function w1RestartLevel() {
+  playSound('click');
+  w1Moves = 10;
+  w1Progress = 0;
+  consecutiveMisses = 0;
+  document.getElementById('w1GameOverModal').style.display = 'none';
+  renderW12();
+  toast("🔄 Level Restarted!");
+}
+
+function renderW12() {
+  document.getElementById('w1CoinsWallet').textContent = w1Coins;
+  document.getElementById('w1GemsWallet').textContent = w1Gems;
+  document.getElementById('w1Lives').textContent = w1Lives;
+  document.getElementById('w1Moves').textContent = w1Moves;
+  document.getElementById('w1Coins').textContent = w1Coins;
+  document.getElementById('w1Gems').textContent = w1Gems;
+  document.getElementById('w1Streak').textContent = w1Streak;
+  document.getElementById('w1LevelNum').textContent = w1Level;
+  document.getElementById('w1LevelIcon').textContent = activeW12 === 1 ? "🌎" : "🌌";
+  
+  let currentLevelData = activeW12 === 1 ? w1LevelsData[w1Level - 1] : w2LevelsData[w1Level - 1];
+  document.getElementById('w1MissionText').textContent = `${currentLevelData.desc} (${w1Progress}/${currentLevelData.target})`;
+  
+  let pct = Math.min(100, (w1Progress / currentLevelData.target) * 100);
+  document.getElementById('w1Bar').style.width = pct + '%';
+  
+  if (activeW12 === 2) {
+    document.getElementById('w1EnergyBar').style.width = w1Energy + '%';
+    document.getElementById('w1MissionDesc').textContent = `Cosmic Mission: Charge Energy & ${currentLevelData.desc} (${w1Progress}/${currentLevelData.target})`;
+  }
+  
+  let colHtml = "";
+  let items = activeW12 === 1 ? ["🍒","🍋","⭐","💎","👑"] : ["⭐","🌟","🔮","💎","👑"];
+  items.forEach(sym => {
+    colHtml += `<div class="w1-card">${sym}<small>Unlocked</small></div>`;
+  });
+  document.getElementById('w1CollectionList').innerHTML = colHtml;
+}
+
+
+/* ==========================================
+   WORLD 3 ENGINE
+========================================== */
+const BASE_LEVELS = [
+  {
+    id: 1, icon: "🌱", name: "MEADOW", challenge: "LEARN MERGING", 
+    creatures: ["🐣","🐸","🦊","🦄","🐲","👑"], 
+    names: ["Fresh","Green","Golden","Crystal","Cosmic","Royal"], 
+    moves: 12, 
+    missions: [{t:0, p:0, target:4}, {t:1, p:0, target:3}, {t:2, p:0, target:2}, {t:3, p:0, target:1}]
+  },
+  {
+    id: 2, icon: "🌊", name: "AQUA DREAMS", challenge: "WATER OBSTACLES", 
+    creatures: ["🦦","🐸","🐡","🦭","🪼","🐳"], 
+    names: ["Otter","Axolotl","Puffer","Seal","Jelly","Whale"], 
+    moves: 16, 
+    missions: [{t:0, p:0, target:5}, {t:1, p:0, target:4}, {t:2, p:0, target:3}, {t:3, p:0, target:2}]
+  },
+  {
+    id: 3, icon: "🔥", name: "VOLCANIC PEAKS", challenge: "FIERY TERRAIN", 
+    creatures: ["🔥","🦎","🦅","🐅","🐲","👑"], 
+    names: ["Spark","Lava","Falcon","Tiger","Dragon","Apex"], 
+    moves: 20, 
+    missions: [{t:0, p:0, target:6}, {t:1, p:0, target:5}, {t:2, p:0, target:4}, {t:3, p:0, target:3}]
+  }
 ];
 
-const world2Special=[
-...world2Normal,
-"🌈","👑"
-];
+let levelW3 = 1, E = BASE_LEVELS[0].creatures, N = BASE_LEVELS[0].names, B = [], score = 0, moves = 12, hist = [], destroy = false;
+let startX = 0, startY = 0, dragging = false, blocked = [], hot = [], M = [];
+let vault = {0:1, 1:0, 2:0, 3:0, 4:0, 5:0};
 
-function save(){
+function initWorld3() { setLevelW3(1); }
+function emptyBoard() { return Array.from({length:4}, () => Array(4).fill(null)); }
 
-if(world===1){
+function setLevelW3(l) {
+  levelW3 = l; 
+  let template = BASE_LEVELS[(l - 1) % BASE_LEVELS.length];
+  E = template.creatures; 
+  N = template.names; 
+  moves = template.moves;
+  
+  M = template.missions.map(m => ({ t: m.t, p: 0, target: m.target }));
+  
+  B = emptyBoard(); 
+  blocked = []; 
+  
+  if (l === 2) blocked = [2, 11]; 
+  if (l === 3) blocked = [5, 10];
+  
+  document.getElementById('levelIcon').textContent = template.icon;
+  document.getElementById('levelText').textContent = `LEVEL ${l} • ${template.name}`;
+  document.getElementById('challengeText').textContent = template.challenge;
 
-w1.level=level;
-
-w1.match=progress.match;
-w1.gemMission=progress.gems;
-
-}else{
-
-w2.level=level;
-
-w2.diamond=progress.diamond;
-w2.gifts=progress.gifts;
+  for(let i=0; i<4; i++) addTile();
+  renderW3();
 }
 
-localStorage.setItem(
-"MATCH4_MASTER",
-JSON.stringify({
-world:1,
-coins,
-gems,
-lucky,
-shield,
-superSpin,
-crownBoost,
-world2Unlocked,
-w1,
-w2
-})
-);
-
+function addTile() {
+  let empty = [];
+  for(let r=0;r<4;r++) for(let c=0;c<4;c++) if(!B[r][c] && !blocked.includes(r*4+c)) empty.push([r,c]);
+  if(empty.length) {
+    let [r,c] = empty[Math.floor(Math.random()*empty.length)];
+    B[r][c] = {t: Math.random() < 0.2 ? 1 : 0};
+  }
 }
 
-let progress={
-match:0,
-gems:0,
-diamond:0,
-gifts:0
+function renderMissions() {
+  let html = "";
+  M.forEach(m => {
+    let isDone = m.p >= m.target;
+    html += `<div class="mission ${isDone ? 'done' : ''}"><div class="mi">${E[m.t] || '🎯'}</div><b>${Math.min(m.p, m.target)}/${m.target}</b><small>${isDone ? 'DONE ✓' : 'MERGE'}</small></div>`;
+  });
+  document.getElementById('missions').innerHTML = html;
+}
+
+function renderW3() {
+  let h = "";
+  for(let r=0;r<4;r++) {
+    for(let c=0;c<4;c++) {
+      let idx = r*4+c, x = B[r][c], cls = "cell";
+      if(blocked.includes(idx)) cls += " blocked";
+      h += `<div class="${cls}" data-r="${r}" data-c="${c}">`;
+      if(blocked.includes(idx)) h += `<div class="obstacle">🌊</div>`;
+      if(x) h += `<div class="tile t${x.t}"><div class="char">${E[x.t]}</div><div class="label">${N[x.t]}</div></div>`;
+      h += `</div>`;
+    }
+  }
+  document.getElementById('board').innerHTML = h;
+  document.getElementById('score').textContent = score;
+  document.getElementById('moves').textContent = moves;
+  document.getElementById('levelNum').textContent = levelW3;
+  document.getElementById('coins').textContent = w1Coins;
+  document.getElementById('gems').textContent = w1Gems;
+  renderMissions();
+}
+
+function move(d) {
+  if(moves <= 0) return toast("OUT OF MOVES!");
+  let old = JSON.stringify(B), nb = emptyBoard();
+
+  for(let n=0; n<4; n++) {
+    let line = [];
+    for(let p=0; p<4; p++) {
+      let r = d==="up"?p : d==="down"?3-p : n;
+      let c = d==="left"?p : d==="right"?3-p : n;
+      if(B[r][c]) line.push(B[r][c]);
+    }
+    let merged = [];
+    for(let i=0; i<line.length; i++) {
+      if(i+1 < line.length && line[i].t === line[i+1].t && line[i].t < 5) {
+        let nt = line[i].t + 1;
+        merged.push({t: nt});
+        score += 10 * Math.pow(2, nt);
+        w1Coins += nt;
+        let missionObj = M.find(m => m.t === line[i].t);
+        if(missionObj) missionObj.p++;
+        i++;
+      } else {
+        merged.push(line[i]);
+      }
+    }
+    while(merged.length < 4) merged.push(null);
+    for(let p=0; p<4; p++) {
+      let r = d==="up"?p : d==="down"?3-p : n;
+      let c = d==="left"?p : d==="right"?3-p : n;
+      if(!blocked.includes(r*4+c)) nb[r][c] = merged[p];
+    }
+  }
+
+  if(JSON.stringify(nb) === old) return;
+  playSound('click');
+  hist.push({ B: JSON.parse(old), M: JSON.parse(JSON.stringify(M)) });
+  B = nb; moves--; addTile();
+  renderW3();
+
+  let allDone = M.every(m => m.p >= m.target);
+  if(allDone) {
+    playSound('worldComplete');
+    let rewardBonus = levelW3 * 150;
+    w1Coins += rewardBonus;
+    moves += 6;
+    
+    if (levelW3 < 3) {
+      toast(`🎉 LEVEL ${levelW3} CLEARED! +${rewardBonus} Coins! Advancing to Level ${levelW3 + 1}!`);
+      setTimeout(() => {
+        setLevelW3(levelW3 + 1);
+      }, 1200);
+    } else {
+      toast("🏆 WORLD 3 COMPLETED! All Worlds Finished!");
+      setTimeout(() => {
+        exitToMap();
+      }, 1500);
+    }
+  }
+}
+
+function undo() {
+  playSound('click');
+  if(!hist.length) return toast("Nothing to undo!");
+  if(w1Gems < 1) return toast("Need 💎1");
+  w1Gems--; let last = hist.pop(); B = last.B; M = last.M; renderW3(); toast("↩ UNDO!");
+}
+
+function shuffle() {
+  playSound('click');
+  if(w1Coins < 5) return toast("Need 💰5");
+  w1Coins -= 5;
+  let flat = B.flat().filter(Boolean).sort(() => Math.random() - 0.5);
+  B = emptyBoard(); let k = 0;
+  for(let r=0;r<4;r++) for(let c=0;c<4;c++) if(k < flat.length && !blocked.includes(r*4+c)) B[r][c] = flat[k++];
+  renderW3(); toast("⤨ SHUFFLED!");
+}
+
+function destroyMode() {
+  playSound('click');
+  if(w1Coins < 3) return toast("Need 💰3");
+  destroy = !destroy; toast(destroy ? "💥 TAP A CREATURE" : "CANCELLED");
+}
+
+function plus() {
+  playSound('click');
+  if(w1Gems < 4) return toast("Need 💎4");
+  w1Gems -= 4; moves += 5; renderW3(); toast("⚡ +5 MOVES!");
+}
+
+function showSubPage(p) {
+  playSound('click');
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(p+'Screen').classList.add('active');
+  if(p === 'shop') renderShop();
+  if(p === 'collection') renderVault();
+}
+
+function renderShop() {
+  let shopItems = [["🐸", "Green Pet", 50], ["🦊", "Golden Pet", 100], ["🦄", "Crystal Pet", 250]];
+  document.getElementById('shopList').innerHTML = shopItems.map((x,i) => `
+    <div class="item-card"><div class="emoji">${x[0]}</div><h3>${x[1]}</h3><button onclick="buyShop(${i}, ${x[2]})">💰 ${x[2]}</button></div>
+  `).join('');
+}
+
+function buyShop(i, cost) {
+  playSound('click');
+  if(w1Coins < cost) return toast("Not enough 💰");
+  w1Coins -= cost; vault[i+1] = (vault[i+1] || 0) + 1; renderShop(); toast("BOUGHT!");
+}
+
+function renderVault() {
+  let h = "";
+  for(let i=0; i<6; i++) {
+    h += `<div class="item-card"><div class="emoji">${E[i]}</div><h3>${N[i]}</h3><p>Owned: ${vault[i]||0}</p></div>`;
+  }
+  document.getElementById('discoverList').innerHTML = h;
+}
+
+document.getElementById('board').onclick = e => {
+  if(!destroy) return;
+  let cell = e.target.closest('.cell'); if(!cell) return;
+  let r = +cell.dataset.r, c = +cell.dataset.c;
+  if(B[r][c]) { B[r][c] = null; w1Coins -= 3; destroy = false; renderW3(); toast("💥 DESTROYED!"); }
 };
 
-function loadWorld(){
-
-if(world===1){
-
-level=w1.level||1;
-
-progress.match=w1.match||0;
-progress.gems=w1.gemMission||0;
-
-progress.diamond=0;
-progress.gifts=0;
-
-energy=0;
-
-}else{
-
-level=w2.level||1;
-
-progress.diamond=w2.diamond||0;
-progress.gifts=w2.gifts||0;
-
-progress.match=0;
-progress.gems=0;
-
-energy=0;
-
-}
-
-lives=5;
-moves=10;
-streak=0;
-crownAttempts=0;
-busy=false;
-
-document.getElementById("play").disabled=false;
-
-updateWorldStyle();
-
-showDefault();
-
-update();
-
-renderCollection();
-
-}
-
-function updateWorldStyle(){
-
-if(world===1){
-
-document.getElementById("worldName")
-.textContent=
-"WORLD 1 • DELUXE ARCADE";
-
-document.getElementById("levelIcon")
-.textContent="🌎";
-
-document.getElementById("missionLabel")
-.textContent="MATCH4 MISSION";
-
-document.getElementById("energyWrap")
-.style.display="none";
-
-}else{
-
-document.getElementById("worldName")
-.textContent=
-"WORLD 2 • NEON COSMOS";
-
-document.getElementById("levelIcon")
-.textContent="🌌";
-
-document.getElementById("missionLabel")
-.textContent=
-"NEON COSMOS MISSION";
-
-document.getElementById("energyWrap")
-.style.display="block";
-
-}
-
-}
-
-function getMission(){
-
-if(world===1){
-
-if(level===1)
-return{
-text:"🎯 MATCH4 once",
-goal:1,
-value:progress.match
-};
-
-if(level===2)
-return{
-text:"🔥 Get 2 MATCH4 wins",
-goal:2,
-value:progress.match
-};
-
-if(level===3)
-return{
-text:"💎 Collect 3 Gems",
-goal:3,
-value:progress.gems
-};
-
-if(level===4)
-return{
-text:"🔥 Build a 3 WIN STREAK",
-goal:3,
-value:streak
-};
-
-return{
-text:"👑 GRAND MATCH • 5 Crown Attempts",
-goal:5,
-value:crownAttempts
-};
-
-}
-
-if(level===1)
-return{
-text:"💎 Get 1 Diamond Match",
-goal:1,
-value:progress.diamond
-};
-
-if(level===2)
-return{
-text:"🎁 Open 2 Cosmic Gifts",
-goal:2,
-value:progress.gifts
-};
-
-if(level===3)
-return{
-text:"🔥 Build a 4 WIN STREAK",
-goal:4,
-value:streak
-};
-
-if(level===4)
-return{
-text:"⚡ Fill Cosmic Energy",
-goal:100,
-value:energy
-};
-
-return{
-text:"👑 GRAND MATCH • 5 Crown Attempts",
-goal:5,
-value:crownAttempts
-};
-
-}
-
-function update(){
-
-document.getElementById("level")
-.textContent=level;
-
-document.getElementById("lives")
-.textContent=lives;
-
-document.getElementById("moves")
-.textContent=moves;
-
-document.getElementById("coins")
-.textContent=coins;
-
-document.getElementById("gems")
-.textContent=gems;
-
-document.getElementById("streak")
-.textContent=streak;
-
-let m=getMission();
-
-let percent=Math.min(
-(m.value/m.goal)*100,
-100
-);
-
-document.getElementById("bar")
-.style.width=percent+"%";
-
-document.getElementById("phoneBar")
-.style.width=percent+"%";
-
-document.getElementById("mission")
-.textContent=m.text;
-
-document.getElementById("phoneMission")
-.textContent=m.text;
-
-document.getElementById("energyBar")
-.style.width=
-Math.min(energy,100)+"%";
-
-save();
-
-}
-
-function initAudio(){
-
-if(!audio){
-
-audio=new(
-window.AudioContext||
-window.webkitAudioContext
-)();
-
-}
-
-if(audio.state==="suspended")
-audio.resume();
-
-}
-
-function tone(
-frequency,
-duration=.08,
-volume=.035,
-type="triangle"
-){
-
-if(!soundOn)return;
-
-try{
-
-initAudio();
-
-let osc=audio.createOscillator();
-let gain=audio.createGain();
-
-osc.type=type;
-osc.frequency.value=frequency;
-
-gain.gain.setValueAtTime(
-0,
-audio.currentTime
-);
-
-gain.gain.linearRampToValueAtTime(
-volume,
-audio.currentTime+.01
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-audio.currentTime+duration
-);
-
-osc.connect(gain);
-gain.connect(audio.destination);
-
-osc.start();
-osc.stop(audio.currentTime+duration);
-
-}catch(e){}
-
-}
-
-function jackpot(){
-
-tone(523,.10,.045,"sine");
-setTimeout(()=>tone(659,.10,.045,"sine"),90);
-setTimeout(()=>tone(784,.12,.05,"sine"),180);
-setTimeout(()=>tone(1047,.18,.05,"triangle"),280);
-setTimeout(()=>tone(1319,.25,.04,"triangle"),420);
-
-}
-
-const cosmicOpeningMusic=[
-
-130.81,155.56,174.61,196.00,
-220.00,246.94,261.63,293.66,
-
-329.63,329.63,392.00,440.00,
-493.88,440.00,392.00,329.63,
-
-349.23,392.00,440.00,493.88,
-523.25,493.88,440.00,392.00,
-
-440.00,493.88,523.25,587.33,
-659.25,587.33,523.25,493.88,
-
-392.00,440.00,493.88,523.25,
-587.33,659.25,587.33,523.25,
-
-493.88,440.00,392.00,349.23,
-329.63,392.00,440.00,493.88,
-
-523.25,587.33,659.25,783.99,
-659.25,587.33,523.25,493.88
-
-];
-
-function playOpeningNote(){
-
-if(!soundOn||!audio)return;
-
-let frequency=
-cosmicOpeningMusic[
-openingMusicStep%cosmicOpeningMusic.length
-];
-
-let osc=audio.createOscillator();
-let gain=audio.createGain();
-
-osc.type="sawtooth";
-
-osc.frequency.setValueAtTime(
-frequency,
-audio.currentTime
-);
-
-gain.gain.setValueAtTime(
-0,
-audio.currentTime
-);
-
-gain.gain.linearRampToValueAtTime(
-.006,
-audio.currentTime+.03
-);
-
-gain.gain.exponentialRampToValueAtTime(
-.001,
-audio.currentTime+.32
-);
-
-osc.connect(gain);
-gain.connect(audio.destination);
-
-osc.start();
-
-osc.stop(
-audio.currentTime+.32
-);
-
-openingMusicStep++;
-
-}
-
-function startOpeningMusic(){
-
-if(!soundOn)return;
-
-initAudio();
-
-stopOpeningMusic();
-
-openingMusicStep=0;
-
-playOpeningNote();
-
-openingMusicTimer=setInterval(
-playOpeningNote,
-200
-);
-
-}
-
-function stopOpeningMusic(){
-
-if(openingMusicTimer){
-
-clearInterval(openingMusicTimer);
-
-openingMusicTimer=null;
-
-}
-
-}
-
-function toggleSound(){
-
-soundOn=!soundOn;
-
-document.getElementById("sound")
-.textContent=
-soundOn?"🔊":"🔇";
-
-if(!soundOn){
-
-stopOpeningMusic();
-
-return;
-
-}
-
-if(
-world===2 &&
-document.getElementById("welcome").style.display==="flex"
-){
-
-startOpeningMusic();
-
-}
-
-tone(440,.08,.025,"sine");
-
-}
-
-function showWelcome(){
-
-let welcome =
-document.getElementById("welcome");
-
-let title =
-document.getElementById("welcomeTitle");
-
-let text =
-document.getElementById("welcomeText");
-
-let worldTitle =
-document.getElementById("welcomeWorld");
-
-let planet =
-document.getElementById("welcomePlanet");
-
-let promo =
-document.getElementById("welcomePromo");
-
-let button =
-document.getElementById("enterWorldButton");
-
-if(world===1){
-
-document.body.classList.remove("world2");
-
-planet.textContent="🌎";
-
-title.textContent=
-"ARCADE DELUXE";
-
-worldTitle.textContent=
-"WORLD 1 • ARCADE DELUXE";
-
-text.textContent=
-"Enter a high-energy neon arcade where every spin can trigger a MATCH4. Build your streak, stack your coins, hunt rare symbols and conquer five levels.";
-
-promo.innerHTML=
-`
-<span>🎯 MATCH 4</span>
-<span>🔥 BUILD STREAKS</span>
-<span>💰 STACK COINS</span>
-<span>👑 GRAND MATCH</span>
-`;
-
-button.textContent=
-"ENTER THE ARCADE";
-
-stopOpeningMusic();
-
-}else{
-
-document.body.classList.add("world2");
-
-planet.textContent="🌌";
-
-title.textContent=
-"NEON COSMOS";
-
-worldTitle.textContent=
-"WORLD 2 • NEON COSMOS";
-
-text.textContent=
-"Leave the arcade behind and enter a deeper neon universe. Chase Diamond Matches, unlock Cosmic Gifts, charge your energy and hunt the Galactic Crown.";
-
-promo.innerHTML=
-`
-<span>💎 DIAMOND MATCHES</span>
-<span>⚡ COSMIC ENERGY</span>
-<span>🎁 COSMIC GIFTS</span>
-<span>👑 GALACTIC CROWN</span>
-`;
-
-button.textContent=
-"ENTER THE COSMOS";
-
-startOpeningMusic();
-
-}
-
-welcome.style.display="flex";
-
-welcomeShown=true;
-
-}
-
-function enterWorld(){
-
-document.getElementById("welcome")
-.style.display="none";
-
-welcomeShown=false;
-
-stopOpeningMusic();
-
-initAudio();
-
-if(world===1){
-
-document.getElementById("msg")
-.textContent=
-"⚡ ARCADE ONLINE • LET'S PLAY!";
-
-}else{
-
-document.getElementById("msg")
-.textContent=
-"🚀 COSMOS ONLINE • INITIATE RUN!";
-
-}
-
-}
-
-function randomSymbol(){
-
-let pool;
-
-if(world===1){
-
-pool=
-level===5
-?world1Special
-:world1Normal;
-
-}else{
-
-pool=
-level===5
-?world2Special
-:world2Normal;
-
-}
-
-return pool[
-Math.floor(Math.random()*pool.length)
-];
-
-}
-
-function show(symbols){
-
-let game=
-document.getElementById("game");
-
-game.innerHTML="";
-
-symbols.forEach(s=>{
-
-let reel=document.createElement("div");
-
-reel.className="reel";
-reel.textContent=s;
-
-game.appendChild(reel);
-
+document.getElementById('board').addEventListener("pointerdown", e => { startX = e.clientX; startY = e.clientY; dragging = true; });
+document.getElementById('board').addEventListener("pointerup", e => {
+  if(!dragging) return; dragging = false;
+  let dx = e.clientX - startX, dy = e.clientY - startY;
+  if(Math.max(Math.abs(dx), Math.abs(dy)) < 20) return;
+  move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "right" : "left") : (dy > 0 ? "down" : "up"));
 });
-
-}
-
-function play(){
-
-if(busy)return;
-
-initAudio();
-
-stopOpeningMusic();
-
-if(level===5){
-
-crownPlay();
-
-return;
-}
-
-if(lives<=0){
-
-document.getElementById("over")
-.style.display="flex";
-
-return;
-}
-
-if(moves<=0){
-
-document.getElementById("msg")
-.textContent=
-"🎯 NO MOVES LEFT!";
-
-return;
-}
-
-busy=true;
-
-document.getElementById("play")
-.disabled=true;
-
-lives--;
-moves--;
-
-update();
-
-document.getElementById("msg")
-.textContent=
-world===1
-?"🎰 ROLLING..."
-:"🚀 WARPING...";
-
-let guaranteed=false;
-
-if(superSpin>0){
-
-guaranteed=true;
-superSpin--;
-
-}
-
-let chance;
-
-if(world===1){
-
-chance=
-level===1?.55:
-level===2?.45:
-level===3?.43:
-.38;
-
-}else{
-
-chance=
-level===1?.48:
-level===2?.43:
-level===3?.42:
-.38;
-
-}
-
-chance+=lucky*.05;
-
-let win=
-guaranteed||
-Math.random()<chance;
-
-let target=randomSymbol();
-
-if(world===2&&Math.random()<.12)
-target="💎";
-
-spin(
-win,
-target,
-normalResult
-);
-
-}
-
-function spin(win,target,callback){
-
-let n=0;
-
-let timer=setInterval(()=>{
-
-show([
-randomSymbol(),
-randomSymbol(),
-randomSymbol(),
-randomSymbol()
-]);
-
-/*
-==================================================
-ROLLING SOUND
-==================================================
-A LITTLE LOUDER:
-OLD = 0.028
-NEW = 0.038
-
-Still soft enough to avoid cracking.
-*/
-
-tone(
-160+Math.random()*180,
-.045,
-.038,
-"sine"
-);
-
-n++;
-
-if(n>=7){
-
-clearInterval(timer);
-
-setTimeout(
-()=>callback(win,target),
-120
-);
-
-}
-
-},65);
-
-}
-
-function normalResult(win,target){
-
-if(win){
-
-show([
-target,
-target,
-target,
-target
-]);
-
-document
-.querySelectorAll(".reel")
-.forEach(x=>
-x.classList.add("win")
-);
-
-streak++;
-progress.match++;
-
-if(world===1){
-
-let reward=
-100*level+
-streak*50;
-
-if(target==="💎"){
-
-gems+=5;
-progress.gems+=5;
-
-addCollection("💎");
-
-showReward(
-"💎 GEM MATCH!<br>+5 GEMS"
-);
-
-}else if(target==="🌈"){
-
-coins+=1000;
-gems+=5;
-progress.gems+=5;
-
-addCollection("🌈");
-
-showReward(
-"🌈 RAINBOW MATCH!<br>+1000 💰 +5 💎"
-);
-
-}else{
-
-coins+=reward;
-
-if(
-["🍒","⭐","🍀"].includes(target)
-)
-addCollection(target);
-
-showReward(
-"🎉 MATCH4!<br>+"+
-reward+
-" 💰"
-);
-
-}
-
-if(Math.random()<.16){
-
-setTimeout(
-openMystery,
-800
-);
-
-}
-
-}else{
-
-energy+=12;
-
-if(energy>100)
-energy=100;
-
-if(target==="💎"){
-
-gems+=10;
-progress.diamond++;
-
-addCollection("💎");
-
-showReward(
-"💎 DIAMOND MATCH!<br>+10 GEMS"
-);
-
-}else if(target==="🌈"){
-
-coins+=1500;
-gems+=5;
-energy=100;
-
-addCollection("🌈");
-
-showReward(
-"🌈 COSMIC RAINBOW!<br>+1500 💰 +5 💎"
-);
-
-}else if(target==="👑"){
-
-coins+=2000;
-gems+=8;
-
-addCollection("👑");
-
-showReward(
-"👑 COSMIC CROWN!<br>+2000 💰 +8 💎"
-);
-
-}else{
-
-let reward=
-100*level+
-streak*50;
-
-coins+=reward;
-
-if(
-["⭐","🌎","🚀"].includes(target)
-)
-addCollection(target);
-
-showReward(
-"✨ MATCH4!<br>+"+
-reward+
-" 💰"
-);
-
-}
-
-if(Math.random()<.15){
-
-setTimeout(
-openGift,
-900
-);
-
-}
-
-}
-
-jackpot();
-
-confetti();
-
-checkLevel();
-
-}else{
-
-streak=0;
-
-if(world===2)
-energy=Math.max(0,energy-8);
-
-if(shield>0){
-
-shield--;
-
-document.getElementById("msg")
-.textContent=
-"🛡️ SHIELD SAVED YOUR LIFE!";
-
-}else{
-
-document.getElementById("msg")
-.textContent=
-"☄️ SO CLOSE!";
-
-}
-
-end();
-
-}
-
-update();
-renderCollection();
-
-}
-
-function checkLevel(){
-
-let advance=false;
-
-if(world===1){
-
-if(level===1&&progress.match>=1)
-advance=true;
-
-if(level===2&&progress.match>=2)
-advance=true;
-
-if(level===3&&progress.gems>=3)
-advance=true;
-
-if(level===4&&streak>=3)
-advance=true;
-
-}else{
-
-if(level===1&&progress.diamond>=1)
-advance=true;
-
-if(level===2&&progress.gifts>=2)
-advance=true;
-
-if(level===3&&streak>=4)
-advance=true;
-
-if(level===4&&energy>=100)
-advance=true;
-
-}
-
-if(advance){
-
-setTimeout(nextLevel,1000);
-
-}else{
-
-end();
-
-}
-
-}
-
-function nextLevel(){
-
-level++;
-
-lives=5;
-moves=10;
-streak=0;
-energy=0;
-
-progress.match=0;
-progress.gems=0;
-progress.diamond=0;
-progress.gifts=0;
-
-crownAttempts=0;
-
-document.getElementById("attempts")
-.textContent="";
-
-document.getElementById("msg")
-.textContent=
-"🚀 LEVEL "+
-level+
-" UNLOCKED!";
-
-showDefault();
-
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-update();
-
-save();
-
-}
-
-function crownPlay(){
-
-if(crownAttempts>=5){
-
-document.getElementById("crown")
-.style.display="flex";
-
-return;
-
-}
-
-stopOpeningMusic();
-
-busy=true;
-
-document.getElementById("play")
-.disabled=true;
-
-crownAttempts++;
-
-document.getElementById("attempts")
-.textContent=
-"● ".repeat(crownAttempts)+
-"○ ".repeat(5-crownAttempts);
-
-document.getElementById("msg")
-.textContent=
-"👑 CROWN ATTEMPT "+
-crownAttempts+
-"/5";
-
-let chance=
-.13+crownBoost*.08;
-
-let win=Math.random()<chance;
-
-spin(
-win,
-"👑",
-crownResult
-);
-
-}
-
-function crownResult(win){
-
-if(win){
-
-show([
-"👑","👑","👑","👑"
-]);
-
-document
-.querySelectorAll(".reel")
-.forEach(x=>
-x.classList.add("win")
-);
-
-addCollection("👑");
-
-coins+=2500;
-gems+=10;
-
-showReward(
-world===1
-?"👑 GRAND MATCH!<br>+2500 💰 +10 💎"
-:"👑 GALACTIC MATCH!<br>+2500 💰 +10 💎"
-);
-
-jackpot();
-confetti();
-
-setTimeout(worldComplete,1500);
-
-}else{
-
-document.getElementById("msg")
-.textContent="☄️ SO CLOSE!";
-
-if(crownAttempts>=5){
-
-setTimeout(()=>{
-document.getElementById("crown")
-.style.display="flex";
-},500);
-
-}else{
-
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-}
-
-}
-
-save();
-update();
-renderCollection();
-
-}
-
-function extraCrown(){
-
-if(gems<3){
-
-alert("You need 3 gems.");
-return;
-
-}
-
-gems-=3;
-
-crownAttempts=4;
-
-document.getElementById("crown")
-.style.display="none";
-
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-document.getElementById("msg")
-.textContent=
-"💎 FINAL CROWN ATTEMPT!";
-
-update();
-save();
-
-}
-
-function buyCrownCoins(){
-
-if(coins<2500){
-
-alert("You need 2,500 coins.");
-return;
-
-}
-
-coins-=2500;
-crownWin();
-
-}
-
-function buyCrownGems(){
-
-if(gems<15){
-
-alert("You need 15 gems.");
-return;
-
-}
-
-gems-=15;
-crownWin();
-
-}
-
-function crownWin(){
-
-document.getElementById("crown")
-.style.display="none";
-
-show([
-"👑","👑","👑","👑"
-]);
-
-addCollection("👑");
-
-coins+=2500;
-gems+=10;
-
-showReward(
-"👑 CROWN ACQUIRED!"
-);
-
-jackpot();
-confetti();
-
-setTimeout(worldComplete,1200);
-
-save();
-update();
-
-}
-
-function worldComplete(){
-
-busy=true;
-
-document.getElementById("play")
-.disabled=true;
-
-if(world===1){
-
-world2Unlocked=true;
-
-document.getElementById("completeTitle")
-.textContent=
-"🏆 WORLD 1 MASTERED!";
-
-document.getElementById("completeText")
-.textContent=
-"🌌 WORLD 2 IS NOW UNLOCKED!";
-
-document.getElementById("nextWorldButton")
-.textContent=
-"🚀 ENTER WORLD 2";
-
-document.getElementById("complete")
-.style.display="flex";
-
-}else{
-
-document.getElementById("completeTitle")
-.textContent=
-"🏆 WORLD 2 MASTERED!";
-
-document.getElementById("completeText")
-.textContent=
-"🌟 YOU MASTERED MATCH4!";
-
-document.getElementById("nextWorldButton")
-.textContent=
-"🌎 PLAY WORLD 1";
-
-document.getElementById("complete")
-.style.display="flex";
-
-}
-
-save();
-
-}
-
-function openWorlds(){
-
-updateWorldButtons();
-
-document.getElementById("worldSelect")
-.style.display="flex";
-
-}
-
-function closeWorlds(){
-
-document.getElementById("worldSelect")
-.style.display="none";
-
-}
-
-function updateWorldButtons(){
-
-let b=
-document.getElementById("world2Button");
-
-if(world2Unlocked){
-
-b.classList.remove("locked");
-
-b.innerHTML=
-"🌌 WORLD 2<br><small>NEON COSMOS 🔓</small>";
-
-}else{
-
-b.classList.add("locked");
-
-b.innerHTML=
-"🌌 WORLD 2<br><small>NEON COSMOS 🔒</small>";
-
-}
-
-}
-
-function switchWorld(x){
-
-if(x===2&&!world2Unlocked){
-
-alert(
-"🔒 Complete WORLD 1 to unlock WORLD 2."
-);
-
-return;
-
-}
-
-world=x;
-
-closeWorlds();
-
-loadWorld();
-
-stopOpeningMusic();
-
-showWelcome();
-
-save();
-
-}
-
-function goNextWorld(){
-
-document.getElementById("complete")
-.style.display="none";
-
-if(world===1){
-
-world=2;
-
-}else{
-
-world=1;
-
-}
-
-loadWorld();
-
-stopOpeningMusic();
-
-showWelcome();
-
-}
-
-function openMystery(){
-
-if(busy)return;
-
-document.getElementById("mystery")
-.style.display="flex";
-
-}
-
-function mysteryReward(type){
-
-document.getElementById("mystery")
-.style.display="none";
-
-if(type==="coins"){
-
-coins+=500;
-
-showReward("🎁 +500 💰!");
-
-}
-
-if(type==="gems"){
-
-gems+=2;
-
-showReward("🎁 +2 GEMS!");
-
-}
-
-if(type==="move"){
-
-moves+=2;
-
-showReward("🎁 +2 MOVES!");
-
-}
-
-update();
-save();
-
-}
-
-function openGift(){
-
-if(busy)return;
-
-document.getElementById("gift")
-.style.display="flex";
-
-}
-
-function giftReward(type){
-
-document.getElementById("gift")
-.style.display="none";
-
-progress.gifts++;
-
-if(type==="coins"){
-
-let reward=
-500+
-Math.floor(Math.random()*1001);
-
-coins+=reward;
-
-showReward(
-"🎁 +"+reward+" 💰"
-);
-
-}
-
-if(type==="gems"){
-
-let reward=
-2+
-Math.floor(Math.random()*5);
-
-gems+=reward;
-
-showReward(
-"🎁 +"+reward+" 💎"
-);
-
-}
-
-if(type==="energy"){
-
-energy+=25;
-
-if(energy>100)
-energy=100;
-
-showReward(
-"🎁 +25 ⚡ ENERGY"
-);
-
-}
-
-confetti();
-
-update();
-save();
-
-}
-
-function openShop(){
-
-document.getElementById("shop")
-.style.display="block";
-
-}
-
-function closeShop(){
-
-document.getElementById("shop")
-.style.display="none";
-
-}
-
-function buy(x){
-
-if(x==="life"){
-
-if(coins<500)
-return alert("Not enough coins.");
-
-coins-=500;
-lives++;
-
-}
-
-if(x==="move"){
-
-if(coins<300)
-return alert("Not enough coins.");
-
-coins-=300;
-moves+=3;
-
-}
-
-if(x==="lucky"){
-
-if(coins<750)
-return alert("Not enough coins.");
-
-coins-=750;
-lucky++;
-
-}
-
-if(x==="shield"){
-
-if(gems<30)
-return alert("Not enough gems.");
-
-gems-=30;
-shield++;
-
-}
-
-if(x==="super"){
-
-if(gems<25)
-return alert("Not enough gems.");
-
-gems-=25;
-superSpin++;
-
-}
-
-if(x==="crown"){
-
-if(gems<40)
-return alert("Not enough gems.");
-
-gems-=40;
-crownBoost++;
-
-}
-
-document.getElementById("msg")
-.textContent=
-"✨ ITEM PURCHASED!";
-
-update();
-save();
-
-}
-
-function continueCoins(){
-
-if(coins<300){
-
-alert("You need 300 coins.");
-return;
-
-}
-
-coins-=300;
-continueGame();
-
-}
-
-function continueGems(){
-
-if(gems<3){
-
-alert("You need 3 gems.");
-return;
-
-}
-
-gems-=3;
-continueGame();
-
-}
-
-function continueGame(){
-
-document.getElementById("over")
-.style.display="none";
-
-lives=5;
-moves=10;
-streak=0;
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-document.getElementById("msg")
-.textContent=
-"🚀 RUN CONTINUES!";
-
-update();
-save();
-
-}
-
-function saveExit(){
-
-document.getElementById("over")
-.style.display="none";
-
-document.getElementById("crown")
-.style.display="none";
-
-document.getElementById("mystery")
-.style.display="none";
-
-document.getElementById("gift")
-.style.display="none";
-
-stopOpeningMusic();
-
-lives=5;
-moves=10;
-streak=0;
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-document.getElementById("msg")
-.textContent=
-"💾 PROGRESS SAVED!";
-
-update();
-save();
-
-}
-
-function end(){
-
-setTimeout(()=>{
-
-document
-.querySelectorAll(".reel")
-.forEach(x=>
-x.classList.remove("win")
-);
-
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-update();
-
-if(lives<=0){
-
-document.getElementById("over")
-.style.display="flex";
-
-}
-
-},600);
-
-}
-
-function showReward(text){
-
-let r=document.createElement("div");
-
-r.className="reward";
-
-r.innerHTML=text;
-
-document.body.appendChild(r);
-
-setTimeout(
-()=>r.remove(),
-1400
-);
-
-document.getElementById("msg")
-.innerHTML=text;
-
-}
-
-function addCollection(x){
-
-let c=
-world===1
-?w1.collection
-:w2.collection;
-
-if(!c.includes(x))
-c.push(x);
-
-save();
-renderCollection();
-
-}
-
-function renderCollection(){
-
-let items;
-
-if(world===1){
-
-items=[
-["🍒","Cherry"],
-["🍋","Lemon"],
-["🍊","Orange"],
-["🍉","Watermelon"],
-["⭐","Star"],
-["🍀","Lucky"],
-["💎","Diamond"],
-["🌈","Rainbow"],
-["👑","Crown"]
-];
-
-}else{
-
-items=[
-["🌙","Moon"],
-["⭐","Star"],
-["🌎","Earth"],
-["☄️","Meteor"],
-["💎","Diamond"],
-["🔮","Crystal"],
-["🌌","Cosmos"],
-["🚀","Rocket"],
-["🌈","Rainbow"],
-["👑","Crown"]
-];
-
-}
-
-let c=
-world===1
-?w1.collection
-:w2.collection;
-
-let html="";
-
-items.forEach(x=>{
-
-let found=c.includes(x[0]);
-
-html+=
-'<div class="card">'+
-(found?x[0]:"❔")+
-'<small>'+
-(found?x[1]:"Unknown")+
-'</small>'+
-'</div>';
-
-});
-
-document.getElementById("collection")
-.innerHTML=html;
-
-}
-
-function confetti(){
-
-let symbols=
-world===1
-?["💰","💎","⭐","🍀","🎉"]
-:["💎","👑","⚡","🌈","✨"];
-
-for(let i=0;i<45;i++){
-
-let p=document.createElement("span");
-
-p.className="conf";
-
-p.textContent=
-symbols[i%symbols.length];
-
-p.style.setProperty(
-"--x",
-(Math.random()-.5)*750+"px"
-);
-
-p.style.setProperty(
-"--y",
-(Math.random()-.5)*650+"px"
-);
-
-p.style.fontSize=
-(16+Math.random()*22)+"px";
-
-document.body.appendChild(p);
-
-setTimeout(
-()=>p.remove(),
-1400
-);
-
-}
-
-}
-
-function showDefault(){
-
-if(world===1){
-
-show([
-"🍒",
-"⭐",
-"🍀",
-"💎"
-]);
-
-}else{
-
-show([
-"🌙",
-"⭐",
-"🌎",
-"💎"
-]);
-
-}
-
-}
-
-function closeComplete(){
-
-document.getElementById("complete")
-.style.display="none";
-
-busy=false;
-
-document.getElementById("play")
-.disabled=false;
-
-}
-
-world=1;
-
-loadWorld();
-
-updateWorldButtons();
-
-setTimeout(()=>{
-showWelcome();
-},250);
-
 </script>
-
 </body>
 </html>
