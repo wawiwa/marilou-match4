@@ -350,7 +350,7 @@
       <span>STACK COINS</span>
       <span>GRAND MATCH</span>
     </div>
-    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(1)">PLAY WORLD 1</button>
+    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(1)">PLAY</button>
   </div>
 </div>
 
@@ -367,7 +367,7 @@
       <span>COMPLETE 4 DIAMONDS</span>
       <span>GALACTIC CROWN</span>
     </div>
-    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(2)">PLAY WORLD 2</button>
+    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(2)">PLAY</button>
   </div>
 </div>
 
@@ -384,7 +384,7 @@
       <span>CLEAR WATER</span>
       <span>INFINITE LEVELS</span>
     </div>
-    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(3)">PLAY WORLD 3</button>
+    <button class="cover-btn" style="background:linear-gradient(135deg,#b8a8ff,#d4c5ff,#9d8cce); border-color:#b8a8ff; box-shadow: 0 15px 40px rgba(184,168,255,0.4), 0 0 28px rgba(212,197,255,0.3);" onclick="closeCover(3)">PLAY</button>
   </div>
 </div>
 
@@ -490,6 +490,62 @@ function playSound(type) {
         g.connect(audioCtx.destination);
         o.start(now + idx * 0.1);
         o.stop(now + idx * 0.1 + 0.6);
+      });
+    } else if (type === 'match') {
+      // Satisfying match/combo sound
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(600, now);
+      osc.frequency.setValueAtTime(800, now + 0.05);
+      osc.frequency.setValueAtTime(1000, now + 0.1);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (type === 'merge') {
+      // Merge/combination sound for World 3
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(700, now);
+      osc.frequency.exponentialRampToValueAtTime(300, now + 0.12);
+      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } else if (type === 'boost') {
+      // Power-up/boost activation sound
+      [800, 1000, 1200].forEach((freq, idx) => {
+        let o = audioCtx.createOscillator();
+        let g = audioCtx.createGain();
+        o.type = 'triangle';
+        o.frequency.setValueAtTime(freq, now + idx * 0.06);
+        g.gain.setValueAtTime(0.1, now + idx * 0.06);
+        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.06 + 0.2);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.06);
+        o.stop(now + idx * 0.06 + 0.2);
+      });
+    } else if (type === 'error') {
+      // Error/invalid move sound
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(200, now);
+      osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      osc.start(now);
+      osc.stop(now + 0.15);
+    } else if (type === 'mission') {
+      // Mission/objective complete sound
+      [440, 554.37, 659.25].forEach((freq, idx) => {
+        let o = audioCtx.createOscillator();
+        let g = audioCtx.createGain();
+        o.type = 'sine';
+        o.frequency.setValueAtTime(freq, now + idx * 0.08);
+        g.gain.setValueAtTime(0.12, now + idx * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.3);
+        o.connect(g);
+        g.connect(audioCtx.destination);
+        o.start(now + idx * 0.08);
+        o.stop(now + idx * 0.08 + 0.3);
       });
     }
   } catch (e) {
@@ -657,6 +713,7 @@ function w1Play() {
     if (activeW12 === 2) {
       if (s1 === currentLevelData.reqSymbol) {
         isTargetMatch = true;
+        playSound('mission');
         toast("⭐ CORRECT MISSION MATCH!");
       } else {
         isTargetMatch = false;
@@ -885,6 +942,7 @@ function renderW3() {
 function move(d) {
   if(moves <= 0) return toast("OUT OF MOVES!");
   let old = JSON.stringify(B), nb = emptyBoard();
+  let hadAnyMerge = false;
 
   for(let n=0; n<4; n++) {
     let line = [];
@@ -894,8 +952,11 @@ function move(d) {
       if(B[r][c]) line.push(B[r][c]);
     }
     let merged = [];
+    let hasMerge = false;
     for(let i=0; i<line.length; i++) {
       if(i+1 < line.length && line[i].t === line[i+1].t && line[i].t < 5) {
+        hasMerge = true;
+        hadAnyMerge = true;
         let nt = line[i].t + 1;
         merged.push({t: nt});
         score += 10 * Math.pow(2, nt);
@@ -917,6 +978,7 @@ function move(d) {
 
   if(JSON.stringify(nb) === old) return;
   playSound('click');
+  if(hadAnyMerge) playSound('merge');
   hist.push({ B: JSON.parse(old), M: JSON.parse(JSON.stringify(M)) });
   B = nb; moves--; addTile();
   renderW3();
