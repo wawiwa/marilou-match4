@@ -1,0 +1,27 @@
+.world2-2-frame {
+  flex: 1;
+  overflow-y: auto;
+  text-align: center;
+  background: radial-gradient(circle at 15% 20%,#7f59ff66,transparent 26%),
+              radial-gradient(circle at 75% 20%,#00d9ff44,transparent 25%),
+              radial-gradient(circle at 50% 100%,#ff7fcd44,transparent 24%),
+              linear-gradient(140deg,#050914,#150c2f,#090b1d);
+  padding-bottom: 40px;
+}
+
+.world2-2-frame .w1-h1 {
+  background: linear-gradient(90deg,#ffffff,#b88cff,#00ffff,#ff5edb,#ffffff);
+  -webkit-background-clip: text;
+}
+
+.world2-2-frame .w1-energy i {
+  background: linear-gradient(90deg,#00eaff,#7d5cff,#ff39c8);
+}
+
+.world2-2-frame .w1-missionTop {
+  color: #d5b0ff;
+}
+
+.world2-2-frame .w1-panel {
+  box-shadow: 0 25px 70px rgba(95, 70, 180, 0.35);
+}

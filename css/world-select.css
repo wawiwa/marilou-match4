@@ -1,0 +1,69 @@
+.world-select-container {
+  padding: 30px 20px;
+  text-align: center;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.world-select-container h1 {
+  font-size: 28px;
+  background: linear-gradient(90deg,#ff3c6e,#ffd43b,#42f4b1,#4bcaff,#a66cff);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.world-select-container p.subtitle {
+  color: #adb5dc;
+  font-size: 12px;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
+}
+
+.world-card {
+  background: #08152f;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin: 8px 0;
+  width: min(420px, 92%);
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.world-card:hover {
+  border-color: #39dfff;
+  background: #0c1e40;
+  transform: translateY(-2px);
+}
+
+.world-card h3 {
+  margin: 0 0 4px;
+  color: #fff;
+  font-size: 15px;
+}
+
+.world-card p {
+  margin: 0;
+  font-size: 11px;
+  color: #9fc7dc;
+}
+
+.world-badge {
+  background: rgba(64, 214, 120, 0.18);
+  border: 1px solid #59d77e;
+  color: #9af7b3;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
