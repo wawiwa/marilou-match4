@@ -186,6 +186,15 @@ function destroyMode() {
   showToast(destroy ? '💥 TAP A CREATURE' : 'CANCELLED');
 }
 
+function plusCoins() {
+  playSound('click');
+  if (getCoins() < 100) return showToast('Need 💰100');
+  setCoins(getCoins() - 100);
+  moves += 5;
+  renderW3();
+  showToast('💰 +5 MOVES!');
+}
+
 function plus() {
   playSound('click');
   if (getGems() < 4) return showToast('Need 💎4');
@@ -268,6 +277,7 @@ if (boardEl) {
 window.undo = undo;
 window.shuffle = shuffle;
 window.destroyMode = destroyMode;
+window.plusCoins = plusCoins;
 window.plus = plus;
 window.showSubPage = showSubPage;
 window.buyShop = buyShop;
