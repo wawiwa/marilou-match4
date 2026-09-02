@@ -1,74 +1,75 @@
 # Match4
 
-A modular HTML, CSS, and JavaScript game built for Vercel, with a structure that can eventually move to Angular.
+Match4 is a modular HTML, CSS, and JavaScript game designed for static hosting on Vercel, with a structure that keeps each world separated so it can later move toward an Angular architecture without changing the current deployment model.
 
-## Project Structure
+## Project structure
 
+```text
 marilou-match4/
-│
 ├── index.html
-│
 ├── css/
 │   ├── base.css
 │   ├── world-select.css
 │   └── world-intro.css
-│
-└── js/
-    ├── core/
-    │   ├── router.js
-    │   ├── audio.js
-    │   └── treasury.js
-    │
-    ├── ui/
-    │   ├── world-select.js
-    │   ├── world-intro.js
-    │   └── toast.js
-    │
-    └── worlds/
-        ├── world1/
-        │   ├── world1.css
-        │   ├── world1.config.js
-        │   └── world1.behavior.js
-        │
-        ├── world2/
-        │   ├── world2.css
-        │   ├── world2.config.js
-        │   └── world2.behavior.js
-        │
-        └── world3/
-            ├── world3.css
-            ├── world3.config.js
-            └── world3.behavior.js
+├── js/
+│   ├── core/
+│   │   ├── audio.js
+│   │   ├── router.js
+│   │   └── treasury.js
+│   ├── ui/
+│   │   ├── toast.js
+│   │   └── world-select.js
+│   └── worlds/
+│       ├── world1/
+│       │   ├── world1.behavior.js
+│       │   ├── world1.config.js
+│       │   └── world1.css
+│       ├── world2/
+│       │   ├── world2.behavior.js
+│       │   ├── world2.config.js
+│       │   └── world2.css
+│       └── world3/
+│           ├── world3.behavior.js
+│           ├── world3.config.js
+│           └── world3.css
+└── README.md
+```
 
-## What the Files Do
+## What each part does
 
-index.html — Main HTML shell.
-base.css — Shared styling.
-world-select.css — World selection screen styling.
-world-intro.css — World introduction screen styling.
-router.js — Switches between screens and worlds.
-audio.js — Game sounds.
-treasury.js — Coins and gems.
-world-select.js — World selection behavior.
-world-intro.js — World intro behavior.
-toast.js — Temporary notifications.
+- index.html — Main HTML shell for the game and screen layout.
+- css/base.css — Shared layout and global styling used across the app.
+- css/world-select.css — Styling for the world selector screen.
+- css/world-intro.css — Styling for the cinematic world intro screens.
+- js/core/audio.js — Sound effects and audio setup.
+- js/core/router.js — Screen and world switching logic.
+- js/core/treasury.js — Shared coins and gems data.
+- js/ui/world-select.js — World selection and World 1/2 gameplay behavior.
+- js/ui/toast.js — Temporary notification messages.
+- js/worlds/world1 — World 1 styling, config, and behavior.
+- js/worlds/world2 — World 2 styling, config, and behavior.
+- js/worlds/world3 — World 3 styling, config, and behavior.
 
-## World Folders
+## World organization
 
-Each world keeps its own styling, configuration, and behavior together.
+Each world keeps its own appearance, developer settings, and gameplay logic together.
 
-world1/
-├── world1.css          # Appearance
-├── world1.config.js    # Developer settings
-└── world1.behavior.js  # Gameplay logic
+```text
+world/
+├── world.css
+├── world.config.js
+└── world.behavior.js
+```
 
-World 2 and World 3 follow the same pattern.
+This keeps the structure clear and makes future migration to Angular easier without introducing a framework in the current version.
 
 ## Architecture
 
+```text
 World
-├── CSS       → Appearance
-├── Config    → Settings
-└── Behavior  → Gameplay
+├── CSS      → appearance
+├── Config   → settings and level data
+└── Behavior → gameplay logic
+```
 
-The project stays simple and works as a static Vercel site while keeping the worlds separated for a future Angular migration.
+The project remains intentionally simple: it works as a static Vercel site while keeping world boundaries clean and ready for future refactoring.
